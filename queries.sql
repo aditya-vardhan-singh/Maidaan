@@ -52,3 +52,10 @@ create table CompetitionAndEvents (
     "rules" text,
     "disabled" boolean
 );
+
+-- Users Table
+create table Users (
+    "user_id" serial primary key,
+    "username" varchar(50),
+    "password" varchar(100)
+)

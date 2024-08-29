@@ -7,7 +7,7 @@ import env from "dotenv";
 import session from "express-session";
 import bodyParser from "body-parser";
 import passport from "passport";
-import { Strategy } from "passport-strategy";
+import { Strategy } from "passport-local";
 
 /*** INIT ***/
 
@@ -27,8 +27,11 @@ app.use(
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use(passport.session());
+
+/*** DATABASE SETUP ***/
 
 const db = new pg.Client({
   user: process.env.PG_USERNAME,
@@ -39,6 +42,7 @@ const db = new pg.Client({
 });
 db.connect();
 
+/*** API CALL HANDLING ***/
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to home page" }).status(200);
 });
@@ -77,13 +81,14 @@ app.post(
 );
 
 app.post("/register", async (req, res) => {
-  const email = req.body.username;
+  const username = req.body.username;
   const password = req.body.password;
 
   try {
-    const checkResult = await db.query("SELECT * FROM user WHERE email = $1", [
-      email,
-    ]);
+    const checkResult = await db.query(
+      "SELECT * FROM users WHERE username = $1",
+      [username]
+    );
 
     if (checkResult.rows.length > 0) {
       // User already exists
@@ -95,8 +100,8 @@ app.post("/register", async (req, res) => {
           console.error("Error hashing password: ", err);
         } else {
           const result = await db.query(
-            "INSERT INTO users (email, password) VALUES ($1, $2)",
-            [email, hash]
+            "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *",
+            [username, hash]
           );
           const user = result.rows[0];
           req.login(user, (err) => {
@@ -117,7 +122,7 @@ passport.use(
     // Verify user from stored username and password
     try {
       // Get user details from database using username
-      const result = await db.query("SELECT * FROM users WHERE email = $1", [
+      const result = await db.query("SELECT * FROM users WHERE username = $1", [
         username,
       ]);
 
@@ -138,15 +143,16 @@ passport.use(
               return cb(null, user);
             } else {
               // Did not pass password check
-              return cb(null, false);
+              return cb(null, false, { message: "Incorrect password" });
             }
           }
         });
       } else {
-        return cb("User not found");
+        return cb(null, false, { message: "User not found" });
       }
     } catch (err) {
-      console.err(err);
+      console.log("Error in strategy:", err);
+      return cb(err);
     }
   })
 );
