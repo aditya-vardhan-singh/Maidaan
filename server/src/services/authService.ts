@@ -1,12 +1,16 @@
+// services/authService.ts
+
 import { PrismaClient, UserProfile, AuthType } from "@prisma/client";
-import { Express, Request, Response, NextFunction } from "express";
+import { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
 import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GoogleStrategy, Profile } from 'passport-google-oauth20';
 import bcrypt from 'bcrypt';
+import { Router } from "express";
 
 const prisma = new PrismaClient();
+const router = Router();
 
 declare global {
   namespace Express {
@@ -55,23 +59,28 @@ export async function initPassport(app: Express): Promise<void> {
         callbackURL: "http://localhost:3000/auth/google/secrets",
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
       },
-      async (accessToken: string, refreshToken: string, profile: any, cb: (error: any, user?: Express.User) => void) => {
+      async (accessToken: string, refreshToken: string, profile: Profile, cb: (error: any, user?: Express.User) => void) => {
         try {
+          const email = profile.emails && profile.emails[0]?.value;
+          
+          if (!email) {
+            return cb(new Error("Email not found in Google profile."));
+          }
+
           let user = await prisma.userProfile.findUnique({
-            where: { email: profile.emails[0].value }
+            where: { email: email }
           });
 
           if (!user) {
             user = await prisma.userProfile.create({
               data: {
-                email: profile.emails[0].value,
+                email: email,
                 username: profile.displayName,
                 googleId: profile.id,
                 authType: AuthType.GOOGLE
               }
             });
           } else if (user.authType !== AuthType.GOOGLE) {
-            // Update existing user to link Google account
             user = await prisma.userProfile.update({
               where: { id: user.id },
               data: {
@@ -104,24 +113,22 @@ export async function initPassport(app: Express): Promise<void> {
       cb(err);
     }
   });
+}
 
-  // Example route using Passport local strategy
-  app.post('/login', passport.authenticate('local'), (req: Request, res: Response) => {
+export function initAuthRoutes(): Router {
+  router.post('/login', passport.authenticate('local'), (req: Request, res: Response) => {
     res.json({ message: "Logged in successfully", user: req.user });
   });
 
-  // Example route using Passport Google strategy
-  app.get('/auth/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
+  router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-  app.get('/auth/google/secrets', 
+  router.get('/google/secrets', 
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req: Request, res: Response) => {
       res.redirect('/');
     });
 
-  // New route for user signup
-  app.post('/signup', async (req: Request, res: Response) => {
+  router.post('/signup', async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
     try {
@@ -155,8 +162,7 @@ export async function initPassport(app: Express): Promise<void> {
     }
   });
 
-  // Logout route
-  app.get('/logout', (req: Request, res: Response) => {
+  router.get('/logout', (req: Request, res: Response) => {
     req.logout((err) => {
       if (err) {
         console.error("Error during logout:", err);
@@ -165,4 +171,6 @@ export async function initPassport(app: Express): Promise<void> {
       res.json({ message: "Logged out successfully" });
     });
   });
+
+  return router;
 }
