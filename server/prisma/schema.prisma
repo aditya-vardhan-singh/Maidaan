@@ -1,0 +1,113 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model UserProfile {
+  id                       Int                        @id @default(autoincrement())
+  email                    String                     @unique @db.VarChar(255)
+  username                 String                     @unique
+  password                 String?                    @db.VarChar(60)
+  name                     String?                    @db.VarChar(100)
+  googleId                 String?                    @unique @db.VarChar(30)
+  authType                 AuthType                   @default(LOCAL)
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  CompetitionParticipation CompetitionParticipation[]
+  SportsParticipation      SportsParticipation[]
+}
+
+enum AuthType {
+  LOCAL
+  GOOGLE
+}
+
+model CompetitionParticipation {
+  id                Int              @id @default(autoincrement())
+  user              UserProfile      @relation(fields: [userId], references: [id])
+  userId            Int
+  competition       CompetitionEvent @relation(fields: [competitionId], references: [id])
+  competitionId     Int
+  participationDate DateTime
+  result            String?          @db.VarChar(255)
+
+  @@unique([userId, competitionId])
+}
+
+model SportsParticipation {
+  id         Int         @id @default(autoincrement())
+  user       UserProfile @relation(fields: [userId], references: [id])
+  userId     Int
+  sport      Sports      @relation(fields: [sportId], references: [id])
+  sportId    Int
+  startDate  DateTime
+  skillLevel String?     @db.VarChar(50)
+
+  @@unique([userId, sportId])
+}
+
+model Sports {
+  id                Int                   @id @default(autoincrement())
+  sportName         String                @db.VarChar(100)
+  description       String?               @db.VarChar(500)
+  rules             String?               @db.Text
+  equipmentRequired String?               @db.VarChar(255)
+  competitions      CompetitionEvent[]
+  trainingCourses   TrainingCourse[]
+  participants      SportsParticipation[]
+}
+
+model CompetitionEvent {
+  id               Int                        @id @default(autoincrement())
+  eventName        String                     @db.VarChar(200)
+  sport            Sports                     @relation(fields: [sportId], references: [id])
+  sportId          Int
+  eventDate        DateTime
+  location         String                     @db.VarChar(255)
+  organizer        Organizer                  @relation(fields: [organizerId], references: [id])
+  organizerId      Int
+  competitionLevel String                     @db.VarChar(50)
+  req_players      Int
+  description      String?                    @db.Text
+  rules            String?                    @db.Text
+  enabled          Boolean                    @default(false)
+  participants     CompetitionParticipation[]
+}
+
+model TrainingCourse {
+  id          Int           @id @default(autoincrement())
+  courseName  String        @db.VarChar(200)
+  sport       Sports        @relation(fields: [sportId], references: [id])
+  sportId     Int
+  description String?       @db.Text
+  duration    String        @db.VarChar(100)
+  fee         Decimal       @db.Decimal(10, 2)
+  academy     SportsAcademy @relation(fields: [academyId], references: [id])
+  academyId   Int
+}
+
+model Organizer {
+  id            Int                @id @default(autoincrement())
+  organizerName String             @db.VarChar(200)
+  contactInfo   String             @db.VarChar(255)
+  email         String             @db.VarChar(255)
+  address       String             @db.VarChar(255)
+  academy       SportsAcademy      @relation(fields: [academyId], references: [id])
+  academyId     Int
+  competitions  CompetitionEvent[]
+}
+
+model SportsAcademy {
+  id          Int              @id @default(autoincrement())
+  academyName String           @db.VarChar(200)
+  location    String           @db.VarChar(255)
+  facilities  String?          @db.Text
+  contactInfo String           @db.VarChar(255)
+  email       String           @db.VarChar(255)
+  organizers  Organizer[]
+  courses     TrainingCourse[]
+}
