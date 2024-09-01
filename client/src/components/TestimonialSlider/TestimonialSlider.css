@@ -1,0 +1,47 @@
+/* General Styles for Testimonial Card */
+.testimonial-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #E8F5E9; /* Background color matching the design */
+    transition: all 0.3s ease;
+  }
+  
+  /* Image Styles */
+  .testimonial-card img {
+    margin-right: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    /* Stack image above text for smaller screens */
+    .testimonial-card {
+      flex-direction: column;
+      text-align: center;
+      padding: 15px; /* Adjust padding for smaller screens */
+    }
+  
+    /* Center image and adjust margin */
+    .testimonial-card img {
+      margin-right: 0;
+      margin-bottom: 15px;
+      width: 80px; /* Adjust image size for mobile */
+      height: 80px; /* Adjust image size for mobile */
+    }
+  
+    /* Adjust text sizes */
+    .testimonial-card .mantine-Text-root {
+      font-size: 16px; /* Base text size */
+    }
+  
+    .testimonial-card .mantine-Text-root:first-of-type {
+      font-size: 18px; /* Name text size */
+      font-weight: 700;
+    }
+  }
+  

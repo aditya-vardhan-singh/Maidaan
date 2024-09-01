@@ -1,0 +1,61 @@
+.card {
+    background-color: var(--mantine-color-body);
+    width: 300px;
+    margin: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1.5%;
+    background: #FCE8CE80;
+    border: rem(2px) solid #F1A02F;
+    border: 2px solid #F1A02F;
+    border-radius: 10px; /* Adjust for rounded corners */
+    padding: 20px;
+    background-color: #FCE8CE80;
+    box-shadow: 0 0 2px #F1A02F, /* White glow */
+                0 0 4px#F1A02F, 
+                0 0 6px #F1A02F;
+    transition: box-shadow 0.3s ease-in-out;
+    @media (max-width: $mantine-breakpoint-sm) {
+        /* flex-direction: column; */
+        width: auto;
+        padding: var(--mantine-spacing-xl);
+        /* margin: auto; */
+      }
+
+    
+
+  }
+  .card:hover {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.8), /* Brighter white glow on hover */
+                0 0 18px rgba(255, 255, 255, 0.6),
+                0 0 12px rgba(255, 255, 255, 0.5);
+  }
+  
+  .avatar {
+    border: rem(2px) solid #F1A02F;
+    margin: 5%;
+  }
+
+
+  .name{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Editbtn{
+    color: #F1A02F;
+    background: #FCE8CE99;
+    @mixin hover {
+        background-color: light-dark(#F1A02F, var(--mantine-color-dark-6));
+        color: var(--mantine-color-white);
+  
+      }
+      box-shadow: 0px 1px 4px 0px #00000040;
+      border: #00000040;
+
+  }

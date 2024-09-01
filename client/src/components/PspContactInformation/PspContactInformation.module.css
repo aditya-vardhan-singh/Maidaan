@@ -1,0 +1,63 @@
+.formContainer {
+    padding: 25px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 85px;
+  }
+  
+  .imageUploadCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .fileInput {
+    width: 100%;
+  }
+  
+  .imagePreview {
+    width: 100%;
+    max-width: 150px;
+    border-radius: 50%;
+    border: 2px dashed #ccc;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .backButton,
+  .nextButton {
+    flex: 1;
+    margin: 0 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .formContainer {
+      padding: 10px;
+    }
+  
+    .imageUploadCol {
+      margin-top: 20px;
+    }
+  
+    .imagePreview {
+      max-width: 120px;
+    }
+  
+    .buttonGroup {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .backButton,
+    .nextButton {
+      margin: 0;
+    }
+  }
+  

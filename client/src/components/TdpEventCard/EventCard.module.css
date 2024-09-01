@@ -1,0 +1,143 @@
+/* Container styling */
+.cardContainer {
+    display: flex;
+    flex-direction: column;
+    border: #555;
+    border-radius: 8px;
+   
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Header styling */
+  .header {
+    background-color: #fff4e6;
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .headerDetails {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .headerInfo {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .applicationDeadline {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff6f00;
+  }
+  
+  /* Image and main content styling */
+  .mainContent {
+    display: flex;
+    flex-direction: row;
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .posterImage {
+    width: 85%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  .eventInfo {
+    flex: 1;
+  }
+  
+  .eventTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .eventLocation {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  
+  /* Description and details section */
+  .description {
+    padding: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .details {
+    padding: 16px;
+    font-size: 14px;
+    color: #333;
+    border-top: 1px solid #ddd;
+  }
+  
+  .detailsTitle {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .detailRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    /* Adjust layout for tablets */
+    .mainContent {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .posterImage {
+      width: 80%;
+      height: auto;
+    }
+  
+    .eventInfo {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Adjust layout for mobile devices */
+    .headerDetails {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .applicationDeadline {
+      font-size: 14px;
+    }
+  
+    .mainContent {
+      padding: 8px;
+    }
+  
+    .eventTitle {
+      font-size: 16px;
+    }
+  
+    .description {
+      padding: 8px;
+    }
+  
+    .details {
+      padding: 8px;
+    }
+  }
+  

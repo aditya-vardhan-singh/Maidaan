@@ -1,0 +1,56 @@
+.cardContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.trophyItem {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 5%;
+}
+
+.trophyTitle {
+  font-weight: bold;
+  color: #948166;
+  font-size: 1.1rem;
+}
+
+.trophyReward {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .cardContainer {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .trophyTitle {
+    font-size: 1rem;
+  }
+
+  .trophyReward {
+    font-size: 0.8rem;
+  }
+}

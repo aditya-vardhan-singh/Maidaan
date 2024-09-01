@@ -1,0 +1,145 @@
+.infobox{
+    background-color: var(--mantine-color-body);
+    width: 780px;
+    display: flex;
+    justify-content: center;
+    align-items: safe;
+    height: fit-content;
+    margin-top: 5%;
+    /* padding-bottom: 530px; */
+    background: #FCE8CE80;
+    border: rem(2px) solid #F1A02F;
+    border: 2px solid #F1A02F;
+    border-radius: 10px; /* Adjust for rounded corners */
+    padding: 20px;
+    background-color: #FCE8CE80;
+    box-shadow: 0 0 2px #F1A02F, /* White glow */
+                0 0 4px#F1A02F, 
+                0 0 6px #F1A02F;
+    transition: box-shadow 0.3s ease-in-out;
+    @media (max-width: $mantine-breakpoint-sm) {
+        /* flex-direction: column; */
+        width: auto;
+    margin: 5%;
+
+        padding: var(--mantine-spacing-xl);
+        /* margin: auto; */
+      }
+
+    
+}
+
+.title {
+    font-size: 2rem;
+    margin: 1.2 rem;
+    margin: 5%;
+    color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .subtitle {
+    font-size: 1.4rem;
+    margin: 1rem;
+    font-weight: bolder;
+
+    /* margin-bottom: 0.5rem; */
+    color: #1a1a1a;
+  }
+  
+  .table {
+    width: 100%;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+  }
+  
+  .table th, 
+  .table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .table th {
+    font-weight: bold;
+    /* color: #333; */
+  }
+  
+  
+  .badge {
+    background-color: #f5e3da;
+    color: #d57b49;
+    border-radius: 10px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  .infobox {
+    padding: 1rem;
+  }
+  
+  .scrollContainer {
+    max-height: 600px; /* Adjust based on your design */
+    overflow-y: auto;
+    margin: 1%;
+  }
+  
+  @media (max-width: 768px) {
+    .title {
+      font-size: 1.25rem;
+    }
+  
+    .subtitle {
+      font-size: 1rem;
+    }
+  
+    .table th,
+    .table td {
+      padding: 0.5rem;
+    }
+  
+    .badge {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .table {
+      font-size: 0.75rem;
+    }
+  
+    .title {
+      font-size: 1.125rem;
+    }
+  
+    .subtitle {
+      font-size: 0.875rem;
+    }
+  }
+  
+
+
+  .scrollContainer {
+    max-height: 150px; /* Adjust based on your design */
+    overflow-y: auto;
+  }
+  
+  /* Custom Scrollbar for WebKit Browsers (Chrome, Safari, etc.) */
+  .scrollContainer::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .scrollContainer::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Background of the scrollbar track */
+  }
+  
+  .scrollContainer::-webkit-scrollbar-thumb {
+    background-color: #d57b49; /* Color of the scrollbar thumb */
+    border-radius: 10px;
+  }
+  
+  .scrollContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #c06a3f; /* Darker color when hovering over the scrollbar */
+  }
+  

@@ -1,0 +1,37 @@
+.card {
+    /* background-color: var(--mantine-color-body); */
+    /* background: #fdf1e1; */
+    box-shadow: 0px 5px 10px 0px #00000040;
+    border-color: #f1a02f;
+    /* border-width: 2px; */
+  
+  }
+  .contai{
+      display: flex;
+      justify-items: center;
+      /* align-items: center; */
+      flex-direction: column;
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--mantine-spacing-sm) var(--mantine-spacing-lg);
+    border-top: rem(1px) solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+  }
+  
+  .title {
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    line-height: 1;
+  }
+   
+  .heading{
+      margin-bottom: 5%;
+      margin-top: 5%;
+      text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3), 0 0 25px #fdf1e1, 0 0 5px #fdf1e1;
+  
+      @media (max-width: 768px) {
+          font-size: larger;
+      }}

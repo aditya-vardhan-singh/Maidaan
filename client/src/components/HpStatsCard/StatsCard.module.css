@@ -1,0 +1,37 @@
+.card {
+    position: relative;
+    overflow: visible;
+    padding: var(--mantine-spacing-xl);
+    padding-top: calc(var(--mantine-spacing-xl) * 1.5 + rem(20px));
+    /* width: 20%; */
+  }
+  .Pgrid {
+    display: grid;
+    gap: 16px; /* Adjust as needed */
+  }
+  
+  @media (max-width: 576px) {
+    .Pgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (min-width: 577px) and (max-width: 768px) {
+    .Pgrid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .Pgrid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  
+  .title {
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+    line-height: 3;
+    font-size: larger;
+  }

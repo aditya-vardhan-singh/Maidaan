@@ -1,0 +1,87 @@
+.container {
+    padding-top: 20px;
+    padding-inline: rem(100px);
+     @media (max-width: em(750px)) {
+    padding-inline: rem(20px);
+  }
+  }
+  
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #f1a817;
+  }
+  
+  .card {
+    border: 1px solid #f1a817;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #fff5e4;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .sport {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #a6a6a6;
+  }
+  
+  .location {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .icon {
+    margin-right: 5px;
+  }
+  
+  .badge {
+    background-color: #f1a817;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+  }
+  
+  .fee {
+    color: #ff6b6b;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .teams {
+    color: #4caf50;
+    margin-bottom: 15px;
+  }
+  
+  .date {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .registerButton {
+    background-color: #f1a817;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .registerButton:hover {
+    background-color: #e08e1c;
+  }
+  .Link{
+    text-decoration: none;
+  }
+  

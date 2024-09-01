@@ -1,0 +1,28 @@
+.formContainer {
+  padding: 2rem;
+  margin-top: 2%;
+  border-radius: 8px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #058a4a;
+  border-radius: 10px; /* Adjust for rounded corners */
+  padding: 20px;
+  /* background-color: #fce8ce80; */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -2px -2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+  background: #06A35733;
+
+}
+
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 1rem;
+    width: auto;
+  }
+}
+.submittedText {
+  text-align: center; /* or left, right as needed */
+}

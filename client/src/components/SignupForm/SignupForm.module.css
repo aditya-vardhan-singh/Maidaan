@@ -1,0 +1,9 @@
+
+.Paper{
+    background-color: #FFF9F1;
+
+}
+.HaveanAccount{
+    display: flex;
+    justify-content: space-between;
+}
