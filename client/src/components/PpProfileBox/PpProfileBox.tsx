@@ -48,7 +48,7 @@ export function PpProfileBox() {
 
   return (
     <Card withBorder padding="lg" radius="md" className={classes.card}>
-      <Avatar src={profileimg} size={100} radius={80} mx="auto" className={classes.avatar} />
+      <Avatar src={profileimg} size={85} radius={80} mx="auto" className={classes.avatar} />
       <Text ta="center" className={classes.name}>
         {name}
       </Text>
@@ -59,7 +59,7 @@ export function PpProfileBox() {
         {bio}
       </Text>
 
-      <Group mt="md" justify="center" gap="xs">
+      <Group mt="md" justify="center" gap="sm">
         {badges.map((badge, index) => (
           <Badge key={index} color={badge.color} variant={badge.variant}>
             {badge.label}
@@ -70,22 +70,22 @@ export function PpProfileBox() {
       <Text ta="center" fz="sm" mt="md">
         {team}
       </Text>
-      <Text ta="center" fz="xs" mt="xs">
+      <Text ta="center" fz="sm" mt="xs">
         {achievements}
       </Text>
 
       <Group mt="md">
         <Group>
           <ActionIcon size="lg" color="orange" variant="light" radius="xl">
-            <IconMail size="1rem" />
+            <IconMail size="1.5rem" />
           </ActionIcon>
-          <Text fz="xs">{email}</Text>
+          <Text fz="sm">{email}</Text>
         </Group>
         <Group>
           <ActionIcon size="lg" color="orange" variant="light" radius="xl">
-            <IconPhone size="1rem" />
+            <IconPhone size="1.5rem" />
           </ActionIcon>
-          <Text fz="xs">{phone}</Text>
+          <Text fz="sm">{phone}</Text>
         </Group>
       </Group>
 
@@ -99,7 +99,7 @@ export function PpProfileBox() {
           href={socialLinks.facebook}
           target="_blank"
         >
-          <IconBrandFacebook size="1rem" />
+          <IconBrandFacebook size="1.5rem" />
         </ActionIcon>
         <ActionIcon
           size="lg"
@@ -110,7 +110,7 @@ export function PpProfileBox() {
           href={socialLinks.instagram}
           target="_blank"
         >
-          <IconBrandInstagram size="1rem" />
+          <IconBrandInstagram size="1.5rem" />
         </ActionIcon>
         <ActionIcon
           size="lg"
@@ -121,7 +121,7 @@ export function PpProfileBox() {
           href={socialLinks.twitter}
           target="_blank"
         >
-          <IconBrandTwitter size="1rem" />
+          <IconBrandTwitter size="1.5rem" />
         </ActionIcon>
       </Group>
       <hr />
