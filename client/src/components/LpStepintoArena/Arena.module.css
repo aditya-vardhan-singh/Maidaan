@@ -45,7 +45,7 @@
     justify-content: center;
     align-content: center;
     margin-top: var(--mantine-spacing-xl);
-    font-size: rem(20px);
+    font-size: rem(23px);
   
     @media (max-width: $mantine-breakpoint-sm) {
       font-size: rem(18px);

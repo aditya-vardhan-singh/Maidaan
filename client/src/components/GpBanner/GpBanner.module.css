@@ -41,6 +41,7 @@
       var(--mantine-font-family);
     line-height: 1;
     margin-bottom: var(--mantine-spacing-md);
+    font-size: rem(40px);
   }
   
   .controls {
@@ -62,4 +63,9 @@
   .control {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+  }
+
+  .description{
+    font-size: rem(20px);
+
   }

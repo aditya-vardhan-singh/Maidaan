@@ -9,7 +9,7 @@ export function HeroText() {
         <Title className={classes.title}>Unlock a World of Sports and Competition </Title>
 
         <Container p={0} size={600}>
-          <Text size="lg" c="dimmed" className={classes.description}>
+          <Text  c="dimmed" className={classes.description}>
             Step into a world where every match, tournament, and event shapes your sports journey.
             Showcase your achievements, connect with like-minded players, and inspire others to join
             you on the path to greatness.

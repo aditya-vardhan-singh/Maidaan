@@ -5,10 +5,16 @@
     border-radius: var(--mantine-radius-md);
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
     /* border: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-8)); */
+    margin: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    justify-content: center;
+  
+
   
     @media (max-width: $mantine-breakpoint-sm) {
       flex-direction: column-reverse;
-      padding: var(--mantine-spacing-xl);
+      padding: var(--mantine-spacing-l);
     }
   }
 .wrappertour{
@@ -44,6 +50,7 @@
       var(--mantine-font-family);
     line-height: 1;
     margin-bottom: var(--mantine-spacing-md);
+    font-size: 3rem;
   }
   
   .controls {
@@ -75,4 +82,8 @@
   
       }
 
+  }
+
+  .description{
+    font-size: x-large;
   }

@@ -43,10 +43,10 @@ export function EpHero() {
         color="#F1A02F" // Set the icon color to #F1A02F
         className={classes.ico}
       />
-      <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
+      <Text fw={500} className={classes.cardTitle} mt="md">
         {feature.title}
       </Text>
-      <Text fz="sm" c="dimmed" mt="sm">
+      <Text  c="dimmed" className={classes.description} mt="sm">
         {feature.description}
       </Text>
     </Card>
