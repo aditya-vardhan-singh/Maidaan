@@ -13,12 +13,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { IconUser } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import classes from "./HeaderMegaMenu.module.css";
+
 interface NavProps {
   NavLinks: string;
   SetNavLinks: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function HeaderMegaMenu({ NavLinks, SetNavLinks }: NavProps) {
+export function HeaderMegaMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -37,60 +38,32 @@ export function HeaderMegaMenu({ NavLinks, SetNavLinks }: NavProps) {
             <a href="/" className={`${classes.link} `}>
               <p>Home</p>
             </a>
-            <a
-              onClick={() => SetNavLinks("Tournaments")}
-              className={`${classes.link} `}
-            >
-              <p
-                className={` ${NavLinks === "Tournaments" ? classes.active : classes.inactive}`}
-              >
-                Tournaments
-              </p>
+            <a href="/tournaments" className={`${classes.link}`}>
+              <p className={`${classes.inactive}`}>Tournaments</p>
             </a>
-            <a onClick={() => SetNavLinks("Events")} className={classes.link}>
-              <p
-                className={` ${NavLinks === "Events" ? classes.active : classes.inactive}`}
-              >
-                Events
-              </p>
+            <a href="/events" className={classes.link}>
+              <p className={`${classes.inactive}`}>Events</p>
             </a>
-            <a
-              onClick={() => SetNavLinks("Academies")}
-              className={classes.link}
-            >
-              <p
-                className={` ${NavLinks === "Academies" ? classes.active : classes.inactive}`}
-              >
-                Academies
-              </p>
+            <a href="/academies" className={classes.link}>
+              <p className={`${classes.inactive}`}>Academies</p>
             </a>
-            <a
-              onClick={() => SetNavLinks("GovernmentSchemes")}
-              className={classes.link}
-            >
-              <p
-                className={` ${NavLinks === "GovernmentSchemes" ? classes.active : classes.inactive}`}
-              >
-                Government Schemes
-              </p>
+            <a href="/government-schemes" className={classes.link}>
+              <p className={`${classes.inactive}`}>Government Schemes</p>
             </a>
-            
           </Group>
 
           <Group visibleFrom="sm">
-            {/* <a href="" className={classes.linkbtn}>
-              Theme
-            </a> */}
-            <a href="/HostingPage" className={classes.linkbtn}>
-              Host an Event
+            <a href="/hosting" className={classes.linkbtn}>
+              <p className={`${classes.inactive}`}>Host an Event</p>
             </a>
-
-            <a href="/ProfilePage"><IconUser size={30} color="#F1A02F" /></a>
-            <Button color="#F1A02F" className={classes.Signbtn}>
-              <a href="/SignUp" className={classes.Signbtn}>
+            <a href="/profile-page">
+              <IconUser size={30} color="#F1A02F" />
+            </a>
+            <a href="/SignUp" className={classes.Signbtn}>
+              <Button color="#F1A02F" className={classes.Signbtn}>
                 Sign up
-              </a>
-            </Button>
+              </Button>
+            </a>
           </Group>
 
           <Burger
@@ -112,44 +85,37 @@ export function HeaderMegaMenu({ NavLinks, SetNavLinks }: NavProps) {
       >
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
           <Divider my="sm" />
-
-          <a
-            onClick={() => SetNavLinks("Tournaments")}
-            className={classes.link}
-          >
+          <a href="/" className={classes.link}>
+            Home
+          </a>
+          <a href="/tournaments" className={classes.link}>
             Tournaments
           </a>
-          <a onClick={() => SetNavLinks("Events")} className={classes.link}>
+          <a href="/events" className={classes.link}>
             Events
           </a>
-          <a onClick={() => SetNavLinks("Academies")} className={classes.link}>
+          <a href="/academies" className={classes.link}>
             Academies
           </a>
-          <a
-            onClick={() => SetNavLinks("GovernmentSchemes")}
-            className={classes.link}
-          >
+          <a href="/government-schemes" className={classes.link}>
             Government Schemes
           </a>
-
           <Divider my="sm" />
-
           <Group justify="center" grow pb="xl" px="md">
-            <a href="/HostingPage" className={classes.linkbtn}>
+            <a href="/hosting" className={classes.linkbtn}>
               Host an Event
             </a>
-            <Button color="#F1A02F" className={classes.Signbtn}>
-              <a href="/SignUp" className={classes.Signbtn}>
+            <a href="/signup" className={classes.Signbtn}>
+              <Button color="#F1A02F" className={classes.Signbtn}>
                 Sign up
-              </a>
-            </Button>
-            <Button color="#F1A02F" className={classes.Signbtn}>
-              <a href="/ProfilePage" className={classes.Signbtn}>
-              <IconUser size={30} color="white" />
-              </a>
-            </Button>
+              </Button>
+            </a>
+            <a href="/profile-page" className={classes.Signbtn}>
+              <Button color="#F1A02F" className={classes.Signbtn}>
+                <IconUser size={30} color="white" />
+              </Button>
+            </a>
           </Group>
-          
         </ScrollArea>
       </Drawer>
     </Box>

@@ -1,34 +1,49 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import EventPage from './pages/EventPage'; // reviewed
-import { HomePage } from './pages/Home.page'; // reviewed
-import HostingPage from './pages/HostingPage'; // reviewed
-import ProfilePage from './pages/ProfilePage'; // reviewed
-import SignUpPage from './pages/SignUpPage'; //
-import { TournamentDetailPage } from './pages/TournamentDetailPage';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import EventPage from "./pages/EventPage"; // reviewed
+import { HomePage } from "./pages/Home.page"; // reviewed
+import HostingPage from "./pages/HostingPage"; // reviewed
+import ProfilePage from "./pages/ProfilePage"; // reviewed
+import SignUpPage from "./pages/SignUpPage"; //
+import Tournaments from "./components/Tournaments/Tournaments";
+import Academies from "./pages/Academies";
+import GovtSchemes from "./pages/GovtSchemes";
+import { TournamentDetailPage } from "./pages/TournamentDetailPage";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <HomePage />,
   },
   {
-    path: '/SignUp',
+    path: "/signup",
     element: <SignUpPage />,
   },
   {
-    path: '/Tournament/Details',
+    path: "/tournaments",
+    element: <Tournaments />,
+  },
+  {
+    path: "/tournaments/details",
     element: <TournamentDetailPage />,
   },
   {
-    path: '/HostingPage',
+    path: "/academies",
+    element: <Academies />,
+  },
+  {
+    path: "/government-schemes",
+    element: <GovtSchemes />,
+  },
+  {
+    path: "/hosting",
     element: <HostingPage />,
   },
   {
-    path: '/EventPage',
+    path: "/events",
     element: <EventPage />,
   },
   {
-    path: '/ProfilePage',
+    path: "/profile-page",
     element: <ProfilePage />,
   },
 ]);
