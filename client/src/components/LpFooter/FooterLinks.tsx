@@ -2,6 +2,7 @@ import { Text, Container, ActionIcon, Group, rem } from '@mantine/core';
 import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './FooterLinks.module.css';
+import MaidaanLogo from "../../assets/MaidaanLogoTwo.png";
 
 const data = [
   {
@@ -42,9 +43,7 @@ export function FooterLinks() {
   return (
     <footer className={classes.footer}>
       <Container className={classes.inner}>
-        <div className={classes.logo}>
-          <MantineLogo size={30} />
-        </div>
+      <img src={MaidaanLogo} alt="" className={classes.Logo} />
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container className={classes.afterFooter} color="white">

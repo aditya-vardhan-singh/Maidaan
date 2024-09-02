@@ -52,10 +52,11 @@ export function HeaderMegaMenu() {
 
           <Group visibleFrom="md">
             <a href="/hosting" className={classes.linkbtn}>
-              <p className={`${classes.inactive}`}>Host an Event</p>
+              <p className={`${classes.inactive}`}>Host</p>
             </a>
             <a href="/profile-page">
-              <IconUser size={30} color="#F1A02F" />
+            <div className={classes.Probtn}><IconUser size={35} color="#F1A02F" /></div>
+            
             </a>
             <a href="/SignUp" className={classes.Signbtn}>
               <Button color="#F1A02F" className={classes.Signbtn}>
@@ -101,7 +102,7 @@ export function HeaderMegaMenu() {
           <Divider my="sm" />
           <Group justify="center" grow pb="xl" px="md">
             <a href="/hosting" className={classes.linkbtn}>
-              Host an Event
+              Host 
             </a>
             <a href="/signup" className={classes.Signbtn}>
               <Button color="#F1A02F" className={classes.Signbtn}>

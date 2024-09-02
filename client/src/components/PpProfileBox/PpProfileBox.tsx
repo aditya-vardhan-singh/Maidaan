@@ -125,7 +125,8 @@ export function PpProfileBox() {
         </ActionIcon>
       </Group>
       <hr />
-      <Button className={classes.Editbtn}>Edit Profile</Button>
+      <a href="profileSetingPage"><Button className={classes.Editbtn}>Edit Profile</Button></a>
+      
     </Card>
   );
 }

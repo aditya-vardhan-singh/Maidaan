@@ -76,6 +76,10 @@
   height: rem(42px);
   font-size: var(--mantine-font-size-md);
   color: #f1a02f;
+ 
+  margin: 3%;
+  margin-top: 0%;
+
   /* background: #FCE8CE99; */
   @mixin hover {
     background-color: light-dark(#f1a02f, var(--mantine-color-dark-6));
