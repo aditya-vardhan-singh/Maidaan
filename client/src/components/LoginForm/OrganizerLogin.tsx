@@ -7,12 +7,12 @@ import {
   PasswordInput,
   Divider,
   Button,
-} from '@mantine/core';
-import classes from './LoginPage.module.css';
-import { GoogleIcon } from '@/components/SignupForm/GoogleIcon';
+} from "@mantine/core";
+import classes from "./LoginPage.module.css";
+import google from "@/assets/google.svg";
 
 interface OrganizerLoginProps {
-  setpage: (page: 'Signup' | 'Login') => void;
+  setpage: (page: "Signup" | "Login") => void;
 }
 
 export function OrganizerLogin({ setpage }: OrganizerLoginProps) {
@@ -21,7 +21,8 @@ export function OrganizerLogin({ setpage }: OrganizerLoginProps) {
       <Box className={classes.infoBox}>
         <Text className={classes.welcomeText}>Welcome Organizer</Text>
         <Text className={classes.descriptionText}>
-          Manage your tournaments, engage with players, and create unforgettable experiences.{' '}
+          Manage your tournaments, engage with players, and create unforgettable
+          experiences.{" "}
         </Text>
       </Box>
 
@@ -43,8 +44,13 @@ export function OrganizerLogin({ setpage }: OrganizerLoginProps) {
 
         <Group grow mb="md" mt="md">
           <Button variant="default" color="gray" fullWidth>
+            <img
+              src={google}
+              alt="Google Icon"
+              style={{ height: "25px", width: "25px" }}
+              className={classes.googleicon}
+            />
             <Group p="center" m="xs">
-              <GoogleIcon />
               <span>Log in with Google</span>
             </Group>
           </Button>
@@ -54,7 +60,12 @@ export function OrganizerLogin({ setpage }: OrganizerLoginProps) {
           <Text size="sm" color="dimmed">
             Don’t have an account
           </Text>
-          <Text size="sm" color="blue" className={classes.signUp} onClick={() => setpage('Signup')}>
+          <Text
+            size="sm"
+            color="blue"
+            className={classes.signUp}
+            onClick={() => setpage("Signup")}
+          >
             Sign Up
           </Text>
         </Group>

@@ -1,25 +1,34 @@
-import { useState } from 'react';
-import { Button, Container, Select, Text, Group } from '@mantine/core';
-import classes from './HpDetailsPage.module.css';
+import { useState } from "react";
+import { Button, Container, Select, Text, Group } from "@mantine/core";
+import classes from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
+  registrationStatus: string;
+  setRegistrationStatus: React.Dispatch<React.SetStateAction<string>>;
+  handleFormSubmit: Function;
 }
 
-export function HpDetailsubmit({ page, setPage }: NavProps) {
+export function HpDetailsubmit({
+  page,
+  setPage,
+  registrationStatus,
+  setRegistrationStatus,
+  handleFormSubmit,
+}: NavProps) {
   const [submitted, setSubmitted] = useState(false);
-  const [status, setStatus] = useState<string>('');
 
   const handleStatusChange = (value: string | null) => {
     if (value !== null) {
-      setStatus(value);
+      setRegistrationStatus(value);
       setSubmitted(false); // Reset the submitted state when status changes
     }
   };
 
   const handleSubmit = () => {
     setSubmitted(true);
+    handleFormSubmit();
   };
 
   return (
@@ -29,31 +38,31 @@ export function HpDetailsubmit({ page, setPage }: NavProps) {
           label="Registration Status"
           placeholder="Select status"
           required
-          data={['Open', 'Upcoming', 'Closed']}
-          value={status}
+          data={["Open", "Upcoming", "Closed"]}
+          value={registrationStatus}
           onChange={handleStatusChange}
           className={classes.statusSelect}
           styles={(theme) => ({
             item: {
-              '&[data-selected]': {
-                backgroundColor: '#058A4A',
-                color: 'white',
+              "&[data-selected]": {
+                backgroundColor: "#058A4A",
+                color: "white",
               },
-              '&[data-hovered]': {
-                backgroundColor: '#046C3A',
-                color: 'white',
+              "&[data-hovered]": {
+                backgroundColor: "#046C3A",
+                color: "white",
               },
             },
             dropdown: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
             input: {
-              backgroundColor: '#058A4A',
-              color: 'white',
+              backgroundColor: "#058A4A",
+              color: "white",
             },
             label: {
-              fontWeight: 'bold',
-              color: '#333',
+              fontWeight: "bold",
+              color: "#333",
             },
           })}
         />
@@ -67,9 +76,9 @@ export function HpDetailsubmit({ page, setPage }: NavProps) {
           size="md"
           styles={(theme) => ({
             root: {
-              backgroundColor: '#058A4A',
-              '&:hover': {
-                backgroundColor: '#046C3A',
+              backgroundColor: "#058A4A",
+              "&:hover": {
+                backgroundColor: "#046C3A",
               },
             },
           })}
@@ -87,12 +96,12 @@ export function HpDetailsubmit({ page, setPage }: NavProps) {
 
       <Group mt={50}>
         <Button
-          onClick={() => setPage('SchedulePage')}
+          onClick={() => setPage("SchedulePage")}
           styles={(theme) => ({
             root: {
-              backgroundColor: '#058A4A',
-              '&:hover': {
-                backgroundColor: '#046C3A',
+              backgroundColor: "#058A4A",
+              "&:hover": {
+                backgroundColor: "#046C3A",
               },
             },
           })}
@@ -102,7 +111,11 @@ export function HpDetailsubmit({ page, setPage }: NavProps) {
         <Button color="#058A4A">
           <a
             href="/"
-            style={{ textDecoration: 'none', color: 'white', backgroundColor: '#058A4A' }}
+            style={{
+              textDecoration: "none",
+              color: "white",
+              backgroundColor: "#058A4A",
+            }}
           >
             Back to Home
           </a>

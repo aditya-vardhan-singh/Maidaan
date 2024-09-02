@@ -1,5 +1,5 @@
-import { Container, Text, Button, Group } from '@mantine/core';
-import classes from './Arena.module.css';
+import { Container, Text, Button, Group } from "@mantine/core";
+import classes from "./Arena.module.css";
 
 export function Arena() {
   return (
@@ -8,20 +8,22 @@ export function Arena() {
         <h1 className={classes.title}>Step Into the Arena with Maidaan</h1>
 
         <Text className={classes.description} color="dimmed">
-          Ready to elevate your game? Whether you’re an athlete chasing glory, <br /> a coach
-          shaping champions, or a sports enthusiast with a passion for play,
-          <br /> Maidaan is your ultimate gateway to the world of sports excellence.
+          Ready to elevate your game? Whether you’re an athlete chasing glory,{" "}
+          <br /> a coach shaping champions, or a sports enthusiast with a
+          passion for play,
+          <br /> Maidaan is your ultimate gateway to the world of sports
+          excellence.
         </Text>
 
         <Group className={classes.controls}>
           <h1>Join the Action –</h1>
 
-          <a href="Signup">
+          <a href="/signup">
             <Button
               size="xl"
               className={classes.control}
               variant="gradient"
-              gradient={{ from: 'blue', to: 'cyan' }}
+              gradient={{ from: "blue", to: "cyan" }}
             >
               Sign Up Now
             </Button>
@@ -30,12 +32,12 @@ export function Arena() {
         <Group className={classes.controls}>
           <h1>Make Your Mark –</h1>
 
-          <a href="/HostingPage">
+          <a href="/hosting">
             <Button
               size="xl"
               className={classes.control}
               variant="gradient"
-              gradient={{ from: 'blue', to: 'cyan' }}
+              gradient={{ from: "blue", to: "cyan" }}
             >
               Host an Event
             </Button>

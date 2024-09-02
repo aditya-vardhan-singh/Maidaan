@@ -9,8 +9,7 @@ import {
   Button,
 } from '@mantine/core';
 import classes from './LoginPage.module.css';
-import { GoogleIcon } from '@/components/SignupForm/GoogleIcon';
-
+import google from '@/assets/google.svg'
 interface UserLoginProps {
   setpage: (page: 'Signup' | 'Login') => void;
 }
@@ -36,8 +35,13 @@ export function UserLogin({ setpage }: UserLoginProps) {
 
         <Group grow mb="md" mt="md">
           <Button variant="default" color="gray" fullWidth>
-            <Group p="center" m="xs">
-              <GoogleIcon />
+          <img
+              src={google}
+              alt="Google Icon"
+              style={{ height: "25px", width: "25px" }}
+              className={classes.googleicon}
+            />
+           <Group p="center" m="xs">
               <span>Log in with Google</span>
             </Group>
           </Button>

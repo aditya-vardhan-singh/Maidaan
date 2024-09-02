@@ -8,17 +8,27 @@ generator client {
 }
 
 model UserProfile {
-  id                       Int                        @id @default(autoincrement())
-  email                    String                     @unique @db.VarChar(255)
-  username                 String                     @unique
-  password                 String?                    @db.VarChar(60)
-  name                     String?                    @db.VarChar(100)
-  googleId                 String?                    @unique @db.VarChar(30)
-  authType                 AuthType                   @default(LOCAL)
-  createdAt                DateTime                   @default(now())
-  updatedAt                DateTime                   @updatedAt
-  CompetitionParticipation CompetitionParticipation[]
-  SportsParticipation      SportsParticipation[]
+  id                       Int                       @id @default(autoincrement())
+  profileType              ProfileType               @default(USER)
+  email                    String                    @unique @db.VarChar(255)
+  username                 String                    @unique
+  password                 String?                   @db.VarChar(60)
+  name                     String?                   @db.VarChar(100)
+  googleId                 String?                   @unique @db.VarChar(30)
+  authType                 AuthType                  @default(LOCAL)
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  eventParticipations      EventParticipation[]
+  tournamentParticipations TournamentParticipation[]
+  sportsParticipations     SportsParticipation[]
+  organizedEvents          Event[]                   @relation("OrganizerEvents")
+  organizedTournaments     Tournament[]              @relation("OrganizerTournaments")
+  links                    Links[]                   @relation("UserProfileLinks")
+}
+
+enum ProfileType {
+  ORGANIZER
+  USER
 }
 
 enum AuthType {
@@ -26,56 +36,126 @@ enum AuthType {
   GOOGLE
 }
 
-model CompetitionParticipation {
-  id                Int              @id @default(autoincrement())
-  user              UserProfile      @relation(fields: [userId], references: [id])
-  userId            Int
-  competition       CompetitionEvent @relation(fields: [competitionId], references: [id])
-  competitionId     Int
-  participationDate DateTime
-  result            String?          @db.VarChar(255)
+model TournamentParticipation {
+  id             Int         @id @default(autoincrement())
+  user           UserProfile @relation(fields: [userId], references: [id])
+  userId         Int
+  tournamentDate DateTime
+  result         String      @db.VarChar(100)
+  tournament     Tournament  @relation(fields: [tournamentId], references: [id])
+  tournamentId   Int
+  sport          Sports      @relation(fields: [sportId], references: [id])
+  sportId        Int
 
-  @@unique([userId, competitionId])
+  @@unique([userId, tournamentId])
+}
+
+model EventParticipation {
+  id                Int         @id @default(autoincrement())
+  user              UserProfile @relation(fields: [userId], references: [id])
+  userId            Int
+  event             Event       @relation(fields: [eventId], references: [id])
+  eventId           Int
+  participationDate DateTime
+  result            String?     @db.VarChar(255)
+
+  @@unique([userId, eventId])
 }
 
 model SportsParticipation {
-  id         Int         @id @default(autoincrement())
-  user       UserProfile @relation(fields: [userId], references: [id])
-  userId     Int
-  sport      Sports      @relation(fields: [sportId], references: [id])
-  sportId    Int
-  startDate  DateTime
-  skillLevel String?     @db.VarChar(50)
+  id          Int          @id @default(autoincrement())
+  user        UserProfile  @relation(fields: [userId], references: [id])
+  userId      Int
+  sport       Sports       @relation(fields: [sportId], references: [id])
+  sportId     Int
+  startDate   DateTime
+  skillLevel  String?      @db.VarChar(50)
+  tournaments Tournament[]
 
   @@unique([userId, sportId])
 }
 
 model Sports {
-  id                Int                   @id @default(autoincrement())
-  sportName         String                @db.VarChar(100)
-  description       String?               @db.VarChar(500)
-  rules             String?               @db.Text
-  equipmentRequired String?               @db.VarChar(255)
-  competitions      CompetitionEvent[]
-  trainingCourses   TrainingCourse[]
-  participants      SportsParticipation[]
+  id                      Int                       @id @default(autoincrement())
+  sportName               String                    @db.VarChar(100)
+  sportType               SportType                 @default(SOLO)
+  description             String?                   @db.VarChar(500)
+  rules                   String?                   @db.Text
+  equipmentRequired       String?                   @db.VarChar(255)
+  events                  Event[]
+  trainingCourses         TrainingCourse[]
+  participants            SportsParticipation[]
+  tournamentParticipation TournamentParticipation[]
+  tournaments             Tournament[]
+  sportAcademy            SportsAcademy[]
 }
 
-model CompetitionEvent {
-  id               Int                        @id @default(autoincrement())
-  eventName        String                     @db.VarChar(200)
-  sport            Sports                     @relation(fields: [sportId], references: [id])
-  sportId          Int
-  eventDate        DateTime
-  location         String                     @db.VarChar(255)
-  organizer        Organizer                  @relation(fields: [organizerId], references: [id])
-  organizerId      Int
-  competitionLevel String                     @db.VarChar(50)
-  req_players      Int
-  description      String?                    @db.Text
-  rules            String?                    @db.Text
-  enabled          Boolean                    @default(false)
-  participants     CompetitionParticipation[]
+enum SportType {
+  TEAM
+  SOLO
+}
+
+model Event {
+  id           Int                  @id @default(autoincrement())
+  title        String               @db.VarChar(100)
+  sport        Sports               @relation(fields: [sportId], references: [id])
+  sportId      Int
+  organizer    UserProfile          @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  organizerId  Int
+  location     String               @db.VarChar(255)
+  status       EventStatus          @default(ONGOING)
+  fee          Float?               @default(0)
+  eventDate    DateTime
+  participants EventParticipation[]
+  links        Links[]              @relation("EventLinks")
+}
+
+enum EventStatus {
+  ONGOING
+  FINISHED
+  UPCOMING
+}
+
+model Tournament {
+  id                      Int                       @id @default(autoincrement())
+  title                   String                    @db.VarChar(200)
+  sport                   Sports                    @relation(fields: [sportId], references: [id])
+  sportId                 Int
+  startDate               DateTime
+  endDate                 DateTime
+  schedule                Schedule[]
+  prizes                  Prizes[]
+  locationCity            String                    @db.VarChar(255)
+  locationVenue           String                    @db.VarChar(255)
+  competitionLevel        String                    @db.VarChar(50)
+  status                  EventStatus               @default(ONGOING)
+  requiredPlayers         Int
+  description             String?                   @db.Text
+  rules                   String?                   @db.Text
+  fee                     Float?
+  organizer               UserProfile               @relation("OrganizerTournaments", fields: [organizerId], references: [id])
+  organizerId             Int
+  TournamentParticipation TournamentParticipation[]
+  links                   Links[]                   @relation("TournamentLinks")
+  SportsParticipation     SportsParticipation       @relation(fields: [sportsParticipationId], references: [id])
+  sportsParticipationId   Int
+}
+
+model Schedule {
+  id           Int        @id @default(autoincrement())
+  title        String
+  startDate    DateTime
+  endDate      DateTime
+  Tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  tournamentId Int
+}
+
+model Prizes {
+  id           Int        @id @default(autoincrement())
+  title        String
+  amount       Int?
+  tournamentId Int
+  Tournament   Tournament @relation(fields: [tournamentId], references: [id])
 }
 
 model TrainingCourse {
@@ -90,24 +170,30 @@ model TrainingCourse {
   academyId   Int
 }
 
-model Organizer {
-  id            Int                @id @default(autoincrement())
-  organizerName String             @db.VarChar(200)
-  contactInfo   String             @db.VarChar(255)
-  email         String             @db.VarChar(255)
-  address       String             @db.VarChar(255)
-  academy       SportsAcademy      @relation(fields: [academyId], references: [id])
-  academyId     Int
-  competitions  CompetitionEvent[]
-}
-
 model SportsAcademy {
   id          Int              @id @default(autoincrement())
   academyName String           @db.VarChar(200)
   location    String           @db.VarChar(255)
   facilities  String?          @db.Text
+  sports      Sports[]
   contactInfo String           @db.VarChar(255)
   email       String           @db.VarChar(255)
-  organizers  Organizer[]
   courses     TrainingCourse[]
+  links       Links[]          @relation("SportsAcademyLinks")
+}
+
+model Links {
+  id              Int            @id @default(autoincrement())
+  officialLink    String?
+  xLink           String?
+  igLink          String?
+  fbLink          String?
+  userProfile     UserProfile?   @relation("UserProfileLinks", fields: [userProfileId], references: [id])
+  userProfileId   Int?
+  event           Event?         @relation("EventLinks", fields: [eventId], references: [id])
+  eventId         Int?
+  tournament      Tournament?    @relation("TournamentLinks", fields: [tournamentId], references: [id])
+  tournamentId    Int?
+  sportsAcademy   SportsAcademy? @relation("SportsAcademyLinks", fields: [sportsAcademyId], references: [id])
+  sportsAcademyId Int?
 }
