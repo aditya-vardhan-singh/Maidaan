@@ -65,7 +65,6 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
           <TextInput
             type="date"
             min={details.startDate}
-            max={new Date(new Date().setDate(new Date().getDate() + ))}
             label="End Date"
             placeholder="DD/MM/YYYY"
             required

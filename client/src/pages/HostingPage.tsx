@@ -99,7 +99,6 @@ const HostingPage: React.FC = () => {
 
   const handleFormSubmit = async () => {
     /* Handle submit here */
-    console.log(tournament);
     try {
       const response: { message: string } = await axios.post(
         `${baseURL}/tournaments/new`,
