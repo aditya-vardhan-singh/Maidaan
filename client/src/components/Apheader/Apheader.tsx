@@ -12,7 +12,7 @@ export function Apheader() {
           <br /> Every Champion Was Once a Beginner Who Never Gave Up.&quot;
         </Title>
         <Container size={640}>
-          <Text size="lg" className={classes.description}>
+          <Text  className={classes.description}>
             A Place Where Every Drill, Every Practice, and Every Lesson is a Step Toward Greatness.
             Here, the Focus is on Progress, Not Perfection.
           </Text>

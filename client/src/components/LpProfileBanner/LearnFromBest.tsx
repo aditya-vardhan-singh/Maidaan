@@ -8,7 +8,7 @@ export function LearnFromBest() {
       <Image src={image} className={classes.image} />
       <div className={classes.body}>
         <Title className={classes.title}>Learn from the Best</Title>
-        <Text fz="sm" c="dimmed" className={classes.description}>
+        <Text  c="dimmed" className={classes.description}>
           Access top-tier coaching and training through courses offered by elite academies and
           fitness centers. Whether online or offline, elevate your skills with guidance from the
           pros.

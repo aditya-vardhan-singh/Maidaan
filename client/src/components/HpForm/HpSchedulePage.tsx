@@ -95,7 +95,7 @@ function HpSchdulePage({ page, setPage }: NavProps) {
 
             <Grid.Col span={6}>
               <Button variant="outline" color="red" onClick={() => handleDeleteSchedule(index)}>
-                Delete Prize
+                Delete Schedule
               </Button>
             </Grid.Col>
           </Grid>

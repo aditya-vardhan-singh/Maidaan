@@ -246,22 +246,23 @@ export function AcademyGrid() {
           src="https://images.unsplash.com/photo-1581889470536-467bdbe30cd0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=720&q=80"
           alt="Academy Image"
           height={140}
+          
         />
       </Card.Section>
 
       <Group justify="space-between" mt="xl">
-        <Text fz="sm" fw={700} className={classes.title}>
+        <Text  fw={700} className={classes.title}>
           {academy.name}
         </Text>
         <Group gap={5}>
-          <Text fz="xs" c="dimmed">
-            {academy.registeredStudents} Students
-          </Text>
         </Group>
       </Group>
+      <Text  c="dimmed">
+            {academy.registeredStudents} Students
+          </Text>
 
-      <Text mt="sm" mb="md" c="dimmed" fz="xs">
-        Timings: {academy.timings} <br /> • Sports: {academy.sports.join(', ')} <br />• Location:{' '}
+      <Text mt="sm" mb="md" c="dimmed" >
+        Timings: {academy.timings} <br /> • Sports: <br /> {academy.sports.join(', ')} <br />• Location: <br />{' '}
         {academy.location}
       </Text>
       <Button fullWidth variant="outline" mt="md" color="#058A4A">
@@ -284,10 +285,10 @@ export function AcademyGrid() {
         mb="md"
         style={{ width: '300px' }}
       />
-      <Grid>
+      <Grid className={classes.gridcon}>
         {filteredAcademies.length > 0 ? (
           filteredAcademies.map((academy) => (
-            <Grid.Col key={academy.name} span={{ base: 12, sm: 6, md: 4 }}>
+            <Grid.Col key={academy.name} span={{ base: 12, sm: 8, md: 4 }}>
               {renderCard(academy)}
             </Grid.Col>
           ))

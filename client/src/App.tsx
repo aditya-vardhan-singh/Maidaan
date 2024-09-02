@@ -9,6 +9,7 @@ import Academies from './pages/Academies'; // reviewed
 import GovtSchemes from './pages/GovtSchemes'; // reviewed
 import { Router } from './Router';
 import { theme } from './theme';
+import EventPage from './pages/EventPage';
 
 export default function App() {
   // type NL = 'Tournaments' | 'Events' | 'Academies' | 'GovtSheme'| 'Home';
@@ -24,7 +25,10 @@ export default function App() {
           <GovtSchemes />
         ) : NavLinks === 'Academies' ? (
           <Academies />
-        ) : (
+        )  : NavLinks === 'Events' ? (
+          <EventPage />
+        ) 
+        : (
           <Router />
         )}
         <FooterLinks />

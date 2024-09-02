@@ -8,7 +8,7 @@ export function TournamentBanner() {
       <Image src={image} className={classes.image} />
       <div className={classes.body}>
         <Title className={classes.title}>Dive into the Best Events</Title>
-        <Text fz="sm" c="dimmed" className={classes.description}>
+        <Text c="dimmed" className={classes.description}>
           From thrilling tournaments to casual matches, discover and join events that ignite your
           passion. Whether you’re competing in football, cricket, or other exciting sports, the
           perfect opportunity awaits.
