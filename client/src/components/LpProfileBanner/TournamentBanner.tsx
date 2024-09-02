@@ -7,7 +7,7 @@ export function TournamentBanner() {
     <div className={classes.wrappertour} id="tour">
       <Image src={image} className={classes.image} />
       <div className={classes.body}>
-        <Title className={classes.title}>Dive into the Best Events</Title>
+        <Title className={classes.title}>Dive into the Best Tournaments</Title>
         <Text c="dimmed" className={classes.description}>
           From thrilling tournaments to casual matches, discover and join events that ignite your
           passion. Whether you’re competing in football, cricket, or other exciting sports, the
@@ -15,9 +15,9 @@ export function TournamentBanner() {
         </Text>
 
         <div className={classes.controls}>
-          <Button className={classes.createProfilebtn} color="">
-            Explore Events
-          </Button>
+          <a href="/Tournaments" style={{textDecoration:'none'}}><Button className={classes.createProfilebtn} color="">
+            Explore Tournaments
+          </Button></a>
         </div>
       </div>
     </div>

@@ -1,27 +1,66 @@
-import React from 'react';
-import { Button, Container, Grid, Group, TextInput } from '@mantine/core';
-import styles from './HpDetailsPage.module.css';
+import React from "react";
+import { Button, Container, Grid, Group, TextInput } from "@mantine/core";
+import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
+  prize: Prize;
+  setPrize: React.Dispatch<React.SetStateAction<Prize>>;
 }
 
-function HpFormPrizePage({ page, setPage }: NavProps) {
+interface Prize {
+  prizeName: string;
+  trophyDesc: string;
+  medalDesc: string;
+  amount: string;
+}
+
+function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
   return (
     <Container mt={30} className={styles.formContainer}>
       <Grid>
         <Grid.Col span={6}>
-          <TextInput label="Prize Name" placeholder="Enter tournament Name" required />
+          <TextInput
+            type="text"
+            autoComplete="prize-name"
+            label="prize-name"
+            placeholder="Enter tournament Name"
+            required
+            value={prize.prizeName}
+            onChange={(e) => setPrize({ ...prize, prizeName: e.target.value })}
+          />
         </Grid.Col>
         <Grid.Col span={6}>
-          <TextInput label="Amount" placeholder="INR 1 Lakh for 1st Position" />
+          <TextInput
+            type="number"
+            label="Amount"
+            placeholder="INR 1 Lakh for 1st Position"
+            value={prize.amount}
+            onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
+          />
         </Grid.Col>
         <Grid.Col span={7}>
-          <TextInput label="Trophy" placeholder="Describe the Trophy" required />
+          <TextInput
+            type="text"
+            autoComplete="trophy"
+            label="trophy"
+            placeholder="Describe the Trophy"
+            required
+            value={prize.trophyDesc}
+            onChange={(e) => setPrize({ ...prize, trophyDesc: e.target.value })}
+          />
         </Grid.Col>
         <Grid.Col span={7}>
-          <TextInput label="Medal" placeholder="Describe the Medal" required />
+          <TextInput
+            type="text"
+            autoComplete="medal"
+            label="medal"
+            placeholder="Describe the Medal"
+            required
+            value={prize.medalDesc}
+            onChange={(e) => setPrize({ ...prize, medalDesc: e.target.value })}
+          />
         </Grid.Col>
 
         <Grid.Col span={8}>
@@ -31,10 +70,10 @@ function HpFormPrizePage({ page, setPage }: NavProps) {
         </Grid.Col>
       </Grid>
       <Group mt={50}>
-        <Button onClick={() => setPage('LinksPage')} color="#058A4A">
+        <Button onClick={() => setPage("LinksPage")} color="#058A4A">
           Prev
         </Button>
-        <Button onClick={() => setPage('SchedulePage')} color="#058A4A">
+        <Button onClick={() => setPage("SchedulePage")} color="#058A4A">
           Next
         </Button>
       </Group>

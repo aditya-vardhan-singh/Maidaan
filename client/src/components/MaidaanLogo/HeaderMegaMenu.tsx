@@ -14,10 +14,6 @@ import { IconUser } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
 import classes from "./HeaderMegaMenu.module.css";
 
-interface NavProps {
-  NavLinks: string;
-  SetNavLinks: React.Dispatch<React.SetStateAction<string>>;
-}
 
 export function HeaderMegaMenu() {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
@@ -34,7 +30,7 @@ export function HeaderMegaMenu() {
             <MantineLogo size={30} />
           </a>
 
-          <Group h="100%" gap={0} visibleFrom="sm">
+          <Group h="100%" gap={0} visibleFrom="md">
             <a href="/" className={`${classes.link} `}>
               <p>Home</p>
             </a>
@@ -52,7 +48,7 @@ export function HeaderMegaMenu() {
             </a>
           </Group>
 
-          <Group visibleFrom="sm">
+          <Group visibleFrom="md">
             <a href="/hosting" className={classes.linkbtn}>
               <p className={`${classes.inactive}`}>Host an Event</p>
             </a>
@@ -69,7 +65,7 @@ export function HeaderMegaMenu() {
           <Burger
             opened={drawerOpened}
             onClick={toggleDrawer}
-            hiddenFrom="sm"
+            hiddenFrom="md"
           />
         </Group>
       </header>
@@ -80,7 +76,7 @@ export function HeaderMegaMenu() {
         size="100%"
         padding="md"
         title="Navigation"
-        hiddenFrom="sm"
+        hiddenFrom="md"
         zIndex={1000000}
       >
         <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
