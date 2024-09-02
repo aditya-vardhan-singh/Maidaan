@@ -17,8 +17,8 @@ function LoginPage({ setpage }: LoginFormProps) {
 
   return (
     <Container className={styles.container}>
-      <Box className={styles.navbar}>
-        <Text className={styles.logo}>Maidan</Text>
+      <Box className={styles.navbar}> {/* Header */}
+       <a href="/" style={{textDecoration:'none'}}> <Text className={styles.logo}>Maidaan</Text></a>
       </Box>
 
       <Group variant="outline" className={styles.roleToggle}>

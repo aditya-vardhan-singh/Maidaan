@@ -3,7 +3,6 @@ import "@mantine/core/styles.css";
 import { useState } from "react";
 import { FooterLinks } from "./components/LpFooter/FooterLinks"; // reviewed
 import { HeaderMegaMenu } from "./components/MaidaanLogo/HeaderMegaMenu"; // reviewed
-import PageProvider from "./Context"; // reviewed
 import { Router } from "./Router";
 import { theme } from "./theme";
 
@@ -13,11 +12,9 @@ export default function App() {
   // const [Page,SetPage] =useState<string>('')
   return (
     <MantineProvider theme={theme}>
-      <PageProvider>
-        <HeaderMegaMenu />
-        <Router />
-        <FooterLinks />
-      </PageProvider>
+      <HeaderMegaMenu />
+      <Router />
+      <FooterLinks />
     </MantineProvider>
   );
 }
