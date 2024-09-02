@@ -106,7 +106,7 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/tournaments", async (req: Request, res: Response) => {
+router.post("/tournaments/new", async (req: Request, res: Response) => {
   try {
     const {
       title,
