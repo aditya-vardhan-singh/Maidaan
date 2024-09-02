@@ -12,6 +12,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconUser } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
+import MaidaanLogo from "../../assets/MaidaanLogoTwo.png";
 import classes from "./HeaderMegaMenu.module.css";
 interface NavProps {
   NavLinks: string;
@@ -30,7 +31,8 @@ export function HeaderMegaMenu({ NavLinks, SetNavLinks }: NavProps) {
         <Group justify="space-between" h="100%">
           <a href="/" style={{ textDecoration: "none", color: "initial" }}>
             {" "}
-            <MantineLogo size={30} />
+            {/* <MantineLogo size={30} /> */}
+            <img src={MaidaanLogo} alt="" className={classes.Logo} />
           </a>
 
           <Group h="100%" gap={0} visibleFrom="sm">

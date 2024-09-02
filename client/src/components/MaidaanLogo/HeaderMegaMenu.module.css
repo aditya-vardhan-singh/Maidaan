@@ -4,7 +4,11 @@
     padding-right: var(--mantine-spacing-md);
     border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     /* padding-bottom: 0%; */
+    /* justify-content: center; */
+    /* align-items: center; */
   }
+
+
 .active{
  color: #F1A02F;
 }
@@ -39,4 +43,17 @@
   .Signbtn{
     text-decoration: none;
     color: white;
+  }
+
+
+
+  .Logo{
+    /* background-image: url('../../assets/MaidaanLogoTwo.png'); */
+    width: 150px;
+    height: 50px;
+    height: 90%;
+    background-size: contain;
+    padding: 0%;
+   /* 2px 4px 6px rgba(0, 0, 0, 0.2); */
+    /* background-color: #F1A02F; */
   }
