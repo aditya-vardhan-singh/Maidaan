@@ -1,6 +1,6 @@
-import { Button, Overlay, Text, Title } from '@mantine/core';
-import cx from 'clsx';
-import classes from './HeroImageBackground.module.css';
+import { Button, Overlay, Text, Title } from "@mantine/core";
+import cx from "clsx";
+import classes from "./HeroImageBackground.module.css";
 
 export function HeroImageBackground() {
   return (
@@ -9,19 +9,22 @@ export function HeroImageBackground() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          "Elevate Your Game and Unlock Your{' '}
+          "Elevate Your Game and Unlock Your{" "}
           <Text component="span" inherit className={classes.highlight}>
             Full Potential"
           </Text>
         </Title>
 
         <div className={classes.controls}>
-          <Button className={classes.control} variant="white" size="lg">
-            <a href="/Tournament" className={classes.a}>
+          <a href="/tournaments" className={classes.a}>
+            <Button className={classes.control} variant="white" size="lg">
               Explore Tournaments
-            </a>
-          </Button>
-          <Button className={cx(classes.control, classes.secondaryControl)} size="lg">
+            </Button>
+          </a>
+          <Button
+            className={cx(classes.control, classes.secondaryControl)}
+            size="lg"
+          >
             Find a Sports Event
           </Button>
         </div>
