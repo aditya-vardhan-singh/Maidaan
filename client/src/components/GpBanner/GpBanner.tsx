@@ -10,7 +10,7 @@ export function GpBanner() {
           Crafting a Healthier Tomorrow: The Importance of Government Initiatives
         </Title>
 
-        <Text c="dimmed">
+        <Text c="dimmed" className={classes.description}>
           Government fitness and sports schemes are the pulse of a healthier nation. They empower
           youth, inspire excellence, and unite communities, unlocking potential and paving the way
           for a vibrant, active India. By championing wellness and nurturing talent, they shape the

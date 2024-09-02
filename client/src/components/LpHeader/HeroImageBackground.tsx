@@ -9,9 +9,9 @@ export function HeroImageBackground() {
 
       <div className={classes.inner}>
         <Title className={classes.title}>
-          Elevate Your Game and Unlock Your{' '}
+          "Elevate Your Game and Unlock Your{' '}
           <Text component="span" inherit className={classes.highlight}>
-            Full Potential
+            Full Potential"
           </Text>
         </Title>
 

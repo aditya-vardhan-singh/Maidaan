@@ -7,7 +7,7 @@ export function UnitrorPlay() {
     <div className={classes.wrapper}>
       <div className={classes.body}>
         <Title className={classes.title}>Unite or Play Solo</Title>
-        <Text fz="sm" c="dimmed" className={classes.description}>
+        <Text  c="dimmed" className={classes.description}>
           Join forces with others or showcase your individual skills. Find or create teams that
           match your ambition and compete at the highest level—or just for the love of the game.
         </Text>

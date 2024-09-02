@@ -1,11 +1,11 @@
 .infobox{
     background-color: var(--mantine-color-body);
-    width: 780px;
+    width: 1080px;
     display: flex;
     justify-content: center;
     align-items: safe;
     height: fit-content;
-    margin-top: 5%;
+    margin-top: 1%;
     /* padding-bottom: 530px; */
     background: #FCE8CE80;
     border: rem(2px) solid #F1A02F;
@@ -31,8 +31,8 @@
 
 .title {
     font-size: 2rem;
-    margin: 1.2 rem;
-    margin: 5%;
+    /* margin: 1.2 rem; */
+    /* margin: 5%; */
     color: #1a1a1a;
     display: flex;
     justify-content: center;
@@ -41,7 +41,7 @@
   
   .subtitle {
     font-size: 1.4rem;
-    margin: 1rem;
+    margin: 0.5rem;
     font-weight: bolder;
 
     /* margin-bottom: 0.5rem; */
@@ -50,7 +50,7 @@
   
   .table {
     width: 100%;
-    font-size: 0.875rem;
+    font-size: 0.975rem;
     border-collapse: collapse;
   }
   
@@ -80,9 +80,9 @@
   }
   
   .scrollContainer {
-    max-height: 600px; /* Adjust based on your design */
+    max-height: 800px; /* Adjust based on your design */
     overflow-y: auto;
-    margin: 1%;
+    margin-bottom: 0.2%;
   }
   
   @media (max-width: 768px) {
@@ -127,7 +127,7 @@
   
   /* Custom Scrollbar for WebKit Browsers (Chrome, Safari, etc.) */
   .scrollContainer::-webkit-scrollbar {
-    width: 8px; /* Width of the scrollbar */
+    width: 10px; /* Width of the scrollbar */
   }
   
   .scrollContainer::-webkit-scrollbar-track {

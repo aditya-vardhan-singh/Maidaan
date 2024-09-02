@@ -8,7 +8,7 @@ export function EmpowerInspire() {
       <div className={classes.wrapper}>
         <div className={classes.body}>
           <Title className={classes.title}>Empower and Inspire</Title>
-          <Text fz="sm" c="dimmed" className={classes.description}>
+          <Text c="dimmed" className={classes.description}>
             Engage in initiatives that promote inclusivity in sports. Support or participate in
             programs that encourage everyone, including women and those with disabilities, to thrive
             in the sports community.

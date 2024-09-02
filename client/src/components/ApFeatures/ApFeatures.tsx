@@ -15,10 +15,10 @@ function Feature({ icon: Icon, title, description, className, ...others }: Featu
 
       <div className={classes.content}>
         <Icon style={{ width: rem(38), height: rem(38) }} className={classes.icon} stroke={1.5} />
-        <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
+        <Text fw={700}  mb="xs" mt={5} className={classes.title}>
           {title}
         </Text>
-        <Text c="dimmed" fz="sm">
+        <Text c="dimmed" className={classes.description} >
           {description}
         </Text>
       </div>
@@ -41,7 +41,7 @@ const mockdata = [
   },
   {
     icon: IconTrophy,
-    title: 'Proven Success Track Record',
+    title: 'Proven Success  Record',
     description:
       'Academies with a history of producing champions across various sports, focusing on performance and character development.',
   },
@@ -51,7 +51,7 @@ export function ApFeatures() {
   const items = mockdata.map((item) => <Feature {...item} key={item.title} />);
 
   return (
-    <Container mt={30} mb={30} size="lg">
+    <Container mt={30} mb={30} size="xl">
       <SimpleGrid cols={{ base: 1, sm: 3 }} spacing={50}>
         {items}
       </SimpleGrid>

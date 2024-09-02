@@ -23,7 +23,7 @@
   
   .title {
     font-weight: 800;
-    font-size: rem(40px);
+    font-size: rem(50px);
     letter-spacing: rem(-1px);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
@@ -47,6 +47,9 @@
   .description {
     color: var(--mantine-color-gray-0);
     text-align: center;
+    font-size: rem(30px);
+    font-weight: bold;
+
   
     @media (max-width: $mantine-breakpoint-xs) {
       font-size: var(--mantine-font-size-md);
