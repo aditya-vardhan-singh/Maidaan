@@ -71,11 +71,20 @@ model CompetitionEvent {
   organizer        Organizer                  @relation(fields: [organizerId], references: [id])
   organizerId      Int
   competitionLevel String                     @db.VarChar(50)
+  compType         CompType                   @default(ONGOING)
   req_players      Int
   description      String?                    @db.Text
   rules            String?                    @db.Text
   enabled          Boolean                    @default(false)
+  instaLink        String?
+  siteLink         String?
   participants     CompetitionParticipation[]
+}
+
+enum CompType {
+  ONGOING
+  FINISHED
+  UPCOMING
 }
 
 model TrainingCourse {
