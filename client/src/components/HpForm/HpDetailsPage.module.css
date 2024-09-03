@@ -16,7 +16,19 @@
   background: #06A35733;
 
 }
-
+.Tickbox{
+  display: flex;
+justify-content: space-between;
+}
+.cb{
+  /* display: inline-block; */
+  padding-bottom:0;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+p{
+  display: inline-block;
+}
 @media (max-width: 768px) {
   .formContainer {
     padding: 1rem;
