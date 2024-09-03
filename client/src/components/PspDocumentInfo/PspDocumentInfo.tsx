@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
-import { TextInput, Container, Grid, Button, Group } from '@mantine/core';
-import styles from './PspDocumentInfo.module.css';
+import React, { useState } from "react";
+import { TextInput, Container, Grid, Button, Group } from "@mantine/core";
+import styles from "./PspDocumentInfo.module.css";
 
+interface NavProps {
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+}
 
-
-function PspDocumentInfo() {
-  const [AadharData, setAadharData] = useState([{ Aadhar: '' }]);
+function PspDocumentInfo({ page, setPage }: NavProps) {
+  const [AadharData, setAadharData] = useState([{ Aadhar: "" }]);
 
   const handleInputChange = (index: number, value: string) => {
     const updatedAadharData = [...AadharData];
@@ -14,7 +17,7 @@ function PspDocumentInfo() {
   };
 
   const addAadhar = () => {
-    setAadharData([...AadharData, { Aadhar: '' }]);
+    setAadharData([...AadharData, { Aadhar: "" }]);
   };
 
   return (
@@ -34,35 +37,30 @@ function PspDocumentInfo() {
                   if (/^\d{0,12}$/.test(value)) {
                     handleInputChange(index, value);
                   }
-                }} required
+                }}
+                required
               />
             </Grid.Col>
           ))}
         </Grid>
         <Group mt="md">
-        <Button
-            // onClick={() => setPage('DocumentPage')}
-            className={styles.nextButton}
-            color="green"
-          >
-            Jump to Document
-          </Button>
           <Button
-            // onClick={() => setPage('AadharInfo')}
+            onClick={() => setPage("Tournament Participation")}
             className={styles.nextButton}
             color="green"
           >
+            Jump to Tournamemnt Participation
+          </Button>
+          <Button className={styles.nextButton} color="green">
             Save All
           </Button>
- 
         </Group>
         <br />
-        <Button
-          className={styles.nextButton}
-          color="green"
-        >
-          View My Profile
-        </Button>
+        <a href="/profile-page" style={{ textDecoration: "none" }}>
+          <Button className={styles.nextButton} color="green">
+            View My Profile
+          </Button>
+        </a>
       </Container>
     </>
   );

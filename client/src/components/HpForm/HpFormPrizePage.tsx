@@ -75,6 +75,45 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
             </Grid.Col>
           </Group>
         </Group>
+        <Group>
+          <Group>
+            <Grid.Col span={6}>
+              <TextInput
+                type="text"
+                autoComplete="Prize Name (Optional)"
+                label="Prize Name"
+                placeholder="Enter Prize Name"
+                value={prize.prizeName}
+                onChange={(e) =>
+                  setPrize({ ...prize, prizeName: e.target.value })
+                }
+              />
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <TextInput
+                type="number"
+                label="Amount"
+                placeholder="INR 1 Lakh for 1st Position"
+                value={prize.amount}
+                onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
+              />
+            </Grid.Col>
+          </Group>
+          <Group>
+            <Grid.Col span={7}>
+              <Checkbox label="Trophy" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Medal" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Certificate" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Participation Certificate" />
+            </Grid.Col>
+          </Group>
+        </Group>
         <Grid.Col span={8} mt="md">
           <Button variant="outline" color="red">
             Delete Prize
