@@ -99,35 +99,11 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
               />
             </Grid.Col>
           </Group>
-          <Group>
-            <Grid.Col span={7}>
-              <Checkbox label="Trophy" />
-            </Grid.Col>
-            <Grid.Col span={7}>
-              <Checkbox label="Medal" />
-            </Grid.Col>
-            <Grid.Col span={7}>
-              <Checkbox label="Certificate" />
-            </Grid.Col>
-            <Grid.Col span={7}>
-              <Checkbox label="Participation Certificate" />
-            </Grid.Col>
-          </Group>
+        
         </Group>
-        <Grid.Col span={8} mt="md">
-          <Button variant="outline" color="red">
-            Delete Prize
-          </Button>
-        </Grid.Col>
+        
       </Grid>
-      <Group mt={50}>
-        <Button onClick={() => setPage("LinksPage")} color="#058A4A">
-          Prev
-        </Button>
-        <Button onClick={() => setPage("SchedulePage")} color="#058A4A">
-          Next
-        </Button>
-      </Group>
+      
     </Container>
   );
 }
