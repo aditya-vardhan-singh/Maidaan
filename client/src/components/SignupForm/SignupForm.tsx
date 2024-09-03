@@ -66,6 +66,7 @@ export function SignupForm({ setpage }: SignupFormProps) {
       >
         <form onSubmit={form.onSubmit((values) => console.log(values))}>
           <TextInput
+          type="email"
             label="Email"
             placeholder="Enter your email address"
             {...form.getInputProps("email")}

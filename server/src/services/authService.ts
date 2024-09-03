@@ -1,5 +1,5 @@
 import { PrismaClient, UserProfile, AuthType } from "@prisma/client";
-import session, { Session } from 'express-session';
+import session from "express-session";
 import { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -29,8 +29,8 @@ export async function initPassport(app: Express): Promise<void> {
   app.use(bodyParser.urlencoded({ extended: true }));
 
   
-  app.use(session<Session>({
-    secret: process.env.SECRET_SESSION, 
+  app.use(session({
+    secret: process.env.SECRET_SESSION || [], 
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false }
@@ -142,7 +142,7 @@ export function initAuthRoutes(): Router {
       res.redirect('/');
     });
 
-  router.post('/signup', async (req: Request, res: Response) => {
+  router.post('/register', async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
     try {
@@ -169,7 +169,10 @@ export function initAuthRoutes(): Router {
         }
       });
 
-      res.status(201).json({ message: "User created successfully", user: newUser });
+      req.login(newUser, (err) => {
+        console.log("success");
+        res.redirect("/secrets");
+      });
     } catch (error) {
       console.error("Error during signup:", error);
       res.status(500).json({ message: "An error occurred during signup" });

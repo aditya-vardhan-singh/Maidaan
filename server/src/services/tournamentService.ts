@@ -132,6 +132,8 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
       },
       schedules,
       registrationStatus,
+      sportId,
+      organizerId
     } = req.body;
 
     console.log("Checkpoint 1");
@@ -146,6 +148,9 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         venueName: venueName,
         tournamentDetails: tournamentDetails,
         registrationStatus: registrationStatus,
+        sport: sportId, // Add the sport property
+        organizer: organizerId, // Add the organizer property
+        SportsParticipation: , // Add the SportsParticipation property
         links: {
           create: {
             officialLink: officialLink || '',
