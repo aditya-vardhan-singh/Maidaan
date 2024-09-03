@@ -109,63 +109,86 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
 router.post("/tournaments/new", async (req: Request, res: Response) => {
   try {
     const {
-      title,
-      sportId,
-      startDate,
-      endDate,
-      locationCity,
-      locationVenue,
-      competitionLevel,
-      requiredPlayers,
-      organizerId,
-      sportsParticipationId,
-      fee,
-      description,
-      rules,
-      links,
-      schedule,
-      prizes,
+      details: {
+        tournamentName,
+        startDate,
+        endDate,
+        venueName,
+        city,
+        tournamentDetails,
+      },
+      links: {
+        officialLink,
+        facebookLink,
+        xLink,
+        instaLink,
+        posterImage,
+      },
+      prize: {
+        prizeName,
+        trophy,
+        medal,
+        amount,
+      },
+      schedules,
+      registrationStatus,
     } = req.body;
 
+    console.log("Checkpoint 1");
+
+    // Create the tournament in the database
     const tournament = await prisma.tournament.create({
       data: {
-        title: title,
-        sportId: sportId,
-        startDate: startDate,
-        endDate: endDate,
-        locationCity: locationCity,
-        locationVenue: locationVenue,
-        competitionLevel: competitionLevel,
-        requiredPlayers: requiredPlayers,
-        organizerId: organizerId,
-        sportsParticipationId: sportsParticipationId,
-        fee: fee,
-        description: description,
-        rules: rules,
+        tournamentName: tournamentName,
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        city: city,
+        venueName: venueName,
+        tournamentDetails: tournamentDetails,
+        registrationStatus: registrationStatus,
         links: {
-          create: links,
+          create: {
+            officialLink: officialLink || '',
+            facebookLink: facebookLink || '',
+            xLink: xLink || '',
+            instaLink: instaLink || '',
+            posterImage: posterImage || '',
+          },
         },
         schedule: {
-          create: schedule,
+          create: schedules.map((schedule: any) => ({
+            scheduleName: schedule.scheduleName,
+            startDate: new Date(schedule.startDate),
+            startTime: schedule.startTime,
+            endDate: new Date(schedule.endDate),
+            endTime: schedule.endTime,
+          })),
         },
         prizes: {
-          create: prizes,
+          create: {
+            prizeName: prizeName || '',
+            trophy: trophy,
+            medal: medal,
+            amount: amount || '',
+          },
         },
       },
       include: {
         links: true,
         schedule: true,
         prizes: true,
-        sport: true,
-        organizer: true,
-        SportsParticipation: true,
       },
     });
+
+    console.log("Checkpoint 2");
+
     res.json(tournament);
   } catch (error) {
+    console.error("Error creating tournament:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 router.put("/tournaments/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
