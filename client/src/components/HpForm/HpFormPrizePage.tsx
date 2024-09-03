@@ -20,6 +20,15 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
   return (
     <Container mt={30} className={styles.formContainer}>
       <Grid>
+      <Grid.Col span={12}>
+          <TextInput
+            type="text"
+            autoComplete="rules"
+            label="Tournament Rules"
+            placeholder="Enter tournamentRules"
+            required
+          />
+        </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
             type="text"
