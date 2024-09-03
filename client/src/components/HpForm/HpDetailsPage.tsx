@@ -33,9 +33,9 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
         <Grid.Col span={12}>
           <TextInput
             type="text"
-            autoComplete="tournament-name"
-            label="tournament-name"
-            placeholder="Enter tournament Name"
+            autoComplete="Tournament Name"
+            label="Tournament Name"
+            placeholder="Enter Tournament Name"
             required
             value={details.tournamentName}
             onChange={(e) =>

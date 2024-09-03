@@ -11,7 +11,6 @@ model UserProfile {
   id                       Int                       @id @default(autoincrement())
   profileType              ProfileType               @default(USER)
   email                    String                    @unique @db.VarChar(255)
-  username                 String                    @unique
   password                 String?                   @db.VarChar(60)
   name                     String?                   @db.VarChar(100)
   googleId                 String?                   @unique @db.VarChar(30)

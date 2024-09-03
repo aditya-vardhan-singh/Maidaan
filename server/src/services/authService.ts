@@ -3,10 +3,11 @@ import session from "express-session";
 import { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
-import { Strategy as LocalStrategy } from 'passport-local';
-import { Strategy as GoogleStrategy, Profile } from 'passport-google-oauth20';
-import bcrypt from 'bcrypt';
+import { Strategy as LocalStrategy } from "passport-local";
+import { Strategy as GoogleStrategy, Profile } from "passport-google-oauth20";
+import bcrypt from "bcrypt";
 import { Router } from "express";
+import env from "dotenv";
 
 const prisma = new PrismaClient();
 const router = Router();
@@ -17,24 +18,23 @@ declare global {
   }
 }
 
-interface Session {
-  secret: string | undefined;
-  resave: boolean;
-  saveUninitialized: boolean;
-  cookie: { secure: boolean} ;
-}
+env.config();
 
 export async function initPassport(app: Express): Promise<void> {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  
-  app.use(session({
-    secret: process.env.SECRET_SESSION || [], 
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }
-  }));
+  app.use(
+    session({
+      secret: process.env.SECRET_SESSION || [
+        "yo pierre yoy wanna",
+        "come out here",
+      ],
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: false },
+    }),
+  );
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -55,13 +55,15 @@ export async function initPassport(app: Express): Promise<void> {
             return cb(null, false, { message: "Incorrect password" });
           }
         } else {
-          return cb(null, false, { message: "User not found or invalid authentication type" });
+          return cb(null, false, {
+            message: "User not found or invalid authentication type",
+          });
         }
       } catch (err) {
         console.error("Error during authentication:", err);
         return cb(err);
       }
-    })
+    }),
   );
 
   passport.use(
@@ -82,7 +84,7 @@ export async function initPassport(app: Express): Promise<void> {
           }
 
           let user = await prisma.userProfile.findUnique({
-            where: { email: email }
+            where: { email: email },
           });
 
           if (!user) {
@@ -91,16 +93,16 @@ export async function initPassport(app: Express): Promise<void> {
                 email: email,
                 username: profile.displayName,
                 googleId: profile.id,
-                authType: AuthType.GOOGLE
-              }
+                authType: AuthType.GOOGLE,
+              },
             });
           } else if (user.authType !== AuthType.GOOGLE) {
             user = await prisma.userProfile.update({
               where: { id: user.id },
               data: {
                 googleId: profile.id,
-                authType: AuthType.GOOGLE
-              }
+                authType: AuthType.GOOGLE,
+              },
             });
           }
 
@@ -109,8 +111,8 @@ export async function initPassport(app: Express): Promise<void> {
           console.error("Error during Google authentication:", err);
           return cb(err);
         }
-      }
-    )
+      },
+    ),
   );
 
   passport.serializeUser((user: Express.User, cb) => {
@@ -120,7 +122,7 @@ export async function initPassport(app: Express): Promise<void> {
   passport.deserializeUser(async (id: number, cb) => {
     try {
       const user = await prisma.userProfile.findUnique({
-        where: { id: id }
+        where: { id: id },
       });
       cb(null, user);
     } catch (err) {
@@ -130,60 +132,68 @@ export async function initPassport(app: Express): Promise<void> {
 }
 
 export function initAuthRoutes(): Router {
-  router.post('/login', passport.authenticate('local'), (req: Request, res: Response) => {
-    res.json({ message: "Logged in successfully", user: req.user });
-  });
-
-  router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-  router.get('/google/secrets',
-    passport.authenticate('google', { failureRedirect: '/login' }),
+  router.post(
+    "/login",
+    passport.authenticate("local"),
     (req: Request, res: Response) => {
-      res.redirect('/');
-    });
+      res.json({ message: "Logged in successfully", user: req.user });
+    },
+  );
 
-  router.post('/register', async (req: Request, res: Response) => {
-    const { username, email, password } = req.body;
+  router.get(
+    "/google",
+    passport.authenticate("google", { scope: ["profile", "email"] }),
+  );
+
+  router.get(
+    "/google/secrets",
+    passport.authenticate("google", { failureRedirect: "/login" }),
+    (req: Request, res: Response) => {
+      res.redirect("/");
+    },
+  );
+
+  router.post("/register", async (req: Request, res: Response) => {
+    const { email, password } = req.body;
 
     try {
       const existingUser = await prisma.userProfile.findFirst({
         where: {
-          OR: [
-            { username: username },
-            { email: email }
-          ]
-        }
+          email: email,
+        },
       });
 
       if (existingUser) {
-        return res.status(400).json({ message: "Username or email already exists" });
+        return res
+          .status(400)
+          .json({ message: "Username or email already exists" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
       const newUser = await prisma.userProfile.create({
         data: {
-          username,
-          email,
+          email: email,
           password: hashedPassword,
-          authType: AuthType.LOCAL
-        }
+          authType: AuthType.LOCAL,
+        },
       });
 
-      req.login(newUser, (err) => {
-        console.log("success");
-        res.redirect("/secrets");
-      });
+      res
+        .status(201)
+        .json({ message: "User created successfully", user: newUser });
     } catch (error) {
       console.error("Error during signup:", error);
       res.status(500).json({ message: "An error occurred during signup" });
     }
   });
 
-  router.get('/logout', (req: Request, res: Response) => {
+  router.get("/logout", (req: Request, res: Response) => {
     req.logout((err) => {
       if (err) {
         console.error("Error during logout:", err);
-        return res.status(500).json({ message: "An error occurred during logout" });
+        return res
+          .status(500)
+          .json({ message: "An error occurred during logout" });
       }
       res.json({ message: "Logged out successfully" });
     });
