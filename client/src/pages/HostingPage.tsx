@@ -52,6 +52,10 @@ interface Tournament {
   registrationStatus: string;
 }
 
+const convertToISOFormat = (dateString: string): string => {
+  return new Date(dateString).toISOString();
+};
+
 const HostingPage: React.FC = () => {
   const [page, setPage] = useState<string>("");
 
@@ -98,17 +102,35 @@ const HostingPage: React.FC = () => {
   });
 
   const handleFormSubmit = async () => {
-    /* Handle submit here */
+    // Convert dates to ISO format before submission
+    const formattedDetails = {
+      ...details,
+      startDate: convertToISOFormat(details.startDate),
+      endDate: convertToISOFormat(details.endDate),
+    };
+
+    const formattedSchedules = schedules.map(schedule => ({
+      ...schedule,
+      startDate: convertToISOFormat(schedule.startDate),
+      endDate: convertToISOFormat(schedule.endDate),
+    }));
+
+    const formattedTournament: Tournament = {
+      ...tournament,
+      details: formattedDetails,
+      schedules: formattedSchedules,
+    };
+
     try {
       const response: { message: string } = await axios.post(
         `${baseURL}/tournaments/new`,
         {
-          tournament: tournament,
-        },
+          tournament: formattedTournament,
+        }
       );
       toast.success(response.message || "Tournament registered successfully");
     } catch (err) {
-      toast.error((err as Error).message || "Error occured submit request!");
+      toast.error((err as Error).message || "Error occurred submit request!");
     }
   };
 

@@ -1,6 +1,5 @@
-// services/authService.ts
-
 import { PrismaClient, UserProfile, AuthType } from "@prisma/client";
+import session, { Session } from 'express-session';
 import { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import passport from "passport";
@@ -18,22 +17,37 @@ declare global {
   }
 }
 
+interface Session {
+  secret: string | undefined;
+  resave: boolean;
+  saveUninitialized: boolean;
+  cookie: { secure: boolean} ;
+}
+
 export async function initPassport(app: Express): Promise<void> {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
+  
+  app.use(session<Session>({
+    secret: process.env.SECRET_SESSION, 
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+  }));
+
   app.use(passport.initialize());
   app.use(passport.session());
-    
+
   passport.use(
     "local",
-    new LocalStrategy(async function verify(username: string, password: string, cb: (error: any, user?: Express.User | false, options?: { message: string }) => void) {
+    new LocalStrategy(async (username: string, password: string, cb) => {
       try {
         const user = await prisma.userProfile.findUnique({
-          where: { username: username, authType: AuthType.LOCAL }
+          where: { username: username },
         });
 
-        if (user && user.password) {
+        if (user && user.authType === AuthType.LOCAL && user.password) {
           const isValid = await bcrypt.compare(password, user.password);
           if (isValid) {
             return cb(null, user);
@@ -59,10 +73,10 @@ export async function initPassport(app: Express): Promise<void> {
         callbackURL: "http://localhost:3000/auth/google/secrets",
         userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
       },
-      async (accessToken: string, refreshToken: string, profile: Profile, cb: (error: any, user?: Express.User) => void) => {
+      async (accessToken, refreshToken, profile, cb) => {
         try {
           const email = profile.emails && profile.emails[0]?.value;
-          
+
           if (!email) {
             return cb(new Error("Email not found in Google profile."));
           }
@@ -99,11 +113,11 @@ export async function initPassport(app: Express): Promise<void> {
     )
   );
 
-  passport.serializeUser((user: Express.User, cb: (err: any, id?: number) => void) => {
+  passport.serializeUser((user: Express.User, cb) => {
     cb(null, user.id);
   });
-  
-  passport.deserializeUser(async (id: number, cb: (err: any, user?: Express.User | null) => void) => {
+
+  passport.deserializeUser(async (id: number, cb) => {
     try {
       const user = await prisma.userProfile.findUnique({
         where: { id: id }
@@ -122,7 +136,7 @@ export function initAuthRoutes(): Router {
 
   router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-  router.get('/google/secrets', 
+  router.get('/google/secrets',
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req: Request, res: Response) => {
       res.redirect('/');
