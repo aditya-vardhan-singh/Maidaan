@@ -8,44 +8,49 @@ import Tournaments from "./components/Tournaments/Tournaments";
 import Academies from "./pages/Academies";
 import GovtSchemes from "./pages/GovtSchemes";
 import { TournamentDetailPage } from "./pages/TournamentDetailPage";
+import ProfileSettingPage from "./pages/ProfileSettingPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <HomePage />
   },
   {
     path: "/signup",
-    element: <SignUpPage />,
+    element: <SignUpPage />
   },
   {
     path: "/tournaments",
-    element: <Tournaments />,
+    element: <Tournaments />
   },
   {
     path: "/tournaments/details",
-    element: <TournamentDetailPage />,
+    element: <TournamentDetailPage />
   },
   {
     path: "/academies",
-    element: <Academies />,
+    element: <Academies />
   },
   {
     path: "/government-schemes",
-    element: <GovtSchemes />,
+    element: <GovtSchemes />
   },
   {
     path: "/hosting",
-    element: <HostingPage />,
+    element: <HostingPage />
   },
   {
     path: "/events",
-    element: <EventPage />,
+    element: <EventPage />
   },
   {
     path: "/profile-page",
-    element: <ProfilePage />,
-  },
+    element: <ProfilePage />
+  }, 
+  {
+    path: "/profile-page/edit-profile",
+    element: <ProfileSettingPage/>
+  }
 ]);
 
 export function Router() {

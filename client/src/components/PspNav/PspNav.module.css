@@ -89,3 +89,13 @@
     display: block;
   }
 }
+ .Logo{
+    /* background-image: url('../../assets/MaidaanLogoTwo.png'); */
+    width: 150px;
+    height: 60px;
+    height: 90%;
+    background-size: contain;
+    padding: 0%;
+   /* 2px 4px 6px rgba(0, 0, 0, 0.2); */
+    /* background-color: #F1A02F; */
+  }
