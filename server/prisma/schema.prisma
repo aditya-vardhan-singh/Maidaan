@@ -11,7 +11,6 @@ model UserProfile {
   id                       Int                       @id @default(autoincrement())
   profileType              ProfileType               @default(USER)
   email                    String                    @unique @db.VarChar(255)
-  username                 String                    @unique
   password                 String?                   @db.VarChar(60)
   name                     String?                   @db.VarChar(100)
   googleId                 String?                   @unique @db.VarChar(30)
@@ -118,19 +117,17 @@ enum EventStatus {
 
 model Tournament {
   id                      Int                       @id @default(autoincrement())
-  title                   String                    @db.VarChar(200)
+  tournamentName          String                    @db.VarChar(200)
   sport                   Sports                    @relation(fields: [sportId], references: [id])
   sportId                 Int
   startDate               DateTime
   endDate                 DateTime
   schedule                Schedule[]
   prizes                  Prizes[]
-  locationCity            String                    @db.VarChar(255)
-  locationVenue           String                    @db.VarChar(255)
-  competitionLevel        String                    @db.VarChar(50)
-  status                  EventStatus               @default(ONGOING)
-  requiredPlayers         Int
-  description             String?                   @db.Text
+  city                    String                    @db.VarChar(255)
+  venueName               String                    @db.VarChar(255)
+  registrationStatus      EventStatus               @default(ONGOING)
+  tournamentDetails       String?                   @db.Text
   rules                   String?                   @db.Text
   fee                     Float?
   organizer               UserProfile               @relation("OrganizerTournaments", fields: [organizerId], references: [id])
@@ -143,17 +140,23 @@ model Tournament {
 
 model Schedule {
   id           Int        @id @default(autoincrement())
-  title        String
+  scheduleName String
   startDate    DateTime
+  startTime    String
   endDate      DateTime
+  endTime      String
   Tournament   Tournament @relation(fields: [tournamentId], references: [id])
   tournamentId Int
 }
 
 model Prizes {
-  id           Int        @id @default(autoincrement())
-  title        String
-  amount       Int?
+  id                       Int      @id @default(autoincrement())
+  prizeName                String?
+  trophy                   Boolean
+  medal                    Boolean
+  certificate              Boolean?
+  participationCertificate Boolean?
+  amount                   Float?
   tournamentId Int
   Tournament   Tournament @relation(fields: [tournamentId], references: [id])
 }
@@ -186,8 +189,9 @@ model Links {
   id              Int            @id @default(autoincrement())
   officialLink    String?
   xLink           String?
-  igLink          String?
-  fbLink          String?
+  instaLink       String?
+  facebookLink    String?
+  posterImage     String?
   userProfile     UserProfile?   @relation("UserProfileLinks", fields: [userProfileId], references: [id])
   userProfileId   Int?
   event           Event?         @relation("EventLinks", fields: [eventId], references: [id])

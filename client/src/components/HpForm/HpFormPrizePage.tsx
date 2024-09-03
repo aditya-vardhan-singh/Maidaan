@@ -1,5 +1,12 @@
 import React from "react";
-import { Button, Container, Grid, Group, TextInput } from "@mantine/core";
+import {
+  Button,
+  Container,
+  Grid,
+  Group,
+  TextInput,
+  Checkbox,
+} from "@mantine/core";
 import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
@@ -20,7 +27,9 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
   return (
     <Container mt={30} className={styles.formContainer}>
       <Grid>
-      <Grid.Col span={12}>
+        <Group>
+          <Group>
+          <Grid.Col span={12}>
           <TextInput
             type="text"
             autoComplete="rules"
@@ -29,50 +38,44 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
             required
           />
         </Grid.Col>
-        <Grid.Col span={6}>
-          <TextInput
-            type="text"
-            autoComplete="prize-name"
-            label="prize-name"
-            placeholder="Enter tournament Name"
-            required
-            value={prize.prizeName}
-            onChange={(e) => setPrize({ ...prize, prizeName: e.target.value })}
-          />
-        </Grid.Col>
-        <Grid.Col span={6}>
-          <TextInput
-            type="number"
-            label="Amount"
-            placeholder="INR 1 Lakh for 1st Position"
-            value={prize.amount}
-            onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
-          />
-        </Grid.Col>
-        <Grid.Col span={7}>
-          <TextInput
-            type="text"
-            autoComplete="trophy"
-            label="trophy"
-            placeholder="Describe the Trophy"
-            required
-            value={prize.trophyDesc}
-            onChange={(e) => setPrize({ ...prize, trophyDesc: e.target.value })}
-          />
-        </Grid.Col>
-        <Grid.Col span={7}>
-          <TextInput
-            type="text"
-            autoComplete="medal"
-            label="medal"
-            placeholder="Describe the Medal"
-            required
-            value={prize.medalDesc}
-            onChange={(e) => setPrize({ ...prize, medalDesc: e.target.value })}
-          />
-        </Grid.Col>
-
-        <Grid.Col span={8}>
+            <Grid.Col span={6}>
+              <TextInput
+                type="text"
+                autoComplete="Prize Name (Optional)"
+                label="Prize Name"
+                placeholder="Enter Prize Name"
+                value={prize.prizeName}
+                onChange={(e) =>
+                  setPrize({ ...prize, prizeName: e.target.value })
+                }
+              />
+            </Grid.Col>
+            <Grid.Col span={6}>
+              <TextInput
+                type="number"
+                label="Amount"
+                placeholder="INR 1 Lakh for 1st Position"
+                value={prize.amount}
+                onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
+              />
+            </Grid.Col>
+          </Group>
+          <Group>
+            <Grid.Col span={7}>
+              <Checkbox label="Trophy" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Medal" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Certificate" />
+            </Grid.Col>
+            <Grid.Col span={7}>
+              <Checkbox label="Participation Certificate" />
+            </Grid.Col>
+          </Group>
+        </Group>
+        <Grid.Col span={8} mt="md">
           <Button variant="outline" color="red">
             Delete Prize
           </Button>

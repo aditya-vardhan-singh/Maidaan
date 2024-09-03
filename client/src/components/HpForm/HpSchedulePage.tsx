@@ -91,7 +91,7 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
 
             <Grid.Col span={3}>
               <TextInput
-                type="date"
+                type="time"
                 label="start-time"
                 placeholder="HH:MM"
                 required
@@ -115,7 +115,7 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
 
             <Grid.Col span={3}>
               <TextInput
-                type="date"
+                type="time"
                 label="end-time"
                 placeholder="HH:MM"
                 required

@@ -17,7 +17,7 @@ initPassport(app);
 
 // Routes
 app.use('/auth', initAuthRoutes());
-app.use('/api/v1', tournamentServices)
+app.use('/', tournamentServices)
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
