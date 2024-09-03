@@ -8,11 +8,11 @@ interface NavProps {
 
 export function HpBanner({ page, setPage }: NavProps) {
   return (
-    <Container className={classes.wrapper} size={1400}>
+    <Container className={classes.wrapper} size={1800}>
       <div className={classes.inner}>
         <Title className={classes.title}>Host a Tournament! for any stack</Title>
 
-        <Container p={0} size={600}>
+        <Container p={0} size={800}>
           <Text size="lg" c="dimmed" className={classes.description}>
             Nothing beats the excitement of participating in a tournament, except for the thrill of
             organizing one yourself! Join the community of tournament organizers on Maidaan and
