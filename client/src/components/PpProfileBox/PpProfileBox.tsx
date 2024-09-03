@@ -1,32 +1,41 @@
-import { ActionIcon, Avatar, Badge, Button, Card, Group, Text } from '@mantine/core';
+import {
+  ActionIcon,
+  Avatar,
+  Badge,
+  Button,
+  Card,
+  Group,
+  Text,
+} from "@mantine/core";
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandTwitter,
   IconMail,
   IconPhone,
-} from '@tabler/icons-react';
-import profileimg from '../../assets/Profilepicturedemo.jpg';
-import classes from './PpProfileBox.module.css';
+} from "@tabler/icons-react";
+import profileimg from "../../assets/Profilepicturedemo.jpg";
+import classes from "./PpProfileBox.module.css";
 
 // Define the mock data
 const mockData = {
-  name: 'Virat Patel',
-  username: 'virat_patel',
-  location: 'Mumbai, India',
-  bio: 'Dedicated cricket enthusiast with a passion for leadership and strategy. Committed to excelling and inspiring on the field.',
+  name: "Virat Patel",
+  username: "virat_patel",
+  location: "Mumbai, India",
+  bio: "Dedicated cricket enthusiast with a passion for leadership and strategy. Committed to excelling and inspiring on the field.",
   badges: [
-    { label: 'Cricket', color: 'orange', variant: 'light' },
-    { label: 'Football', color: 'orange', variant: 'light' },
+    { label: "Cricket", color: "orange", variant: "light" },
+    { label: "Football", color: "orange", variant: "light" },
   ],
-  team: 'Mumbai Tigers | U-19 State Squad',
-  achievements: '4 years of competitive play, 3-time state champion, 1-time national semi-finalist',
-  email: 'aarav.patel@email.com',
-  phone: '00000-00000',
+  team: "Mumbai Tigers | U-19 State Squad",
+  achievements:
+    "4 years of competitive play, 3-time state champion, 1-time national semi-finalist",
+  email: "aarav.patel@email.com",
+  phone: "00000-00000",
   socialLinks: {
-    facebook: 'https://facebook.com/virat_patel',
-    instagram: 'https://instagram.com/virat_patel',
-    twitter: 'https://twitter.com/virat_patel',
+    facebook: "https://facebook.com/virat_patel",
+    instagram: "https://instagram.com/virat_patel",
+    twitter: "https://twitter.com/virat_patel",
   },
   avatarUrl: { profileimg },
 };
@@ -48,7 +57,13 @@ export function PpProfileBox() {
 
   return (
     <Card withBorder padding="lg" radius="md" className={classes.card}>
-      <Avatar src={profileimg} size={85} radius={80} mx="auto" className={classes.avatar} />
+      <Avatar
+        src={profileimg}
+        size={85}
+        radius={80}
+        mx="auto"
+        className={classes.avatar}
+      />
       <Text ta="center" className={classes.name}>
         {name}
       </Text>
@@ -125,8 +140,9 @@ export function PpProfileBox() {
         </ActionIcon>
       </Group>
       <hr />
-      <a href="profileSetingPage"><Button className={classes.Editbtn}>Edit Profile</Button></a>
-      
+      <a href="/profile-page/edit-profile">
+        <Button className={classes.Editbtn}>Edit Profile</Button>
+      </a>
     </Card>
   );
 }

@@ -44,8 +44,8 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
             <Grid.Col span={12}>
               <TextInput
                 type="text"
-                autoComplete="official-link"
-                label="official-link"
+                autoComplete="Official link"
+                label="Official link"   
                 placeholder="Enter the official tournament website URL"
                 value={links.officialLink}
                 onChange={(e) =>
@@ -56,8 +56,8 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
             <Grid.Col span={12}>
               <TextInput
                 type="text"
-                autoComplete="facebook-link"
-                label="facebook-link"
+                autoComplete="Facebook link"
+                label="Facebook link"
                 placeholder="Enter the Facebook page URL"
                 value={links.facebookLink}
                 onChange={(e) =>
@@ -68,8 +68,8 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
             <Grid.Col span={12}>
               <TextInput
                 type="text"
-                autoComplete="x-link"
-                label="x-link"
+                autoComplete="X link"
+                label="X link"
                 placeholder="Enter the X handle or link"
                 value={links.xLink}
                 onChange={(e) => setLinks({ ...links, xLink: e.target.value })}
@@ -78,8 +78,8 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
             <Grid.Col span={12}>
               <TextInput
                 type="text"
-                autoComplete="insta-link"
-                label="insta-link"
+                autoComplete="Insta link"
+                label="Insta link"
                 placeholder="Enter the Instagram profile URL"
                 value={links.instaLink}
                 onChange={(e) =>
@@ -91,7 +91,7 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
         </Grid.Col>
         <Grid.Col span={4}>
           <FileInput
-            label="upload-poster-image"
+            label="Upload poster image"
             placeholder="Upload the event poster image"
             // icon={<IconUpload size={14} />}
             accept="image/*"
