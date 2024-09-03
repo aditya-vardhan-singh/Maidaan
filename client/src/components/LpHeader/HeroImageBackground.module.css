@@ -2,11 +2,11 @@
   position: relative;
   padding-top: rem(180px);
   padding-bottom: rem(130px);
-  background-image: url(../../assets/LpHeader.jpeg);
+  background-image: url(../../assets/LpNewImg.jpg);
   background-size: cover;
   background-position: center;
   margin-top: 0%;
-  height: 92vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,6 +65,7 @@
   justify-content: center;
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
+  
 
   @media (max-width: $mantine-breakpoint-xs) {
     flex-direction: column;
@@ -75,6 +76,10 @@
   height: rem(42px);
   font-size: var(--mantine-font-size-md);
   color: #f1a02f;
+ 
+  margin: 3%;
+  margin-top: 0%;
+
   /* background: #FCE8CE99; */
   @mixin hover {
     background-color: light-dark(#f1a02f, var(--mantine-color-dark-6));
@@ -82,7 +87,7 @@
   }
 
   &:not(:first-of-type) {
-    margin-left: var(--mantine-spacing-md);
+    margin-left: 5%;
   }
 
   @media (max-width: $mantine-breakpoint-xs) {

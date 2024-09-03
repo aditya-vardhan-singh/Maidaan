@@ -5,7 +5,10 @@
     justify-content: center;
     align-items: safe;
     height: fit-content;
+    margin: 5%;
+    margin-left:1%;
     margin-top: 1%;
+
     /* padding-bottom: 530px; */
     background: #FCE8CE80;
     border: rem(2px) solid #F1A02F;

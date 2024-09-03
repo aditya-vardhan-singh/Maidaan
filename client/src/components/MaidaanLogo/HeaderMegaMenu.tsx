@@ -12,6 +12,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { IconUser } from "@tabler/icons-react";
 import { MantineLogo } from "@mantinex/mantine-logo";
+import MaidaanLogo from "../../assets/MaidaanLogoTwo.png";
 import classes from "./HeaderMegaMenu.module.css";
 
 
@@ -27,7 +28,8 @@ export function HeaderMegaMenu() {
         <Group justify="space-between" h="100%">
           <a href="/" style={{ textDecoration: "none", color: "initial" }}>
             {" "}
-            <MantineLogo size={30} />
+            {/* <MantineLogo size={30} /> */}
+            <img src={MaidaanLogo} alt="" className={classes.Logo} />
           </a>
 
           <Group h="100%" gap={0} visibleFrom="md">
@@ -50,10 +52,11 @@ export function HeaderMegaMenu() {
 
           <Group visibleFrom="md">
             <a href="/hosting" className={classes.linkbtn}>
-              <p className={`${classes.inactive}`}>Host an Event</p>
+              <p className={`${classes.inactive}`}>Host</p>
             </a>
             <a href="/profile-page">
-              <IconUser size={30} color="#F1A02F" />
+            <div className={classes.Probtn}><IconUser size={35} color="#F1A02F" /></div>
+            
             </a>
             <a href="/SignUp" className={classes.Signbtn}>
               <Button color="#F1A02F" className={classes.Signbtn}>
@@ -99,7 +102,7 @@ export function HeaderMegaMenu() {
           <Divider my="sm" />
           <Group justify="center" grow pb="xl" px="md">
             <a href="/hosting" className={classes.linkbtn}>
-              Host an Event
+              Host 
             </a>
             <a href="/signup" className={classes.Signbtn}>
               <Button color="#F1A02F" className={classes.Signbtn}>
