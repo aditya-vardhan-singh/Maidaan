@@ -12,6 +12,7 @@ import HpSchdulePage from "@/components/HpForm/HpSchedulePage"; // 1 warn, revie
 import HpFormNavbar from "@/components/HpFormNavbar/HpFormNavbar"; // reviewed
 import { baseURL } from "@/Utility";
 
+
 interface Details {
   tournamentName: string;
   startDate: string;
@@ -49,12 +50,13 @@ interface Tournament {
   links: Links;
   prize: Prize;
   schedules: Schedule[];
-  registrationStatus: string;
+  registrationStatus: String;
 }
 
 const convertToISOFormat = (dateString: string): string => {
   return new Date(dateString).toISOString();
 };
+
 
 const HostingPage: React.FC = () => {
   const [page, setPage] = useState<string>("");
@@ -90,16 +92,17 @@ const HostingPage: React.FC = () => {
       endTime: "",
     },
   ]);
-  const [registrationStatus, setRegistrationStatus] = useState<string>("");
+  const [registrationStatus, setRegistrationStatus] = useState("")
 
   /* All forms data compiled in tournaments */
   const [tournament, setTournament] = useState<Tournament>({
-    details,
-    links,
-    prize,
-    schedules,
-    registrationStatus,
+    details: details,
+    links: links,
+    prize: prize,
+    schedules: schedules,
+    registrationStatus: registrationStatus
   });
+
 
   const handleFormSubmit = async () => {
     // Convert dates to ISO format before submission
@@ -109,7 +112,7 @@ const HostingPage: React.FC = () => {
       endDate: convertToISOFormat(details.endDate),
     };
 
-    const formattedSchedules = schedules.map(schedule => ({
+    const formattedSchedules = schedules.map((schedule) => ({
       ...schedule,
       startDate: convertToISOFormat(schedule.startDate),
       endDate: convertToISOFormat(schedule.endDate),
@@ -120,6 +123,8 @@ const HostingPage: React.FC = () => {
       details: formattedDetails,
       schedules: formattedSchedules,
     };
+
+    console.log(formattedTournament);
 
     try {
       const response: { message: string } = await axios.post(

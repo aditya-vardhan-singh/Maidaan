@@ -19,11 +19,8 @@ export function HpDetailsubmit({
 }: NavProps) {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleStatusChange = (value: string | null) => {
-    if (value !== null) {
-      setRegistrationStatus(value);
-      setSubmitted(false); // Reset the submitted state when status changes
-    }
+  const handleStatusChange = (e: string | null) => {
+    
   };
 
   const handleSubmit = () => {
@@ -38,9 +35,9 @@ export function HpDetailsubmit({
           label="Registration Status"
           placeholder="Select status"
           required
-          data={["Open", "Upcoming", "Closed"]}
+          data={["ONGOING", "UPCOMING", "FINISHED"]}
           value={registrationStatus}
-          onChange={handleStatusChange}
+          onChange={(value) => setRegistrationStatus(value || "")}
           className={classes.statusSelect}
           styles={(theme) => ({
             item: {
