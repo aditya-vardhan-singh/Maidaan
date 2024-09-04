@@ -12,126 +12,93 @@ import HpSchdulePage from "@/components/HpForm/HpSchedulePage"; // 1 warn, revie
 import HpFormNavbar from "@/components/HpFormNavbar/HpFormNavbar"; // reviewed
 import { baseURL } from "@/Utility";
 
-
-interface Details {
-  tournamentName: string;
-  startDate: string;
-  endDate: string;
-  venueName: string;
-  city: string;
-  tournamentDetails: string;
+export interface Tournament {
+  details: {
+    tournamentName: string;
+    startDate: string;
+    endDate: string;
+    selectedOption: string;
+    registrationFees: string;
+    venueName: string;
+    city: string;
+    tournamentDetails: string;
+  };
+  links: {
+    officialLink: string;
+    facebookLink: string;
+    xLink: string;
+    instaLink: string;
+    posterImage: string;
+  };
+  prize: {
+    tournamentRules: string;
+    prizeName: string;
+    amount: string;
+    trophy: boolean;
+    medal: boolean;
+    certificate: boolean;
+    participationCertificate: boolean;
+  };
+  schedules: {
+    scheduleName: string;
+    startDate: string;
+    startTime: string;
+    endDate: string;
+    endTime: string;
+  }[];
+  registrationStatus: string;
 }
-
-interface Links {
-  officialLink: string;
-  facebookLink: string;
-  xLink: string;
-  instaLink: string;
-  posterImage: string;
-}
-
-interface Prize {
-  prizeName: string;
-  trophyDesc: string;
-  medalDesc: string;
-  amount: string;
-}
-
-interface Schedule {
-  scheduleName: string;
-  startDate: string;
-  startTime: string;
-  endDate: string;
-  endTime: string;
-}
-
-interface Tournament {
-  details: Details;
-  links: Links;
-  prize: Prize;
-  schedules: Schedule[];
-  registrationStatus: String;
-}
-
-const convertToISOFormat = (dateString: string): string => {
-  return new Date(dateString).toISOString();
-};
-
 
 const HostingPage: React.FC = () => {
   const [page, setPage] = useState<string>("");
 
-  /* Form Data */
-  const [details, setDetails] = useState<Details>({
-    tournamentName: "",
-    startDate: "",
-    endDate: "",
-    venueName: "",
-    city: "",
-    tournamentDetails: "",
-  });
-  const [links, setLinks] = useState<Links>({
-    officialLink: "",
-    facebookLink: "",
-    xLink: "",
-    instaLink: "",
-    posterImage: "",
-  });
-  const [prize, setPrize] = useState<Prize>({
-    prizeName: "",
-    trophyDesc: "",
-    medalDesc: "",
-    amount: "",
-  });
-  const [schedules, setSchedules] = useState<Schedule[]>([
-    {
-      scheduleName: "",
-      startDate: "",
-      startTime: "",
-      endDate: "",
-      endTime: "",
-    },
-  ]);
-  const [registrationStatus, setRegistrationStatus] = useState("")
-
   /* All forms data compiled in tournaments */
   const [tournament, setTournament] = useState<Tournament>({
-    details: details,
-    links: links,
-    prize: prize,
-    schedules: schedules,
-    registrationStatus: registrationStatus
+    details: {
+      tournamentName: "",
+      startDate: "",
+      endDate: "",
+      selectedOption: "",
+      registrationFees: "",
+      venueName: "",
+      city: "",
+      tournamentDetails: "",
+    },
+    links: {
+      officialLink: "",
+      facebookLink: "",
+      xLink: "",
+      instaLink: "",
+      posterImage: "",
+    },
+    prize: {
+      tournamentRules: "",
+      prizeName: "",
+      amount: "",
+      trophy: false,
+      medal: false,
+      certificate: false,
+      participationCertificate: false,
+    },
+    schedules: [
+      {
+        scheduleName: "",
+        startDate: "",
+        startTime: "",
+        endDate: "",
+        endTime: "",
+      },
+    ],
+    registrationStatus: "",
   });
 
-
   const handleFormSubmit = async () => {
-    // Convert dates to ISO format before submission
-    const formattedDetails = {
-      ...details,
-      startDate: convertToISOFormat(details.startDate),
-      endDate: convertToISOFormat(details.endDate),
-    };
-
-    const formattedSchedules = schedules.map((schedule) => ({
-      ...schedule,
-      startDate: convertToISOFormat(schedule.startDate),
-      endDate: convertToISOFormat(schedule.endDate),
-    }));
-
-    const formattedTournament: Tournament = {
-      ...tournament,
-      details: formattedDetails,
-      schedules: formattedSchedules,
-    };
-
-    console.log(formattedTournament);
-
     try {
       const response: { message: string } = await axios.post(
         `${baseURL}/tournaments/new`,
         {
-          tournament: formattedTournament,
-        }
+          tournament: tournament,
+        },
       );
       toast.success(response.message || "Tournament registered successfully");
     } catch (err) {
@@ -148,8 +115,8 @@ const HostingPage: React.FC = () => {
           <HpDetailsPage
             setPage={setPage}
             page={page}
-            details={details}
-            setDetails={setDetails}
+            tournament={tournament}
+            setTournament={setTournament}
           />
         </>
       ) : page === "LinksPage" ? (
@@ -158,8 +125,8 @@ const HostingPage: React.FC = () => {
           <HpDetailsPageLinks
             setPage={setPage}
             page={page}
-            links={links}
-            setLinks={setLinks}
+            tournament={tournament}
+            setTournament={setTournament}
           />
         </>
       ) : page === "PrizesPage" ? (
@@ -168,8 +135,8 @@ const HostingPage: React.FC = () => {
           <HpFormPrizePage
             setPage={setPage}
             page={page}
-            prize={prize}
-            setPrize={setPrize}
+            tournament={tournament}
+            setTournament={setTournament}
           />
         </>
       ) : page === "SchedulePage" ? (
@@ -178,8 +145,8 @@ const HostingPage: React.FC = () => {
           <HpSchdulePage
             setPage={setPage}
             page={page}
-            schedules={schedules}
-            setSchedules={setSchedules}
+            tournament={tournament}
+            setTournament={setTournament}
           />
         </>
       ) : page === "SubmitPage" ? (
@@ -188,8 +155,8 @@ const HostingPage: React.FC = () => {
           <HpDetailsubmit
             setPage={setPage}
             page={page}
-            registrationStatus={registrationStatus}
-            setRegistrationStatus={setRegistrationStatus}
+            tournament={tournament}
+            setTournament={setTournament}
             handleFormSubmit={handleFormSubmit}
           />
         </>
