@@ -41,10 +41,10 @@ export async function initPassport(app: Express): Promise<void> {
 
   passport.use(
     "local",
-    new LocalStrategy(async (username: string, password: string, cb) => {
+    new LocalStrategy(async (email: string, password: string, cb) => {
       try {
         const user = await prisma.userProfile.findUnique({
-          where: { username: username },
+          where: { email: email },
         });
 
         if (user && user.authType === AuthType.LOCAL && user.password) {
@@ -91,7 +91,6 @@ export async function initPassport(app: Express): Promise<void> {
             user = await prisma.userProfile.create({
               data: {
                 email: email,
-                username: profile.displayName,
                 googleId: profile.id,
                 authType: AuthType.GOOGLE,
               },
@@ -178,9 +177,10 @@ export function initAuthRoutes(): Router {
         },
       });
 
-      res
-        .status(201)
-        .json({ message: "User created successfully", user: newUser });
+      req.login(newUser, (err) => {
+        console.log("success");
+        res.redirect("/");
+      });
     } catch (error) {
       console.error("Error during signup:", error);
       res.status(500).json({ message: "An error occurred during signup" });
