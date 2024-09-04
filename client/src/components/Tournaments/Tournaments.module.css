@@ -1,6 +1,7 @@
 .container {
     padding-top: 20px;
     padding-inline: rem(100px);
+    /* height: 90%;  */
      @media (max-width: em(750px)) {
     padding-inline: rem(20px);
   }

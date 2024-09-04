@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Group, Code, Button } from '@mantine/core';
+import { useState } from "react";
+import MaidaanLogo from '@/assets/MaidaanLogoTwo.png'
+import { Group, Code, Button } from "@mantine/core";
 import {
   IconUser,
   IconPhone,
@@ -9,56 +10,84 @@ import {
   IconSwitchHorizontal,
   IconLogout,
   IconMenu, // Icon for mobile menu toggle
-} from '@tabler/icons-react';
-import { MantineLogo } from '@mantinex/mantine-logo';
+} from "@tabler/icons-react";
 
-import classes from './PspNav.module.css';
+import classes from "./PspNav.module.css";
 
 const data = [
-  { link: '', label: 'Personal Information', icon: IconUser },
-  { link: '', label: 'Contact Information', icon: IconPhone },
-  { link: '', label: 'Sport Profile', icon: IconTrophy },
-  { link: '', label: 'Tournament', icon: IconMedal },
-  { link: '', label: 'Document', icon: IconFileText },
+  {
+    link: "Personal Information",
+    label: "Personal Information",
+    icon: IconUser,
+  },
+  {
+    link: "Contact Information",
+    label: "Contact Information",
+    icon: IconPhone,
+  },
+  { link: "Sport Profile", label: "Sport Profile", icon: IconTrophy },
+  {
+    link: "Tournament Participation",
+    label: "Tournament Participation",
+    icon: IconMedal,
+  },
+  { link: "Document", label: "Document", icon: IconFileText },
 ];
-
-export function PspNav() {
-  const [active, setActive] = useState('Personal Information');
+interface NavProps {
+  page: string;
+  setPage: React.Dispatch<React.SetStateAction<string>>;
+}
+export function PspNav({ page, setPage }: NavProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const links = data.map((item) => (
-    <a
+    <p
       className={classes.link}
-      data-active={item.label === active || undefined}
-      href={item.link}
+      data-active={item.link === page || undefined}
+      // href={item.link}
       key={item.label}
+      style={{ cursor: "pointer" }}
       onClick={(event) => {
         event.preventDefault();
-        setActive(item.label);
         if (mobileMenuOpen) setMobileMenuOpen(false);
+        setPage(`${item.link}`);
       }}
     >
       <item.icon className={classes.linkIcon} stroke={1.5} />
       <span>{item.label}</span>
-    </a>
+    </p>
   ));
 
   return (
-    <nav className={`${classes.navbar} ${mobileMenuOpen ? classes.navbarOpen : ''}`}>
+    <nav
+      className={`${classes.navbar} ${mobileMenuOpen ? classes.navbarOpen : ""}`}
+    >
       <div className={classes.navbarMain}>
         <Group className={classes.header}>
-          <MantineLogo size={28} inverted style={{ color: 'white' }} />
+        <a href="/" style={{ textDecoration: "none", color: "initial" }}>
+            {" "}
+            {/* <MantineLogo size={30} /> */}
+            <img src={MaidaanLogo} alt="" className={classes.Logo} />
+          </a>
         </Group>
         {links}
       </div>
 
       <div className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          href="#"
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+        >
           <IconSwitchHorizontal className={classes.linkIcon} stroke={1.5} />
           <span>Change account</span>
         </a>
 
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a
+          href="#"
+          className={classes.link}
+          onClick={(event) => event.preventDefault()}
+        >
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </a>
