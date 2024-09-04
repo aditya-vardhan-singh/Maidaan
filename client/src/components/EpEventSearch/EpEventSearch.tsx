@@ -151,7 +151,7 @@ export function EventSearch() {
   );
 
   return (
-    <Container my="md" className={classes.contai} id="target-section">
+    <Container  className={classes.contai} id="target-section">
       <Title className={classes.heading}>Upcoming Fitness and Sports Events in India</Title>
       <>
         <Select
