@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { TextInput, Container, Grid, Button, Group } from "@mantine/core";
+import { Tournament } from "@/pages/HostingPage";
 import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
-  schedules: Schedule[];
-  setSchedules: React.Dispatch<React.SetStateAction<Schedule[]>>;
+  tournament: Tournament;
+  setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 }
 
 interface Schedule {
@@ -17,7 +18,7 @@ interface Schedule {
   endTime: string;
 }
 
-function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
+function HpSchdulePage({ page, setPage, tournament, setTournament }: NavProps) {
   // const [schedules, setSchedules] = useState<ScheduleData[]>([
   //   {
   //     scheduleName: "",
@@ -29,16 +30,19 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
   // ]);
 
   const handleAddSchedule = () => {
-    setSchedules([
-      ...schedules,
-      {
-        scheduleName: "",
-        startDate: "",
-        startTime: "",
-        endDate: "",
-        endTime: "",
-      },
-    ]);
+    setTournament({
+      ...tournament,
+      schedules: [
+        ...tournament.schedules,
+        {
+          scheduleName: "",
+          startDate: "",
+          startTime: "",
+          endDate: "",
+          endTime: "",
+        },
+      ],
+    });
   };
 
   const handleChange = (
@@ -46,27 +50,27 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
     field: keyof Schedule,
     value: string,
   ) => {
-    const newSchedules = schedules.map((schedule, i) =>
+    const newSchedules = tournament.schedules.map((schedule, i) =>
       i === index ? { ...schedule, [field]: value } : schedule,
     );
-    setSchedules(newSchedules);
+    setTournament({ ...tournament, schedules: newSchedules });
   };
 
   const handleDeleteSchedule = (index: number) => {
-    const newSchedules = schedules.filter((_, i) => i !== index);
-    setSchedules(newSchedules);
+    const newSchedules = tournament.schedules.filter((_, i) => i !== index);
+    setTournament({ ...tournament, schedules: newSchedules });
   };
 
   return (
     <Container mt={30} className={styles.formContainer}>
-      {schedules.map((schedule, index) => (
+      {tournament.schedules.map((schedule, index) => (
         <div key={index} className={styles.scheduleContainer}>
           <Grid>
             <Grid.Col span={6}>
               <TextInput
                 type="text"
                 autoComplete="schedule-name"
-                label="schedule-name"
+                label="Schedule name"
                 placeholder="Enter the official tournament event name"
                 required
                 value={schedule.scheduleName}
@@ -91,8 +95,8 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
 
             <Grid.Col span={3}>
               <TextInput
-                type="date"
-                label="Start-time"
+                type="time"
+                label="Start time"
                 placeholder="HH:MM"
                 required
                 value={schedule.startTime}
@@ -115,8 +119,8 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
 
             <Grid.Col span={3}>
               <TextInput
-                type="date"
-                label="end-time"
+                type="time"
+                label="End time"
                 placeholder="HH:MM"
                 required
                 value={schedule.endTime}
@@ -153,7 +157,6 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
         <Button
           onClick={() => {
             setPage("SubmitPage");
-            console.log(schedules);
           }}
           color="#058A4A"
         >

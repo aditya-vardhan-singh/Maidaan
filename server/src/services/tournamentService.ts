@@ -107,40 +107,106 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/tournaments/new", async (req: Request, res: Response) => {
-  const tournament = req.body['tournament'];
+  // ############
+  // MESSAGE 1 🤌🏻
+  // This is the type of input you will receive 👇🏻
+  interface Tournament {
+    details: {
+      tournamentName: string;
+      startDate: string;
+      endDate: string;
+      selectedOption: string;
+      registrationFees: string;
+      venueName: string;
+      city: string;
+      tournamentDetails: string;
+    };
+    links: {
+      officialLink: string;
+      facebookLink: string;
+      xLink: string;
+      instaLink: string;
+      posterImage: string;
+    };
+    prize: {
+      tournamentRules: string;
+      prizeName: string;
+      amount: string;
+      trophy: boolean;
+      medal: boolean;
+      certificate: boolean;
+      participationCertificate: boolean;
+    };
+    schedules: {
+      scheduleName: string;
+      startDate: string;
+      startTime: string;
+      endDate: string;
+      endTime: string;
+    }[];
+    registrationStatus: string;
+  }
+
+  const tournament: Tournament = req.body["tournament"];
   const details = tournament.details;
-  const links = tournament.details;
-  const prize = tournament.details;
-  const schedules = tournament.details;
+  const links = tournament.links;
+  const prize = tournament.prize;
+  const schedules = tournament.schedules;
   const registrationStatus = tournament.registrationStatus;
 
-  console.log(registrationStatus)
-  
+  // console.log(tournament);
+  // Output: 👇🏻
+  // {
+  //   details: {
+  //     tournamentName: 'Champions League',
+  //     startDate: '2024-09-07',
+  //     endDate: '2024-09-08',
+  //     selectedOption: 'basketball',
+  //     registrationFees: '1000',
+  //     venueName: 'Ekana Indoor Stadium',
+  //     city: 'Lucknow',
+  //     tournamentDetails: 'No details yet'
+  //   },
+  //   links: {
+  //     officialLink: 'No official link',
+  //     facebookLink: 'No fb either',
+  //     xLink: "I have x link but won't share, sorry :P",
+  //     instaLink: 'Insta huh? Can I know why??!',
+  //     posterImage: ''
+  //   },
+  //   prize: {
+  //     tournamentRules: 'You are free to kick the basketball',
+  //     prizeName: 'Losers of the League',
+  //     amount: '00000001',
+  //     trophy: true,
+  //     medal: true,
+  //     certificate: true,
+  //     participationCertificate: false
+  //   },
+  //   schedules: [
+  //     {
+  //       scheduleName: 'Day 1',
+  //       startDate: '2024-09-07',
+  //       startTime: '10:00',
+  //       endDate: '2024-09-07',
+  //       endTime: '14:00'
+  //     },
+  //     {
+  //       scheduleName: 'Day 2',
+  //       startDate: '2024-09-08',
+  //       startTime: '10:00',
+  //       endDate: '2024-09-07',
+  //       endTime: '14:00'
+  //     }
+  //   ],
+  //   registrationStatus: 'UPCOMING'
+  // }
+
+  // FROM: Aditya 🤟🏻
+  // MESSAGE 1 ENDS
+  // ############
+
   try {
-    const {
-      details: {
-        tournamentName,
-        startDate,
-        endDate,
-        venueName,
-        city,
-        tournamentDetails,
-      },
-      links: { officialLink, facebookLink, xLink, instaLink, posterImage },
-      prize: { prizeName, trophy, medal, amount },
-      schedules,
-      registrationStatus,
-      sportId,
-      organizerId,
-    } = req.body.tournament; // <-- Access the `tournament` object
-
-    console.log("Checkpoint 1");
-
-    if (!Object.values(EventStatus).includes(registrationStatus)) {
-      return res.status(400).json({ error: "Invalid registration status" });
-    }
-
-    console.log("White Ferrari")
     // Create the tournament in the database
     const tournament = await prisma.tournament.create({
       data: {
@@ -150,7 +216,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         city: city,
         venueName: venueName,
         tournamentDetails: tournamentDetails,
-        
+
         sport: { connect: { id: sportId } }, // Corrected: use 'connect' for existing relations
         organizer: { connect: { id: organizerId } }, // Corrected: use 'connect' for existing relations
         links: {
