@@ -15,6 +15,7 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), -2px -2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
   background: #06A35733;
+  margin-bottom: 10%;
 
 }
 .Tickbox{

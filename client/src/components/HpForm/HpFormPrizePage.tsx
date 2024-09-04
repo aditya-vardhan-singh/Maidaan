@@ -25,19 +25,19 @@ interface Prize {
 
 function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
   return (
-    <Container mt={30} className={styles.formContainer}>
-      <Grid>
+    <Container mt={30} className={styles.formContainer} >
+      <Grid >
         <Group>
           <Group>
-          <Grid.Col span={12}>
-          <TextInput
-            type="text"
-            autoComplete="rules"
-            label="Tournament Rules"
-            placeholder="Enter tournamentRules"
-            required
-          />
-        </Grid.Col>
+            <Grid.Col span={12}>
+              <TextInput
+                type="text"
+                autoComplete="rules"
+                label="Tournament Rules"
+                placeholder="Enter tournamentRules"
+                required
+              />
+            </Grid.Col>
             <Grid.Col span={6}>
               <TextInput
                 type="text"
@@ -75,35 +75,37 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
             </Grid.Col>
           </Group>
         </Group>
-        <Group>
-          <Group>
-            <Grid.Col span={6}>
-              <TextInput
-                type="text"
-                autoComplete="Prize Name (Optional)"
-                label="Prize Name"
-                placeholder="Enter Prize Name"
-                value={prize.prizeName}
-                onChange={(e) =>
-                  setPrize({ ...prize, prizeName: e.target.value })
-                }
-              />
-            </Grid.Col>
-            <Grid.Col span={6}>
-              <TextInput
-                type="number"
-                label="Amount"
-                placeholder="INR 1 Lakh for 1st Position"
-                value={prize.amount}
-                onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
-              />
-            </Grid.Col>
-          </Group>
-        
-        </Group>
-        
       </Grid>
+
+      <Group mt={50}>
+        <Button
+          onClick={() => setPage("LinksPage")}
+          styles={(theme) => ({
+            root: {
+              backgroundColor: "#058A4A",
+              "&:hover": {
+                backgroundColor: "#046C3A",
+              },
+            },
+          })}
+        >
+          Prev
+        </Button>
       
+        <Button
+          onClick={() => setPage("SchedulePage")}
+          styles={(theme) => ({
+            root: {
+              backgroundColor: "#058A4A",
+              "&:hover": {
+                backgroundColor: "#046C3A",
+              },
+            },
+          })}
+        >
+          Next
+        </Button>
+      </Group>
     </Container>
   );
 }

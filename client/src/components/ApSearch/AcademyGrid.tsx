@@ -272,7 +272,7 @@ export function AcademyGrid() {
   );
 
   return (
-    <Container my="md" className={classes.contai} id="target-section">
+    <Container  className={classes.contai} id="target-section">
       <Toaster richColors />
       <Title className={classes.heading}>
         Elite Academy Finder: Where Passion Meets Opportunity
