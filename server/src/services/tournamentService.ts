@@ -10,19 +10,19 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
-        status: EventStatus.ONGOING,
+        registrationStatus: EventStatus.ONGOING,
       },
       select: {
         id: true,
-        title: true,
+        tournamentName: true,
         sport: {
           select: {
             sportName: true,
           },
         },
         fee: true,
-        locationCity: true,
-        status: true,
+        city: true,
+        registrationStatus: true,
         startDate: true,
         endDate: true,
         _count: {
@@ -34,11 +34,11 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
     });
     const response = tournaments.map((tournament) => {
       return {
-        title: tournament.title,
+        tournamentName: tournament.tournamentName,
         sportName: tournament.sport.sportName,
-        locationCity: tournament.locationCity,
+        city: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
-        status: tournament.status,
+        registrationStatus: tournament.registrationStatus,
         fee: tournament.fee,
         startDate: tournament.startDate,
       };
@@ -51,19 +51,19 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
-        status: EventStatus.UPCOMING,
+        registrationStatus: EventStatus.UPCOMING,
       },
       select: {
         id: true,
-        title: true,
+        tournamentName: true,
         sport: {
           select: {
             sportName: true,
           },
         },
         fee: true,
-        locationCity: true,
-        status: true,
+        city: true,
+        registrationStatus: true,
         startDate: true,
         endDate: true,
         _count: {
@@ -75,11 +75,11 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
     });
     const response = tournaments.map((tournament) => {
       return {
-        title: tournament.title,
+        title: tournament.tournamentName,
         sportName: tournament.sport.sportName,
-        locationCity: tournament.locationCity,
+        locationCity: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
-        status: tournament.status,
+        status: tournament.registrationStatus,
         fee: tournament.fee,
         startDate: tournament.startDate,
       };
@@ -107,6 +107,15 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/tournaments/new", async (req: Request, res: Response) => {
+  const tournament = req.body['tournament'];
+  const details = tournament.details;
+  const links = tournament.details;
+  const prize = tournament.details;
+  const schedules = tournament.details;
+  const registrationStatus = tournament.registrationStatus;
+
+  console.log(registrationStatus)
+  
   try {
     const {
       details: {
@@ -117,27 +126,21 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         city,
         tournamentDetails,
       },
-      links: {
-        officialLink,
-        facebookLink,
-        xLink,
-        instaLink,
-        posterImage,
-      },
-      prize: {
-        prizeName,
-        trophy,
-        medal,
-        amount,
-      },
+      links: { officialLink, facebookLink, xLink, instaLink, posterImage },
+      prize: { prizeName, trophy, medal, amount },
       schedules,
       registrationStatus,
       sportId,
-      organizerId
-    } = req.body;
+      organizerId,
+    } = req.body.tournament; // <-- Access the `tournament` object
 
     console.log("Checkpoint 1");
 
+    if (!Object.values(EventStatus).includes(registrationStatus)) {
+      return res.status(400).json({ error: "Invalid registration status" });
+    }
+
+    console.log("White Ferrari")
     // Create the tournament in the database
     const tournament = await prisma.tournament.create({
       data: {
@@ -147,17 +150,16 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         city: city,
         venueName: venueName,
         tournamentDetails: tournamentDetails,
-        registrationStatus: registrationStatus,
-        sport: sportId, // Add the sport property
-        organizer: organizerId, // Add the organizer property
-        SportsParticipation: , // Add the SportsParticipation property
+        
+        sport: { connect: { id: sportId } }, // Corrected: use 'connect' for existing relations
+        organizer: { connect: { id: organizerId } }, // Corrected: use 'connect' for existing relations
         links: {
           create: {
-            officialLink: officialLink || '',
-            facebookLink: facebookLink || '',
-            xLink: xLink || '',
-            instaLink: instaLink || '',
-            posterImage: posterImage || '',
+            officialLink: officialLink || "",
+            facebookLink: facebookLink || "",
+            xLink: xLink || "",
+            instaLink: instaLink || "",
+            posterImage: posterImage || "",
           },
         },
         schedule: {
@@ -171,10 +173,10 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         },
         prizes: {
           create: {
-            prizeName: prizeName || '',
+            prizeName: prizeName || "",
             trophy: trophy,
             medal: medal,
-            amount: amount || '',
+            amount: parseFloat(amount) || 0, // Ensure amount is a number
           },
         },
       },
@@ -194,35 +196,30 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
   }
 });
 
-
 router.put("/tournaments/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
   const {
-    title,
+    tournamentName,
     sportId,
-    locationCity,
-    status,
+    city,
+    registrationStatus,
     fee,
     startDate,
     endDate,
-    locationVenue,
-    competitionLevel,
-    requiredPlayers,
+    venueName,
   } = req.body;
   try {
     const tournament = await prisma.tournament.update({
       where: { id: parseInt(id) },
       data: {
-        title,
-        sportId,
-        locationCity,
-        status,
-        fee,
-        startDate,
+        tournamentName: tournamentName,
+        sportId: sportId,
+        city: city,
+        registrationStatus: registrationStatus,
+        fee: fee,
+        startDate: startDate,
         endDate: endDate,
-        locationVenue: locationVenue,
-        competitionLevel: competitionLevel,
-        requiredPlayers: requiredPlayers,
+        venueName: venueName,
       },
     });
     res.json(tournament);

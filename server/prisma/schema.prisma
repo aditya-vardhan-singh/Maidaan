@@ -62,14 +62,14 @@ model EventParticipation {
 }
 
 model SportsParticipation {
-  id          Int          @id @default(autoincrement())
-  user        UserProfile  @relation(fields: [userId], references: [id])
-  userId      Int
-  sport       Sports       @relation(fields: [sportId], references: [id])
-  sportId     Int
-  startDate   DateTime
-  skillLevel  String?      @db.VarChar(50)
-  tournaments Tournament[]
+  id         Int         @id @default(autoincrement())
+  user       UserProfile @relation(fields: [userId], references: [id])
+  userId     Int
+  sport      Sports      @relation(fields: [sportId], references: [id])
+  sportId    Int
+  startDate  DateTime
+  skillLevel String?     @db.VarChar(50)
+  // tournaments Tournament[]
 
   @@unique([userId, sportId])
 }
@@ -134,8 +134,8 @@ model Tournament {
   organizerId             Int
   TournamentParticipation TournamentParticipation[]
   links                   Links[]                   @relation("TournamentLinks")
-  SportsParticipation     SportsParticipation       @relation(fields: [sportsParticipationId], references: [id])
-  sportsParticipationId   Int
+  // SportsParticipation     SportsParticipation       @relation(fields: [sportsParticipationId], references: [id])
+  // sportsParticipationId   Int
 }
 
 model Schedule {
@@ -150,15 +150,15 @@ model Schedule {
 }
 
 model Prizes {
-  id                       Int      @id @default(autoincrement())
+  id                       Int        @id @default(autoincrement())
   prizeName                String?
   trophy                   Boolean
   medal                    Boolean
   certificate              Boolean?
   participationCertificate Boolean?
   amount                   Float?
-  tournamentId Int
-  Tournament   Tournament @relation(fields: [tournamentId], references: [id])
+  tournamentId             Int
+  Tournament               Tournament @relation(fields: [tournamentId], references: [id])
 }
 
 model TrainingCourse {
