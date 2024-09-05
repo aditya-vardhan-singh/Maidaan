@@ -1,27 +1,26 @@
 import { useState } from "react";
 import { Button, Container, Select, Text, Group } from "@mantine/core";
+import { Tournament } from "@/pages/HostingPage";
 import classes from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
-  registrationStatus: string;
-  setRegistrationStatus: React.Dispatch<React.SetStateAction<string>>;
+  tournament: Tournament;
+  setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
   handleFormSubmit: Function;
 }
 
 export function HpDetailsubmit({
   page,
   setPage,
-  registrationStatus,
-  setRegistrationStatus,
+  tournament,
+  setTournament,
   handleFormSubmit,
 }: NavProps) {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleStatusChange = (e: string | null) => {
-    
-  };
+  const handleStatusChange = (e: string | null) => {};
 
   const handleSubmit = () => {
     setSubmitted(true);
@@ -37,8 +36,10 @@ export function HpDetailsubmit({
           placeholder="Select status"
           required
           data={["ONGOING", "UPCOMING", "FINISHED"]}
-          value={registrationStatus}
-          onChange={(value) => setRegistrationStatus(value || "")}
+          value={tournament.registrationStatus}
+          onChange={(value) =>
+            setTournament({ ...tournament, registrationStatus: value || "" })
+          }
           className={classes.statusSelect}
           styles={(theme) => ({
             item: {

@@ -8,24 +8,22 @@ import {
   TextInput,
 } from "@mantine/core";
 import React, { useState } from "react";
+import { Tournament } from "@/pages/HostingPage";
 import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
-  links: Links;
-  setLinks: React.Dispatch<React.SetStateAction<Links>>;
+  tournament: Tournament;
+  setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 }
 
-interface Links {
-  officialLink: string;
-  facebookLink: string;
-  xLink: string;
-  instaLink: string;
-  posterImage: string;
-}
-
-function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
+function HpDetailsPageLinks({
+  page,
+  setPage,
+  tournament,
+  setTournament,
+}: NavProps) {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -33,7 +31,10 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
     setImage(file);
     const objectUrl: string = URL.createObjectURL(file);
     setPreview(objectUrl);
-    setLinks({ ...links, posterImage: objectUrl });
+    setTournament({
+      ...tournament,
+      links: { ...tournament.links, posterImage: objectUrl },
+    });
   };
 
   return (
@@ -46,11 +47,17 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
               <TextInput
                 type="text"
                 autoComplete="Official link"
-                label="Official link"   
+                label="Official link"
                 placeholder="Enter the official tournament website URL"
-                value={links.officialLink}
+                value={tournament.links.officialLink}
                 onChange={(e) =>
-                  setLinks({ ...links, officialLink: e.target.value })
+                  setTournament({
+                    ...tournament,
+                    links: {
+                      ...tournament.links,
+                      officialLink: e.target.value,
+                    },
+                  })
                 }
               />
             </Grid.Col>
@@ -60,9 +67,15 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
                 autoComplete="Facebook link"
                 label="Facebook link"
                 placeholder="Enter the Facebook page URL"
-                value={links.facebookLink}
+                value={tournament.links.facebookLink}
                 onChange={(e) =>
-                  setLinks({ ...links, facebookLink: e.target.value })
+                  setTournament({
+                    ...tournament,
+                    links: {
+                      ...tournament.links,
+                      facebookLink: e.target.value,
+                    },
+                  })
                 }
               />
             </Grid.Col>
@@ -72,8 +85,13 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
                 autoComplete="X link"
                 label="X link"
                 placeholder="Enter the X handle or link"
-                value={links.xLink}
-                onChange={(e) => setLinks({ ...links, xLink: e.target.value })}
+                value={tournament.links.xLink}
+                onChange={(e) =>
+                  setTournament({
+                    ...tournament,
+                    links: { ...tournament.links, xLink: e.target.value },
+                  })
+                }
               />
             </Grid.Col>
             <Grid.Col span={12}>
@@ -82,9 +100,12 @@ function HpDetailsPageLinks({ page, setPage, links, setLinks }: NavProps) {
                 autoComplete="Insta link"
                 label="Insta link"
                 placeholder="Enter the Instagram profile URL"
-                value={links.instaLink}
+                value={tournament.links.instaLink}
                 onChange={(e) =>
-                  setLinks({ ...links, instaLink: e.target.value })
+                  setTournament({
+                    ...tournament,
+                    links: { ...tournament.links, instaLink: e.target.value },
+                  })
                 }
               />
             </Grid.Col>

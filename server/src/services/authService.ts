@@ -165,7 +165,7 @@ export function initAuthRoutes(): Router {
       if (existingUser) {
         return res
           .status(400)
-          .json({ message: "Username or email already exists" });
+          .json({ message: "Email already in use" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -179,7 +179,7 @@ export function initAuthRoutes(): Router {
 
       req.login(newUser, (err) => {
         console.log("success");
-        res.redirect("/");
+        res.redirect("/profile-page/edit-profile");
       });
     } catch (error) {
       console.error("Error during signup:", error);

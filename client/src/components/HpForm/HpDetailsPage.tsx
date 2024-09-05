@@ -7,61 +7,73 @@ import {
   Textarea,
   Select,
 } from "@mantine/core";
-// import React from "react";
 import React, { useState } from "react";
+import { Tournament } from "@/pages/HostingPage";
 import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
-  details: Details;
-  setDetails: React.Dispatch<React.SetStateAction<Details>>;
+  tournament: Tournament;
+  setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 }
 
-interface Details {
-  tournamentName: string;
-  startDate: string;
-  endDate: string;
-  venueName: string;
-  city: string;
-  tournamentDetails: string;
-}
+//Created Sports with IDs: [
+//     { id: 1, sportName: 'Cricket' },
+//     { id: 2, sportName: 'Football' },
+//     { id: 3, sportName: 'Tennis' },
+//     { id: 4, sportName: 'Badminton' },
+//     { id: 5, sportName: 'Swimming' },
+//     { id: 6, sportName: 'Running' },
+//     { id: 7, sportName: 'Yoga' },
+//     { id: 8, sportName: 'Gymnastics' },
+//     { id: 9, sportName: 'Martial Arts' },
+//     { id: 10, sportName: 'Weightlifting' },
+//     { id: 11, sportName: 'Cycling' },
+//     { id: 12, sportName: 'Volleyball' },
+//     { id: 13, sportName: 'Table Tennis' },
+//     { id: 14, sportName: 'Archery' }
+//     { id: 29, sportName: 'Basketball'}
+//   ]
+
 
 const sportsCategories = [
-  { value: "football", label: "Football" },
-  { value: "basketball", label: "Basketball" },
-  { value: "cricket", label: "Cricket" },
-  { value: "tennis", label: "Tennis" },
-  { value: "badminton", label: "Badminton" },
-  { value: "swimming", label: "Swimming" },
-  { value: "running", label: "Running" },
-  { value: "yoga", label: "Yoga" },
-  { value: "gymnastics", label: "Gymnastics" },
-  { value: "martial_arts", label: "Martial Arts" },
-  { value: "weightlifting", label: "Weightlifting" },
-  { value: "cycling", label: "Cycling" },
-  { value: "volleyball", label: "Volleyball" },
-  { value: "table_tennis", label: "Table Tennis" },
-  { value: "archery", label: "Archery" },
+  { value: "2", label: "Football" },
+  { value: "29", label: "Basketball" },
+  { value: "1", label: "Cricket" },
+  { value: "3", label: "Tennis" },
+  { value: "4", label: "Badminton" },
+  { value: "5", label: "Swimming" },
+  { value: "6", label: "Running" },
+  { value: "7", label: "Yoga" },
+  { value: "8", label: "Gymnastics" },
+  { value: "9", label: "Martial Arts" },
+  { value: "10", label: "Weightlifting" },
+  { value: "11", label: "Cycling" },
+  { value: "12", label: "Volleyball" },
+  { value: "13", label: "Table Tennis" },
+  { value: "14", label: "Archery" },
 ];
 
-function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
+function HpDetailsPage({ page, setPage, tournament, setTournament }: NavProps) {
   const today = new Date().toISOString().split("T")[0];
 
-  const [cost, setCost] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
-    if (/^\d*\.?\d*$/.test(value)) {  // Allow only numbers and a single dot for decimals
-      setCost(value);
+    if (/^\d*\.?\d*$/.test(value)) {
+      // Allow only numbers and a single dot for decimals
+      setTournament({
+        ...tournament,
+        details: { ...tournament.details, registrationFees: value },
+      });
       setError(null);
     } else {
-      setError('Please enter a valid number');
+      setError("Please enter a valid number");
     }
   };
 
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   return (
     <div className={styles.box}>
     <Container mt={30} className={styles.formContainer}>
@@ -73,9 +85,15 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             label="Tournament Name"
             placeholder="Enter Tournament Name"
             required
-            value={details.tournamentName}
+            value={tournament.details.tournamentName}
             onChange={(e) =>
-              setDetails({ ...details, tournamentName: e.target.value })
+              setTournament({
+                ...tournament,
+                details: {
+                  ...tournament.details,
+                  tournamentName: e.target.value,
+                },
+              })
             }
           />
         </Grid.Col>
@@ -86,27 +104,36 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             max={
               new Date(new Date().setFullYear(new Date().getFullYear() + 2))
                 .toISOString()
-                .split("T")[0]
+                .split("T")[1]
             }
             label="Start Date"
             placeholder="DD/MM/YYYY"
             required
-            value={details.startDate}
+            value={tournament.details.startDate}
             onChange={(e) =>
-              setDetails({ ...details, startDate: e.target.value })
+              setTournament({
+                ...tournament,
+                details: { ...tournament.details, startDate: e.target.value },
+              })
             }
           />
         </Grid.Col>
         <Grid.Col span={6}>
           <TextInput
             type="date"
-            min={details.startDate}
+            min={tournament.details.startDate}
             label="End Date"
             placeholder="DD/MM/YYYY"
             required
-            value={details.endDate}
+            value={tournament.details.endDate}
             onChange={(e) =>
-              setDetails({ ...details, endDate: e.target.value })
+              setTournament({
+                ...tournament,
+                details: {
+                  ...tournament.details,
+                  endDate: e.target.value,
+                },
+              })
             }
           />
         </Grid.Col>
@@ -116,8 +143,15 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
               label="Choose Sports"
               placeholder="Select Sports"
               required
-              value={selectedOption}
-              onChange={setSelectedOption}
+              value={tournament.details.selectedOption}
+              onChange={(value) => {
+                if (value !== null) {
+                  setTournament({
+                    ...tournament,
+                    details: { ...tournament.details, selectedOption: value },
+                  });
+                }
+              }}
               data={sportsCategories}
             />
           </div>
@@ -127,19 +161,12 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             <TextInput
               label="Registration Fees"
               placeholder="Enter the Registration Fees"
-              value={cost}
+              value={tournament.details.registrationFees}
               onChange={handleChange}
               error={error}
-               rightSection="₹"
+              rightSection="₹"
             />
             <br />
-            <Button
-              disabled={!cost || !!error}
-              onClick={() => alert(`Submitted cost: ₹${cost}`)}
-              color="#058A4A"
-            >
-              Submit
-            </Button>
           </div>
         </Grid.Col>
         <Grid.Col span={12}>
@@ -147,9 +174,12 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             label="Venue Name"
             placeholder="Enter the venue name"
             required
-            value={details.venueName}
+            value={tournament.details.venueName}
             onChange={(e) =>
-              setDetails({ ...details, venueName: e.target.value })
+              setTournament({
+                ...tournament,
+                details: { ...tournament.details, venueName: e.target.value },
+              })
             }
           />
         </Grid.Col>
@@ -158,8 +188,13 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             label="City"
             placeholder="Enter City"
             required
-            value={details.city}
-            onChange={(e) => setDetails({ ...details, city: e.target.value })}
+            value={tournament.details.city}
+            onChange={(e) =>
+              setTournament({
+                ...tournament,
+                details: { ...tournament.details, city: e.target.value },
+              })
+            }
           />
         </Grid.Col>
         <Grid.Col span={12}>
@@ -167,14 +202,20 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
             label="Tournament Details"
             placeholder="Provide details of the tournament"
             required
-            value={details.tournamentDetails}
+            value={tournament.details.tournamentDetails}
             onChange={(e) =>
-              setDetails({ ...details, tournamentDetails: e.target.value })
+              setTournament({
+                ...tournament,
+                details: {
+                  ...tournament.details,
+                  tournamentDetails: e.target.value,
+                },
+              })
             }
           />
         </Grid.Col>
       </Grid>
-      <Group mt={50}>
+      <Group mt={30}>
         <Button onClick={() => setPage("")} color="#058A4A">
           Prev
         </Button>

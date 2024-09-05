@@ -20,7 +20,7 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
             sportName: true,
           },
         },
-        fee: true,
+        registrationFee: true,
         city: true,
         registrationStatus: true,
         startDate: true,
@@ -39,7 +39,7 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
         city: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
         registrationStatus: tournament.registrationStatus,
-        fee: tournament.fee,
+        fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
     });
@@ -61,7 +61,7 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
             sportName: true,
           },
         },
-        fee: true,
+        registrationFee: true,
         city: true,
         registrationStatus: true,
         startDate: true,
@@ -80,7 +80,7 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
         locationCity: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
         status: tournament.registrationStatus,
-        fee: tournament.fee,
+        fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
     });
@@ -107,63 +107,130 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/tournaments/new", async (req: Request, res: Response) => {
-  const tournament = req.body['tournament'];
-  const details = tournament.details;
-  const links = tournament.details;
-  const prize = tournament.details;
-  const schedules = tournament.details;
-  const registrationStatus = tournament.registrationStatus;
-
-  console.log(registrationStatus)
+  const userId = req.user?.id
   
+  // ############
+  // MESSAGE 1 🤌🏻
+  // This is the type of input you will receive 👇🏻
+  interface Tournament {
+    details: {
+      tournamentName: string;
+      startDate: string;
+      endDate: string;
+      selectedOption: string;
+      registrationFees: string;
+      venueName: string;
+      city: string;
+      tournamentDetails: string;
+    };
+    links: {
+      officialLink: string;
+      facebookLink: string;
+      xLink: string;
+      instaLink: string;
+      posterImage: string;
+    };
+    prize: {
+      tournamentRules: string;
+      prizeName: string;
+      amount: string;
+      trophy: boolean;
+      medal: boolean;
+      certificate: boolean;
+      participationCertificate: boolean;
+    };
+    schedules: {
+      scheduleName: string;
+      startDate: string;
+      startTime: string;
+      endDate: string;
+      endTime: string;
+    }[];
+    registrationStatus: string;
+  }
+
+  const tournament: Tournament = req.body.tournament;
+  // const details = tournament.details;
+  // const links = tournament.links;
+  // const prize = tournament.prize;
+  // const schedules = tournament.schedules;
+  // const registrationStatus = tournament.registrationStatus;
+
+  // console.log(tournament);
+  // Output: 👇🏻
+  // {
+  //   details: {
+  //     tournamentName: 'Champions League',
+  //     startDate: '2024-09-07',
+  //     endDate: '2024-09-08',
+  //     selectedOption: 'basketball',
+  //     registrationFees: '1000',
+  //     venueName: 'Ekana Indoor Stadium',
+  //     city: 'Lucknow',
+  //     tournamentDetails: 'No details yet'
+  //   },
+  //   links: {
+  //     officialLink: 'No official link',
+  //     facebookLink: 'No fb either',
+  //     xLink: "I have x link but won't share, sorry :P",
+  //     instaLink: 'Insta huh? Can I know why??!',
+  //     posterImage: ''
+  //   },
+  //   prize: {
+  //     tournamentRules: 'You are free to kick the basketball',
+  //     prizeName: 'Losers of the League',
+  //     amount: '00000001',
+  //     trophy: true,
+  //     medal: true,
+  //     certificate: true,
+  //     participationCertificate: false
+  //   },
+  //   schedules: [
+  //     {
+  //       scheduleName: 'Day 1',
+  //       startDate: '2024-09-07',
+  //       startTime: '10:00',
+  //       endDate: '2024-09-07',
+  //       endTime: '14:00'
+  //     },
+  //     {
+  //       scheduleName: 'Day 2',
+  //       startDate: '2024-09-08',
+  //       startTime: '10:00',
+  //       endDate: '2024-09-07',
+  //       endTime: '14:00'
+  //     }
+  //   ],
+  //   registrationStatus: 'UPCOMING'
+  // }
+
+  // FROM: Aditya 🤟🏻
+  // MESSAGE 1 ENDS
+  // ############
+
   try {
-    const {
-      details: {
-        tournamentName,
-        startDate,
-        endDate,
-        venueName,
-        city,
-        tournamentDetails,
-      },
-      links: { officialLink, facebookLink, xLink, instaLink, posterImage },
-      prize: { prizeName, trophy, medal, amount },
-      schedules,
-      registrationStatus,
-      sportId,
-      organizerId,
-    } = req.body.tournament; // <-- Access the `tournament` object
-
-    console.log("Checkpoint 1");
-
-    if (!Object.values(EventStatus).includes(registrationStatus)) {
-      return res.status(400).json({ error: "Invalid registration status" });
-    }
-
-    console.log("White Ferrari")
-    // Create the tournament in the database
-    const tournament = await prisma.tournament.create({
+    const tournaments = await prisma.tournament.create({
       data: {
-        tournamentName: tournamentName,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        city: city,
-        venueName: venueName,
-        tournamentDetails: tournamentDetails,
-        
-        sport: { connect: { id: sportId } }, // Corrected: use 'connect' for existing relations
-        organizer: { connect: { id: organizerId } }, // Corrected: use 'connect' for existing relations
+        tournamentName: tournament.details.tournamentName,
+        startDate: new Date(tournament.details.startDate),
+        endDate: new Date(tournament.details.endDate),
+        city: tournament.details.city,
+        venueName: tournament.details.venueName,
+        tournamentDetails: tournament.details.tournamentDetails,
+        registrationFee: parseInt(tournament.details.registrationFees),
+        sport: { connect: { id: parseInt(tournament.details.selectedOption) } }, // Corrected: use 'connect' for existing relations
+        organizer: { connect: { id: userId } }, // Corrected: use 'connect' for existing relations
         links: {
           create: {
-            officialLink: officialLink || "",
-            facebookLink: facebookLink || "",
-            xLink: xLink || "",
-            instaLink: instaLink || "",
-            posterImage: posterImage || "",
+            officialLink: tournament.links.officialLink || "",
+            facebookLink: tournament.links.facebookLink || "",
+            xLink: tournament.links.xLink || "",
+            instaLink: tournament.links.instaLink || "",
+            posterImage: tournament.links.posterImage || "",
           },
         },
         schedule: {
-          create: schedules.map((schedule: any) => ({
+          create: tournament.schedules.map((schedule: any) => ({
             scheduleName: schedule.scheduleName,
             startDate: new Date(schedule.startDate),
             startTime: schedule.startTime,
@@ -173,10 +240,10 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         },
         prizes: {
           create: {
-            prizeName: prizeName || "",
-            trophy: trophy,
-            medal: medal,
-            amount: parseFloat(amount) || 0, // Ensure amount is a number
+            prizeName: tournament.prize.prizeName || "",
+            trophy: tournament.prize.trophy,
+            medal: tournament.prize.medal,
+            amount: parseFloat(tournament.prize.amount) || 0, // Ensure amount is a number
           },
         },
       },
@@ -189,7 +256,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
 
     console.log("Checkpoint 2");
 
-    res.json(tournament);
+    res.json(tournaments);
   } catch (error) {
     console.error("Error creating tournament:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -216,7 +283,7 @@ router.put("/tournaments/:id", async (req: Request, res: Response) => {
         sportId: sportId,
         city: city,
         registrationStatus: registrationStatus,
-        fee: fee,
+        registrationFee: fee,
         startDate: startDate,
         endDate: endDate,
         venueName: venueName,

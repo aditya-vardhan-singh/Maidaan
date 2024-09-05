@@ -7,23 +7,22 @@ import {
   TextInput,
   Checkbox,
 } from "@mantine/core";
+import { Tournament } from "@/pages/HostingPage";
 import styles from "./HpDetailsPage.module.css";
 
 interface NavProps {
   page: string;
   setPage: React.Dispatch<React.SetStateAction<string>>;
-  prize: Prize;
-  setPrize: React.Dispatch<React.SetStateAction<Prize>>;
+  tournament: Tournament;
+  setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 }
 
-interface Prize {
-  prizeName: string;
-  trophyDesc: string;
-  medalDesc: string;
-  amount: string;
-}
-
-function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
+function HpFormPrizePage({
+  page,
+  setPage,
+  tournament,
+  setTournament,
+}: NavProps) {
   return (
     <div className={styles.box}>
 
@@ -38,6 +37,16 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
                 label="Tournament Rules"
                 placeholder="Enter tournamentRules"
                 required
+                value={tournament.prize.tournamentRules}
+                onChange={(e) =>
+                  setTournament({
+                    ...tournament,
+                    prize: {
+                      ...tournament.prize,
+                      tournamentRules: e.target.value,
+                    },
+                  })
+                }
               />
             </Grid.Col>
             <Grid.Col span={6}>
@@ -46,9 +55,12 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
                 autoComplete="Prize Name (Optional)"
                 label="Prize Name"
                 placeholder="Enter Prize Name"
-                value={prize.prizeName}
+                value={tournament.prize.prizeName}
                 onChange={(e) =>
-                  setPrize({ ...prize, prizeName: e.target.value })
+                  setTournament({
+                    ...tournament,
+                    prize: { ...tournament.prize, prizeName: e.target.value },
+                  })
                 }
               />
             </Grid.Col>
@@ -57,23 +69,77 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
                 type="number"
                 label="Amount"
                 placeholder="INR 1 Lakh for 1st Position"
-                value={prize.amount}
-                onChange={(e) => setPrize({ ...prize, amount: e.target.value })}
+                value={tournament.prize.amount}
+                onChange={(e) =>
+                  setTournament({
+                    ...tournament,
+                    prize: { ...tournament.prize, amount: e.target.value },
+                  })
+                }
               />
             </Grid.Col>
           </Group>
           <Group>
             <Grid.Col span={7}>
-              <Checkbox label="Trophy" />
+              <Checkbox
+                label="Trophy"
+                checked={tournament.prize.trophy}
+                onChange={() =>
+                  setTournament({
+                    ...tournament,
+                    prize: {
+                      ...tournament.prize,
+                      trophy: !tournament.prize.trophy,
+                    },
+                  })
+                }
+              />
             </Grid.Col>
             <Grid.Col span={7}>
-              <Checkbox label="Medal" />
+              <Checkbox
+                label="Medal"
+                checked={tournament.prize.medal}
+                onChange={() =>
+                  setTournament({
+                    ...tournament,
+                    prize: {
+                      ...tournament.prize,
+                      medal: !tournament.prize.medal,
+                    },
+                  })
+                }
+              />
             </Grid.Col>
             <Grid.Col span={7}>
-              <Checkbox label="Certificate" />
+              <Checkbox
+                label="Certificate"
+                checked={tournament.prize.certificate}
+                onChange={() =>
+                  setTournament({
+                    ...tournament,
+                    prize: {
+                      ...tournament.prize,
+                      certificate: !tournament.prize.certificate,
+                    },
+                  })
+                }
+              />
             </Grid.Col>
             <Grid.Col span={7}>
-              <Checkbox label="Participation Certificate" />
+              <Checkbox
+                label="Participation Certificate"
+                checked={tournament.prize.participationCertificate}
+                onChange={() =>
+                  setTournament({
+                    ...tournament,
+                    prize: {
+                      ...tournament.prize,
+                      participationCertificate:
+                        !tournament.prize.participationCertificate,
+                    },
+                  })
+                }
+              />
             </Grid.Col>
           </Group>
         </Group>
@@ -93,9 +159,11 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
         >
           Prev
         </Button>
-      
+
         <Button
-          onClick={() => setPage("SchedulePage")}
+          onClick={() => {
+            setPage("SchedulePage");
+          }}
           styles={(theme) => ({
             root: {
               backgroundColor: "#058A4A",
