@@ -26,7 +26,7 @@ export function HeaderMegaMenu() {
     <Box pb={0}>
       <header className={classes.header}>
         <Group justify="space-between" h="100%">
-          <a href="/" style={{ textDecoration: "none", color: "initial" }}>
+          <a href="/" style={{ textDecoration: "none", color: "initial" }} className={classes.LogoContainer}>
             {" "}
             {/* <MantineLogo size={30} /> */}
             <img src={MaidaanLogo} alt="" className={classes.Logo} />
