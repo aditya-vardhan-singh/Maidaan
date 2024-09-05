@@ -28,6 +28,7 @@ export function HpDetailsubmit({
   };
 
   return (
+    <div className={classes.box}>
     <Container className={classes.formContainer}>
       <div className={classes.registrationStatusContainer}>
         <Select
@@ -121,5 +122,6 @@ export function HpDetailsubmit({
         <Button color="#058A4A">Your Profile</Button>
       </Group>
     </Container>
+    </div>
   );
 }

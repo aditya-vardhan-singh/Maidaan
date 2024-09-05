@@ -75,6 +75,7 @@ function HpDetailsPage({ page, setPage, tournament, setTournament }: NavProps) {
   };
 
   return (
+    <div className={styles.box}>
     <Container mt={30} className={styles.formContainer}>
       <Grid>
         <Grid.Col span={12}>
@@ -223,6 +224,7 @@ function HpDetailsPage({ page, setPage, tournament, setTournament }: NavProps) {
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 

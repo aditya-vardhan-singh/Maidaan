@@ -24,8 +24,10 @@ function HpFormPrizePage({
   setTournament,
 }: NavProps) {
   return (
-    <Container mt={30} className={styles.formContainer}>
-      <Grid>
+    <div className={styles.box}>
+
+    <Container mt={30} className={styles.formContainer} >
+      <Grid >
         <Group>
           <Group>
             <Grid.Col span={12}>
@@ -175,6 +177,7 @@ function HpFormPrizePage({
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 

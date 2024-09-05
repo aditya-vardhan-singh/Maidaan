@@ -38,6 +38,7 @@ function HpDetailsPageLinks({
   };
 
   return (
+    <div className={styles.box}>
     <Container mt={30} className={styles.formContainer}>
       <Grid>
         <Grid.Col span={8}>
@@ -132,6 +133,7 @@ function HpDetailsPageLinks({
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 
