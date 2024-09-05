@@ -18,22 +18,41 @@ interface NavProps {
   setTournament: React.Dispatch<React.SetStateAction<Tournament>>;
 }
 
+//Created Sports with IDs: [
+//     { id: 1, sportName: 'Cricket' },
+//     { id: 2, sportName: 'Football' },
+//     { id: 3, sportName: 'Tennis' },
+//     { id: 4, sportName: 'Badminton' },
+//     { id: 5, sportName: 'Swimming' },
+//     { id: 6, sportName: 'Running' },
+//     { id: 7, sportName: 'Yoga' },
+//     { id: 8, sportName: 'Gymnastics' },
+//     { id: 9, sportName: 'Martial Arts' },
+//     { id: 10, sportName: 'Weightlifting' },
+//     { id: 11, sportName: 'Cycling' },
+//     { id: 12, sportName: 'Volleyball' },
+//     { id: 13, sportName: 'Table Tennis' },
+//     { id: 14, sportName: 'Archery' }
+//     { id: 29, sportName: 'Basketball'}
+//   ]
+
+
 const sportsCategories = [
-  { value: "football", label: "Football" },
-  { value: "basketball", label: "Basketball" },
-  { value: "cricket", label: "Cricket" },
-  { value: "tennis", label: "Tennis" },
-  { value: "badminton", label: "Badminton" },
-  { value: "swimming", label: "Swimming" },
-  { value: "running", label: "Running" },
-  { value: "yoga", label: "Yoga" },
-  { value: "gymnastics", label: "Gymnastics" },
-  { value: "martial_arts", label: "Martial Arts" },
-  { value: "weightlifting", label: "Weightlifting" },
-  { value: "cycling", label: "Cycling" },
-  { value: "volleyball", label: "Volleyball" },
-  { value: "table_tennis", label: "Table Tennis" },
-  { value: "archery", label: "Archery" },
+  { value: "2", label: "Football" },
+  { value: "29", label: "Basketball" },
+  { value: "1", label: "Cricket" },
+  { value: "3", label: "Tennis" },
+  { value: "4", label: "Badminton" },
+  { value: "5", label: "Swimming" },
+  { value: "6", label: "Running" },
+  { value: "7", label: "Yoga" },
+  { value: "8", label: "Gymnastics" },
+  { value: "9", label: "Martial Arts" },
+  { value: "10", label: "Weightlifting" },
+  { value: "11", label: "Cycling" },
+  { value: "12", label: "Volleyball" },
+  { value: "13", label: "Table Tennis" },
+  { value: "14", label: "Archery" },
 ];
 
 function HpDetailsPage({ page, setPage, tournament, setTournament }: NavProps) {

@@ -20,7 +20,7 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
             sportName: true,
           },
         },
-        fee: true,
+        registrationFee: true,
         city: true,
         registrationStatus: true,
         startDate: true,
@@ -39,7 +39,7 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
         city: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
         registrationStatus: tournament.registrationStatus,
-        fee: tournament.fee,
+        fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
     });
@@ -61,7 +61,7 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
             sportName: true,
           },
         },
-        fee: true,
+        registrationFee: true,
         city: true,
         registrationStatus: true,
         startDate: true,
@@ -80,7 +80,7 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
         locationCity: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
         status: tournament.registrationStatus,
-        fee: tournament.fee,
+        fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
     });
@@ -107,6 +107,8 @@ router.get("/tournaments/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/tournaments/new", async (req: Request, res: Response) => {
+  const userId = req.user?.id
+  
   // ############
   // MESSAGE 1 🤌🏻
   // This is the type of input you will receive 👇🏻
@@ -147,12 +149,12 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
     registrationStatus: string;
   }
 
-  const tournament: Tournament = req.body["tournament"];
-  const details = tournament.details;
-  const links = tournament.links;
-  const prize = tournament.prize;
-  const schedules = tournament.schedules;
-  const registrationStatus = tournament.registrationStatus;
+  const tournament: Tournament = req.body.tournament;
+  // const details = tournament.details;
+  // const links = tournament.links;
+  // const prize = tournament.prize;
+  // const schedules = tournament.schedules;
+  // const registrationStatus = tournament.registrationStatus;
 
   // console.log(tournament);
   // Output: 👇🏻
@@ -207,29 +209,28 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
   // ############
 
   try {
-    // Create the tournament in the database
-    const tournament = await prisma.tournament.create({
+    const tournaments = await prisma.tournament.create({
       data: {
-        tournamentName: tournamentName,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        city: city,
-        venueName: venueName,
-        tournamentDetails: tournamentDetails,
-
-        sport: { connect: { id: sportId } }, // Corrected: use 'connect' for existing relations
-        organizer: { connect: { id: organizerId } }, // Corrected: use 'connect' for existing relations
+        tournamentName: tournament.details.tournamentName,
+        startDate: new Date(tournament.details.startDate),
+        endDate: new Date(tournament.details.endDate),
+        city: tournament.details.city,
+        venueName: tournament.details.venueName,
+        tournamentDetails: tournament.details.tournamentDetails,
+        registrationFee: parseInt(tournament.details.registrationFees),
+        sport: { connect: { id: parseInt(tournament.details.selectedOption) } }, // Corrected: use 'connect' for existing relations
+        organizer: { connect: { id: userId } }, // Corrected: use 'connect' for existing relations
         links: {
           create: {
-            officialLink: officialLink || "",
-            facebookLink: facebookLink || "",
-            xLink: xLink || "",
-            instaLink: instaLink || "",
-            posterImage: posterImage || "",
+            officialLink: tournament.links.officialLink || "",
+            facebookLink: tournament.links.facebookLink || "",
+            xLink: tournament.links.xLink || "",
+            instaLink: tournament.links.instaLink || "",
+            posterImage: tournament.links.posterImage || "",
           },
         },
         schedule: {
-          create: schedules.map((schedule: any) => ({
+          create: tournament.schedules.map((schedule: any) => ({
             scheduleName: schedule.scheduleName,
             startDate: new Date(schedule.startDate),
             startTime: schedule.startTime,
@@ -239,10 +240,10 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         },
         prizes: {
           create: {
-            prizeName: prizeName || "",
-            trophy: trophy,
-            medal: medal,
-            amount: parseFloat(amount) || 0, // Ensure amount is a number
+            prizeName: tournament.prize.prizeName || "",
+            trophy: tournament.prize.trophy,
+            medal: tournament.prize.medal,
+            amount: parseFloat(tournament.prize.amount) || 0, // Ensure amount is a number
           },
         },
       },
@@ -255,7 +256,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
 
     console.log("Checkpoint 2");
 
-    res.json(tournament);
+    res.json(tournaments);
   } catch (error) {
     console.error("Error creating tournament:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -282,7 +283,7 @@ router.put("/tournaments/:id", async (req: Request, res: Response) => {
         sportId: sportId,
         city: city,
         registrationStatus: registrationStatus,
-        fee: fee,
+        registrationFee: fee,
         startDate: startDate,
         endDate: endDate,
         venueName: venueName,

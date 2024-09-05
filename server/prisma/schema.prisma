@@ -69,7 +69,7 @@ model SportsParticipation {
   sportId    Int
   startDate  DateTime
   skillLevel String?     @db.VarChar(50)
-  // tournaments Tournament[]
+  tournaments Tournament[]
 
   @@unique([userId, sportId])
 }
@@ -95,18 +95,18 @@ enum SportType {
 }
 
 model Event {
-  id           Int                  @id @default(autoincrement())
-  title        String               @db.VarChar(100)
-  sport        Sports               @relation(fields: [sportId], references: [id])
-  sportId      Int
-  organizer    UserProfile          @relation("OrganizerEvents", fields: [organizerId], references: [id])
-  organizerId  Int
-  location     String               @db.VarChar(255)
-  status       EventStatus          @default(ONGOING)
-  fee          Float?               @default(0)
-  eventDate    DateTime
-  participants EventParticipation[]
-  links        Links[]              @relation("EventLinks")
+  id              Int                  @id @default(autoincrement())
+  title           String               @db.VarChar(100)
+  sport           Sports               @relation(fields: [sportId], references: [id])
+  sportId         Int
+  organizer       UserProfile          @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  organizerId     Int
+  location        String               @db.VarChar(255)
+  status          EventStatus          @default(ONGOING)
+  registrationFee Float?               @default(0)
+  eventDate       DateTime
+  participants    EventParticipation[]
+  links           Links[]              @relation("EventLinks")
 }
 
 enum EventStatus {
@@ -129,13 +129,13 @@ model Tournament {
   registrationStatus      EventStatus               @default(ONGOING)
   tournamentDetails       String?                   @db.Text
   rules                   String?                   @db.Text
-  fee                     Float?
+  registrationFee         Float?
   organizer               UserProfile               @relation("OrganizerTournaments", fields: [organizerId], references: [id])
   organizerId             Int
   TournamentParticipation TournamentParticipation[]
   links                   Links[]                   @relation("TournamentLinks")
-  // SportsParticipation     SportsParticipation       @relation(fields: [sportsParticipationId], references: [id])
-  // sportsParticipationId   Int
+  SportsParticipation     SportsParticipation?       @relation(fields: [sportsParticipationId], references: [id])
+  sportsParticipationId   Int?
 }
 
 model Schedule {
