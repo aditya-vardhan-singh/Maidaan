@@ -25,6 +25,8 @@ interface Prize {
 
 function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
   return (
+    <div className={styles.box}>
+
     <Container mt={30} className={styles.formContainer} >
       <Grid >
         <Group>
@@ -107,6 +109,7 @@ function HpFormPrizePage({ page, setPage, prize, setPrize }: NavProps) {
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 

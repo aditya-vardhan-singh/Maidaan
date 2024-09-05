@@ -63,6 +63,7 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   return (
+    <div className={styles.box}>
     <Container mt={30} className={styles.formContainer}>
       <Grid>
         <Grid.Col span={12}>
@@ -182,6 +183,7 @@ function HpDetailsPage({ page, setPage, details, setDetails }: NavProps) {
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 

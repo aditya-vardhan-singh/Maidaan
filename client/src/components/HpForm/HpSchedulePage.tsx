@@ -58,6 +58,7 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
   };
 
   return (
+    <div className={styles.box}>
     <Container mt={30} className={styles.formContainer}>
       {schedules.map((schedule, index) => (
         <div key={index} className={styles.scheduleContainer}>
@@ -161,6 +162,7 @@ function HpSchdulePage({ page, setPage, schedules, setSchedules }: NavProps) {
         </Button>
       </Group>
     </Container>
+    </div>
   );
 }
 

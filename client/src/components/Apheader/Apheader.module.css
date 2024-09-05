@@ -7,6 +7,9 @@
     background-position: center;
     margin-top: 0%;
     height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   
     @media (max-width: $mantine-breakpoint-xs) {
       padding-top: rem(80px);
@@ -24,12 +27,12 @@
   
   .title {
     font-weight: 800;
-    font-size: rem(50px);
+    font-size: rem(45px);
     letter-spacing: rem(-1px);
     padding-left: var(--mantine-spacing-md);
     padding-right: var(--mantine-spacing-md);
     color: var(--mantine-color-white);
-    margin-bottom: var(--mantine-spacing-xs);
+    /* margin-bottom: var(--mantine-spacing-xs); */
     text-align: center;
     display: flex;
     justify-content: center;
@@ -52,7 +55,7 @@
     color: var(--mantine-color-gray-0);
     text-align: center;
     font-size: rem(25px);
-    font-weight: 500;
+    font-weight: 400;
   
     @media (max-width: $mantine-breakpoint-xs) {
       font-size: var(--mantine-font-size-md);

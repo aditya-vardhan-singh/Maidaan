@@ -1,9 +1,9 @@
 .formContainer {
-  padding: 2rem;
-  margin-top: 2%;
+  /* padding: 2rem; */
+  /* margin-top: 2%; */
   border-radius: 8px;
-  width: 800px;
-  height: 800px;
+  /* width: 800px;
+  height: 800px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,6 +18,19 @@
   margin-bottom: 10%;
 
 }
+
+.box{
+
+  margin-top: 2%;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .Tickbox{
   display: flex;
 justify-content: space-between;
