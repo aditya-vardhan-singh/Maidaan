@@ -133,23 +133,36 @@ export async function initPassport(app: Express): Promise<void> {
 export function initAuthRoutes(): Router {
   router.post(
     "/login",
-    passport.authenticate("local"),
-    (req: Request, res: Response) => {
-      res.json({ message: "Logged in successfully", user: req.user });
-    },
+    passport.authenticate("local", {
+      successRedirect: "http://localhost:5173/profile-page/edit-profile",
+      failureRedirect: "http://localhost:5173/SignUp",
+    }),
+    // (req: Request, res: Response) => {
+    //   res.json({ message: "Logged in successfully", user: req.user });
+    // },
   );
 
   router.get(
     "/google",
-    passport.authenticate("google", { scope: ["profile", "email"] }),
+    passport.authenticate("google", {
+      scope: ["profile", "email"],
+    }),
   );
+
+  router.get("/my-redirect", (req, res) => {
+    res.redirect("http://localhost:5173/profile-page/edit-profile");
+  });
 
   router.get(
     "/google/secrets",
-    passport.authenticate("google", { failureRedirect: "/login" }),
-    (req: Request, res: Response) => {
-      res.redirect("/");
-    },
+    passport.authenticate("google", {
+      successRedirect: "/my-redirect",
+      failureRedirect: "http://localhost:5173/SignUp",
+    }),
+    // passport.authenticate("google", { failureRedirect: "/login" }),
+    // (req: Request, res: Response) => {
+    //   res.redirect("/");
+    // },
   );
 
   router.post("/register", async (req: Request, res: Response) => {
@@ -163,9 +176,7 @@ export function initAuthRoutes(): Router {
       });
 
       if (existingUser) {
-        return res
-          .status(400)
-          .json({ message: "Email already in use" });
+        return res.status(400).json({ message: "Email already in use" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -179,7 +190,7 @@ export function initAuthRoutes(): Router {
 
       req.login(newUser, (err) => {
         console.log("success");
-        res.redirect("/profile-page/edit-profile");
+        res.redirect("http://localhost:5173/profile-page/edit-profile");
       });
     } catch (error) {
       console.error("Error during signup:", error);

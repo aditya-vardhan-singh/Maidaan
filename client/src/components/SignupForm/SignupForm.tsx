@@ -34,13 +34,16 @@ export function SignupForm({ setpage }: SignupFormProps) {
       const response = await axios.post(`${baseURL}/auth/register`, values);
       toast.success(response?.data?.message || "User registered successfully");
     } catch (err) {
-      console.log("Checkpoint 3");
       toast.error(
         axios.isAxiosError(err) && err.response?.data?.message
           ? err.response.data.message
           : "Failed to register user",
       );
     }
+  };
+
+  const handleGoogleLogin = async () => {
+    axios.get(`${baseURL}/auth/google`);
   };
 
   const form = useForm({
@@ -136,7 +139,12 @@ export function SignupForm({ setpage }: SignupFormProps) {
           <Divider label="OR" labelPosition="center" my="lg" />
 
           <Group grow mb="md" mt="md">
-            <Button variant="default" color="gray" fullWidth>
+            <Button
+              variant="default"
+              color="gray"
+              fullWidth
+              onClick={() => handleGoogleLogin()}
+            >
               <img
                 src={google}
                 alt="Google Icon"
