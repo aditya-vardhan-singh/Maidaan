@@ -49,7 +49,7 @@ function PspDocumentInfo({ page, setPage }: NavProps) {
             className={styles.nextButton}
             color="green"
           >
-            Jump to Tournamemnt Participation
+            Jump to Tournament Participation
           </Button>
           <Button className={styles.nextButton} color="green">
             Save All
