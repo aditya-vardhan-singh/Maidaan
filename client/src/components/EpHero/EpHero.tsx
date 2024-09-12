@@ -8,27 +8,27 @@ import {
   Container,
   rem,
   useMantineTheme,
-} from '@mantine/core';
-import { IconHeartbeat, IconBrain, IconUsers } from '@tabler/icons-react';
-import classes from './EpHero.module.css';
+} from "@mantine/core";
+import { IconHeartbeat, IconBrain, IconUsers } from "@tabler/icons-react";
+import classes from "./EpHero.module.css";
 
 const mockdata = [
   {
-    title: 'Boost Your Physical Health',
+    title: "Boost Your Physical Health",
     description:
       "Participate in activities that improve your fitness, strengthen muscles, and enhance your endurance. Whether it's running a marathon or joining a sports camp, get moving and feel your best.",
     icon: IconHeartbeat,
   },
   {
-    title: 'Enhance Mental Clarity',
+    title: "Enhance Mental Clarity",
     description:
-      'Break away from the daily grind and find peace of mind. Engage in workshops and events that reduce stress, improve focus, and uplift your mood.',
+      "Break away from the daily grind and find peace of mind. Engage in workshops and events that reduce stress, improve focus, and uplift your mood.",
     icon: IconBrain,
   },
   {
-    title: 'Build Meaningful Connections',
+    title: "Build Meaningful Connections",
     description:
-      'Join a community of like-minded individuals. Strengthen social bonds, share experiences, and foster friendships through group activities and events.',
+      "Join a community of like-minded individuals. Strengthen social bonds, share experiences, and foster friendships through group activities and events.",
     icon: IconUsers,
   },
 ];
@@ -36,7 +36,13 @@ const mockdata = [
 export function EpHero() {
   const theme = useMantineTheme();
   const features = mockdata.map((feature) => (
-    <Card key={feature.title} shadow="md" radius="md" className={classes.card} padding="xl">
+    <Card
+      key={feature.title}
+      shadow="md"
+      radius="md"
+      className={classes.card}
+      padding="xl"
+    >
       <feature.icon
         style={{ width: rem(50), height: rem(50) }}
         stroke={2}
@@ -46,7 +52,7 @@ export function EpHero() {
       <Text fw={500} className={classes.cardTitle} mt="md">
         {feature.title}
       </Text>
-      <Text  c="dimmed" className={classes.description} mt="sm">
+      <Text c="dimmed" className={classes.description} mt="sm">
         {feature.description}
       </Text>
     </Card>
@@ -65,9 +71,9 @@ export function EpHero() {
       </Title>
 
       <Text c="dimmed" className={classes.description} ta="center" mt="md">
-        Step into a world of excitement and growth! Whether you're looking to boost your fitness,
-        find mental clarity, or connect with others, our events are designed to inspire and energize
-        you.
+        Step into a world of excitement and growth! Whether you're looking to
+        boost your fitness, find mental clarity, or connect with others, our
+        events are designed to inspire and energize you.
       </Text>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>

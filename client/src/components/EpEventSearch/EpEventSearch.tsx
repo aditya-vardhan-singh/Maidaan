@@ -1,92 +1,117 @@
-import { Button, Card, Container, Grid, Group, Image, Select, Text, Title } from '@mantine/core';
-import React, { useState } from 'react';
-import img from '../../assets/imgofevent.jpg';
-import classes from './EventSearch.module.css'; // Ensure this path is correct
+import {
+  Button,
+  Card,
+  Container,
+  Grid,
+  Group,
+  Image,
+  Select,
+  Text,
+  Title,
+} from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import img from "../../assets/imgofevent.jpg";
+import classes from "./EventSearch.module.css"; // Ensure this path is correct
+import { baseURL } from "@/Utility";
+import { toast, Toaster } from "sonner";
+import axios, { isAxiosError } from "axios";
+
+interface EventsType {
+  name: string;
+  date: string;
+  location: string;
+  description: string;
+  participants: number;
+}
 
 // Imaginary sports and fitness event data
-const events = [
+const events: EventsType[] = [
   {
-    name: 'Mumbai Marathon',
-    date: '2024-09-6',
-    location: 'Mumbai',
-    description: 'A thrilling marathon in the heart of Mumbai.',
+    name: "Mumbai Marathon",
+    date: "2024-09-6",
+    location: "Mumbai",
+    description: "A thrilling marathon in the heart of Mumbai.",
     participants: 5000,
   },
   {
-    name: 'Delhi Yoga Retreat',
-    date: '2024-10-05',
-    location: 'Delhi',
-    description: 'A rejuvenating yoga retreat in Delhi.',
+    name: "Delhi Yoga Retreat",
+    date: "2024-10-05",
+    location: "Delhi",
+    description: "A rejuvenating yoga retreat in Delhi.",
     participants: 200,
   },
   {
-    name: 'Goa Triathlon',
-    date: '2024-11-10',
-    location: 'Goa',
-    description: 'An exciting triathlon event in sunny Goa.',
+    name: "Goa Triathlon",
+    date: "2024-11-10",
+    location: "Goa",
+    description: "An exciting triathlon event in sunny Goa.",
     participants: 1500,
   },
   {
-    name: 'Bangalore Fitness Expo',
-    date: '2024-12-20',
-    location: 'Bangalore',
-    description: 'A leading fitness expo showcasing the latest in fitness equipment and trends.',
+    name: "Bangalore Fitness Expo",
+    date: "2024-12-20",
+    location: "Bangalore",
+    description:
+      "A leading fitness expo showcasing the latest in fitness equipment and trends.",
     participants: 3000,
   },
   {
-    name: 'Kolkata Running Challenge',
-    date: '2024-09-9',
-    location: 'Kolkata',
-    description: 'A fun running challenge for all ages in Kolkata.',
+    name: "Kolkata Running Challenge",
+    date: "2024-09-9",
+    location: "Kolkata",
+    description: "A fun running challenge for all ages in Kolkata.",
     participants: 800,
   },
   {
-    name: 'Chennai Cycling Festival',
-    date: '2024-10-15',
-    location: 'Chennai',
-    description: 'A vibrant cycling festival with races and community rides in Chennai.',
+    name: "Chennai Cycling Festival",
+    date: "2024-10-15",
+    location: "Chennai",
+    description:
+      "A vibrant cycling festival with races and community rides in Chennai.",
     participants: 1200,
   },
   {
-    name: 'Hyderabad Martial Arts Tournament',
-    date: '2024-11-25',
-    location: 'Hyderabad',
-    description: 'A competitive martial arts tournament featuring various disciplines.',
+    name: "Hyderabad Martial Arts Tournament",
+    date: "2024-11-25",
+    location: "Hyderabad",
+    description:
+      "A competitive martial arts tournament featuring various disciplines.",
     participants: 1000,
   },
   {
-    name: 'Pune CrossFit Games',
-    date: '2024-12-10',
-    location: 'Pune',
-    description: 'An intense CrossFit competition in Pune.',
+    name: "Pune CrossFit Games",
+    date: "2024-12-10",
+    location: "Pune",
+    description: "An intense CrossFit competition in Pune.",
     participants: 700,
   },
   {
-    name: 'Mumbai Marathon',
-    date: '2024-09-15',
-    location: 'Mumbai',
-    description: 'A thrilling marathon in the heart of Mumbai.',
+    name: "Mumbai Marathon",
+    date: "2024-09-15",
+    location: "Mumbai",
+    description: "A thrilling marathon in the heart of Mumbai.",
     participants: 5000,
   },
   {
-    name: 'Delhi Yoga Retreat',
-    date: '2024-10-05',
-    location: 'Delhi',
-    description: 'A rejuvenating yoga retreat in Delhi.',
+    name: "Delhi Yoga Retreat",
+    date: "2024-10-05",
+    location: "Delhi",
+    description: "A rejuvenating yoga retreat in Delhi.",
     participants: 200,
   },
   {
-    name: 'Goa Triathlon',
-    date: '2024-11-10',
-    location: 'Goa',
-    description: 'An exciting triathlon event in sunny Goa.',
+    name: "Goa Triathlon",
+    date: "2024-11-10",
+    location: "Goa",
+    description: "An exciting triathlon event in sunny Goa.",
     participants: 1500,
   },
   {
-    name: 'Bangalore Fitness Expo',
-    date: '2024-12-20',
-    location: 'Bangalore',
-    description: 'A leading fitness expo showcasing the latest in fitness equipment and trends.',
+    name: "Bangalore Fitness Expo",
+    date: "2024-12-20",
+    location: "Bangalore",
+    description:
+      "A leading fitness expo showcasing the latest in fitness equipment and trends.",
     participants: 3000,
   },
 ];
@@ -106,7 +131,97 @@ const daysLeftOptions = [0, 7, 14, 30, 60].map((days) => ({
 }));
 
 export function EventSearch() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [events, setEvents] = useState<EventsType[]>([
+    {
+      name: "Mumbai Marathon",
+      date: "2024-09-6",
+      location: "Mumbai",
+      description: "A thrilling marathon in the heart of Mumbai.",
+      participants: 5000,
+    },
+    {
+      name: "Delhi Yoga Retreat",
+      date: "2024-10-05",
+      location: "Delhi",
+      description: "A rejuvenating yoga retreat in Delhi.",
+      participants: 200,
+    },
+    {
+      name: "Goa Triathlon",
+      date: "2024-11-10",
+      location: "Goa",
+      description: "An exciting triathlon event in sunny Goa.",
+      participants: 1500,
+    },
+    {
+      name: "Bangalore Fitness Expo",
+      date: "2024-12-20",
+      location: "Bangalore",
+      description:
+        "A leading fitness expo showcasing the latest in fitness equipment and trends.",
+      participants: 3000,
+    },
+    {
+      name: "Kolkata Running Challenge",
+      date: "2024-09-9",
+      location: "Kolkata",
+      description: "A fun running challenge for all ages in Kolkata.",
+      participants: 800,
+    },
+    {
+      name: "Chennai Cycling Festival",
+      date: "2024-10-15",
+      location: "Chennai",
+      description:
+        "A vibrant cycling festival with races and community rides in Chennai.",
+      participants: 1200,
+    },
+    {
+      name: "Hyderabad Martial Arts Tournament",
+      date: "2024-11-25",
+      location: "Hyderabad",
+      description:
+        "A competitive martial arts tournament featuring various disciplines.",
+      participants: 1000,
+    },
+    {
+      name: "Pune CrossFit Games",
+      date: "2024-12-10",
+      location: "Pune",
+      description: "An intense CrossFit competition in Pune.",
+      participants: 700,
+    },
+    {
+      name: "Mumbai Marathon",
+      date: "2024-09-15",
+      location: "Mumbai",
+      description: "A thrilling marathon in the heart of Mumbai.",
+      participants: 5000,
+    },
+    {
+      name: "Delhi Yoga Retreat",
+      date: "2024-10-05",
+      location: "Delhi",
+      description: "A rejuvenating yoga retreat in Delhi.",
+      participants: 200,
+    },
+    {
+      name: "Goa Triathlon",
+      date: "2024-11-10",
+      location: "Goa",
+      description: "An exciting triathlon event in sunny Goa.",
+      participants: 1500,
+    },
+    {
+      name: "Bangalore Fitness Expo",
+      date: "2024-12-20",
+      location: "Bangalore",
+      description:
+        "A leading fitness expo showcasing the latest in fitness equipment and trends.",
+      participants: 3000,
+    },
+  ]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedDays, setSelectedDays] = useState<string | null>(null);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +235,7 @@ export function EventSearch() {
   const filteredEvents = events.filter(
     (event) =>
       event.name.toLowerCase().includes(searchTerm) &&
-      (selectedDays ? getDaysLeft(event.date) <= parseInt(selectedDays) : true)
+      (selectedDays ? getDaysLeft(event.date) <= parseInt(selectedDays) : true),
   );
 
   const renderCard = (event: (typeof events)[0]) => (
@@ -141,8 +256,8 @@ export function EventSearch() {
       </Group>
 
       <Text mt="sm" mb="md" c="dimmed" fz="xs">
-        Date: {event.date} <br /> • Location: {event.location} <br />• Description:{' '}
-        {event.description}
+        Date: {event.date} <br /> • Location: {event.location} <br />•
+        Description: {event.description}
       </Text>
       <Button fullWidth variant="outline" mt="md" color="#058A4A">
         Register
@@ -150,25 +265,47 @@ export function EventSearch() {
     </Card>
   );
 
+  useEffect(() => {
+    const fetchTournaments = async () => {
+      await axios
+        .get(`${baseURL}/tournaments/all`)
+        .then((response: { data: { tournaments: EventsType[] } }) => {
+          if (response?.data?.tournaments) {
+            setEvents(response?.data?.tournaments);
+          } else {
+            toast.error("Invalid parameters of response.");
+          }
+        })
+        .catch((err) => {
+          toast.error(
+            err?.response?.data?.message || "Error getting tournament records",
+          );
+        });
+    };
+    fetchTournaments();
+  }, []);
+
   return (
-    <Container  className={classes.contai} id="target-section">
-      <Title className={classes.heading}>Upcoming Fitness and Sports Events in India</Title>
-      <>
+    <Container className={classes.contai} id="target-section">
+      <Title className={classes.heading}>
+        Upcoming Fitness and Sports Events in India
+      </Title>
+      <div style={{ display: "flex", columnGap: "20px" }}>
         <Select
           placeholder="Filter Events by Days Left"
           value={selectedDays}
           onChange={handleDaysChange}
-          data={[{ value: '', label: 'All Events' }, ...daysLeftOptions]}
-          mb="md"
-          style={{ width: '300px' }}
+          data={[{ value: "", label: "All Events" }, ...daysLeftOptions]}
+          // mb="md"
+          style={{ width: "300px" }}
         />
         <input
           type="text"
           placeholder="Search events"
           onChange={handleSearch}
-          style={{ marginBottom: '1rem', padding: '0.5rem', width: '300px' }}
+          style={{ marginBottom: "1rem", padding: "0.5rem", width: "100%" }}
         />
-      </>
+      </div>
       <Grid>
         {filteredEvents.length > 0 ? (
           filteredEvents.map((event) => (

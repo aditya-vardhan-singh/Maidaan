@@ -15,6 +15,8 @@ import google from "@/assets/google.svg";
 import classes from "./SignupForm.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import MaidaanLogo from "../../assets/MaidaanLogoTwo.png";
+
 import { getInitialValue } from "@testing-library/user-event/dist/types/document/UI";
 import { baseURL } from "@/Utility";
 import { Toaster, toast } from "sonner";
@@ -81,10 +83,12 @@ export function SignupForm({ setpage }: SignupFormProps) {
       <Box className={classes.navbar}>
         {" "}
         {/* Header */}
-        <a href="/" style={{ textDecoration: "none" }}>
-          {" "}
-          <Text className={classes.logo}>Maidaan</Text>
-        </a>
+        <a href="/" style={{ textDecoration: "none", color: "initial" }} className={classes.LogoContainer}>
+            {" "}
+            {/* <MantineLogo size={30} /> */}
+            <img src={MaidaanLogo} alt="" className={classes.Logo} />
+          </a>
+
       </Box>
       <Container size={420} my={40} className={classes.container}>
         <Title

@@ -22,5 +22,18 @@
     font-weight: bold;
     color: #000;
   }
+  .LogoContainer{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+  }
+  
+    .Logo{
+      /* background-image: url('../../assets/MaidaanLogoTwo.png'); */
+      width: 150px;
+      height: 60px;
+      /* height: 90%; */
+      background-size: contain;
+    }
   
 
