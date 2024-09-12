@@ -16,17 +16,27 @@ export function HeroImageBackground() {
         </Title>
 
         <div className={classes.controls}>
-          <a href="/tournaments" className={classes.a}>
+          <a
+            href="/tournaments"
+            className={classes.a}
+            style={{ marginRight: "40px" }}
+          >
             <Button className={classes.control} variant="white" size="lg">
               Explore Tournaments
             </Button>
           </a>
-          <Button
-            className={cx(classes.control, classes.secondaryControl)}
-            size="lg"
+          <a
+            href="/events"
+            className={classes.a}
+            style={{ marginRight: "20px" }}
           >
-            Find a Sports Event
-          </Button>
+            <Button
+              className={cx(classes.control, classes.secondaryControl)}
+              size="lg"
+            >
+              Find a Sports Event
+            </Button>
+          </a>
         </div>
       </div>
     </div>

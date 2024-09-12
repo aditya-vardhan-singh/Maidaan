@@ -65,7 +65,6 @@
   justify-content: center;
   padding-left: var(--mantine-spacing-md);
   padding-right: var(--mantine-spacing-md);
-  
 
   @media (max-width: $mantine-breakpoint-xs) {
     flex-direction: column;
@@ -76,7 +75,7 @@
   height: rem(42px);
   font-size: var(--mantine-font-size-md);
   color: #f1a02f;
- 
+
   margin: 3%;
   margin-top: 0%;
 

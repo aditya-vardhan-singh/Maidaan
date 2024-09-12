@@ -1,5 +1,5 @@
-import { Button, Container, Overlay, Text, Title } from '@mantine/core';
-import classes from './GpHeader.module.css';
+import { Button, Container, Overlay, Text, Title } from "@mantine/core";
+import classes from "./GpHeader.module.css";
 
 export function GpHeader() {
   return (
@@ -7,7 +7,9 @@ export function GpHeader() {
       <Overlay color="#000" opacity={0.65} zIndex={1} />
 
       <div className={classes.inner}>
-        <Title className={classes.title}>Government Schemes on Fitness and Sports </Title>
+        <Title className={classes.title}>
+          Government Schemes on Fitness and Sports{" "}
+        </Title>
         <Container size={640}>
           <Text size="lg" className={classes.description}>
             &quot;Empowering Fitness, Nurturing Sportsmanship&quot;
@@ -15,11 +17,11 @@ export function GpHeader() {
         </Container>
 
         <div className={classes.controls}>
-          <Button className={classes.control} variant="white" size="lg">
-            <a href="#target-section" className={classes.a}>
+          <a href="#target-section" className={classes.a}>
+            <Button className={classes.control} variant="white" size="lg">
               Explore Scheme
-            </a>
-          </Button>
+            </Button>
+          </a>
           {/* <Button className={cx(classes.control, classes.secondaryControl)} size="lg">
           Explore Scheme
           </Button> */}
