@@ -130,8 +130,8 @@ model Tournament {
   tournamentDetails       String?                   @db.Text
   rules                   String?                   @db.Text
   registrationFee         Float?
-  organizer               UserProfile               @relation("OrganizerTournaments", fields: [organizerId], references: [id])
-  organizerId             Int
+  organizer               UserProfile?               @relation("OrganizerTournaments", fields: [organizerId], references: [id])
+  organizerId             Int?
   TournamentParticipation TournamentParticipation[]
   links                   Links[]                   @relation("TournamentLinks")
   SportsParticipation     SportsParticipation?       @relation(fields: [sportsParticipationId], references: [id])

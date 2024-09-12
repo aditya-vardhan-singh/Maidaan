@@ -13,7 +13,7 @@ import {
 import { useForm } from "@mantine/form";
 import google from "@/assets/google.svg";
 import classes from "./SignupForm.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { getInitialValue } from "@testing-library/user-event/dist/types/document/UI";
 import { baseURL } from "@/Utility";
@@ -29,16 +29,25 @@ interface RegistrationForm {
 }
 
 export function SignupForm({ setpage }: SignupFormProps) {
+  const [isLoading, setIsLoading] = useState(true);
   const handleRegister = async (values: typeof form.values) => {
+    const toastId = toast.loading("Loading...", );
     try {
       const response = await axios.post(`${baseURL}/auth/register`, values);
-      toast.success(response?.data?.message || "User registered successfully");
+      if (!response?.data?.message) {
+        toast.success("User registered successfully");
+      } else {
+      }
     } catch (err) {
       toast.error(
         axios.isAxiosError(err) && err.response?.data?.message
           ? err.response.data.message
-          : "Failed to register user",
+          : "Failed to register user"
       );
+    }
+    finally{
+      setIsLoading(false);
+      toast.dismiss(toastId)
     }
   };
 

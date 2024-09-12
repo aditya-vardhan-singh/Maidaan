@@ -47,10 +47,10 @@ function NextUpTcard() {
     fetchTournaments();
   }, []);
 
-  const card = tournaments.map((tournament) => (
+  const card = tournaments.map((tournament, index) => (
     <Card shadow="sm" p="lg">
       <Toaster richColors />
-      <Card className={classes.card}>
+      <Card className={classes.card} key={index}>
         <Text className={classes.title}>{tournament.title}</Text>
         <Text className={classes.sport}>{tournament.sport}</Text>
         <div className={classes.location}>

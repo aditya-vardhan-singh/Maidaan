@@ -20,7 +20,7 @@ export function HomePage() {
       <UnitrorPlay />
       <LearnFromBest />
       <EmpowerInspire />
-      <VoiceFromFiled />
+      {/* <VoiceFromFiled /> */}
       {/* <TestimonialSlider/> */}
       <Arena />
     </>

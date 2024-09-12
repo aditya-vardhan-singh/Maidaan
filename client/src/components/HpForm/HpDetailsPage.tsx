@@ -38,21 +38,21 @@ interface NavProps {
 
 
 const sportsCategories = [
-  { value: "2", label: "Football" },
-  { value: "29", label: "Basketball" },
-  { value: "1", label: "Cricket" },
-  { value: "3", label: "Tennis" },
-  { value: "4", label: "Badminton" },
-  { value: "5", label: "Swimming" },
-  { value: "6", label: "Running" },
-  { value: "7", label: "Yoga" },
-  { value: "8", label: "Gymnastics" },
-  { value: "9", label: "Martial Arts" },
-  { value: "10", label: "Weightlifting" },
-  { value: "11", label: "Cycling" },
-  { value: "12", label: "Volleyball" },
-  { value: "13", label: "Table Tennis" },
-  { value: "14", label: "Archery" },
+  { value: "1", label: 'Cricket' },
+    { value: "2", label: 'Hockey' },
+    { value: "3", label: 'Kabaddi' },
+    { value: "4", label: 'Football' },
+    { value: "5", label: 'Badminton' },
+    { value: "6", label: 'Tennis' },
+    { value: "7", label: 'Table Tennis' },
+    { value: "8", label: 'Boxing' },
+    { value: "9", label: 'Wrestling' },
+    { value: "10", label: 'Athletics' },
+    { value: "11", label: 'Basketball' },
+    { value: "12", label: 'Volleyball' },
+    { value: "13", label: 'Kho Kho' },
+    { value: "14", label: 'Golf' },
+    { value: "15", label: 'Shooting' },
 ];
 
 function HpDetailsPage({ page, setPage, tournament, setTournament }: NavProps) {

@@ -5,8 +5,9 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 const router = express.Router();
-
+console.log('chk pt 1')
 router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
+  console.log('chk pt 2')
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
@@ -32,13 +33,14 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
         },
       },
     });
+    console.log('chk pt 3')
     const response = tournaments.map((tournament) => {
       return {
-        tournamentName: tournament.tournamentName,
-        sportName: tournament.sport.sportName,
-        city: tournament.city,
+        title: tournament.tournamentName,
+        sport: tournament.sport.sportName,
+        location: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
-        registrationStatus: tournament.registrationStatus,
+        status: tournament.registrationStatus,
         fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
@@ -48,6 +50,7 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
 });
 
 router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
+  console.log('chk pttt 1')
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
@@ -73,17 +76,20 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
         },
       },
     });
+    console.log(tournaments)
+    console.log('chk pttt 2')
     const response = tournaments.map((tournament) => {
       return {
         title: tournament.tournamentName,
-        sportName: tournament.sport.sportName,
-        locationCity: tournament.city,
+        sport: tournament.sport.sportName,
+        location: tournament.city,
         teamsParticipating: tournament._count.TournamentParticipation,
         status: tournament.registrationStatus,
         fee: tournament.registrationFee,
         startDate: tournament.startDate,
       };
     });
+    console.log('chk pttt 3')
     res.json(response);
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
@@ -150,6 +156,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
   }
 
   const tournament: Tournament = req.body.tournament;
+  console.log(tournament)
   // const details = tournament.details;
   // const links = tournament.links;
   // const prize = tournament.prize;
@@ -209,6 +216,13 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
   // ############
 
   try {
+    const sportExists = await prisma.sports.findUnique({
+      where: { id: parseInt(tournament.details.selectedOption) },
+    });
+
+    if (!sportExists) {
+      throw new Error(`The sport with id ${tournament.details.selectedOption} does not exist.`);
+    }
     const tournaments = await prisma.tournament.create({
       data: {
         tournamentName: tournament.details.tournamentName,
@@ -219,7 +233,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         tournamentDetails: tournament.details.tournamentDetails,
         registrationFee: parseInt(tournament.details.registrationFees),
         sport: { connect: { id: parseInt(tournament.details.selectedOption) } }, // Corrected: use 'connect' for existing relations
-        organizer: { connect: { id: userId } }, // Corrected: use 'connect' for existing relations
+        // organizer: { connect: { id: userId } }, // Corrected: use 'connect' for existing relations
         links: {
           create: {
             officialLink: tournament.links.officialLink || "",
