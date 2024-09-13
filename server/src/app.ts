@@ -4,13 +4,13 @@ import { initPassport, initAuthRoutes } from './services/authService';
 import tournamentServices from './services/tournamentService'
 // import userRoutes from './services/userService';  
 // import organizerRoutes from './services/organizerService';  
-// import { PrismaClient, SportType, EventStatus } from '@prisma/client'; // Import PrismaClient
-// const prisma = new PrismaClient()
+import { PrismaClient, SportType, EventStatus } from '@prisma/client'; // Import PrismaClient
+const prisma = new PrismaClient()
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// import { Request, Response } from 'express';
+import { Request, Response } from 'express';
 
 
 // const sportsData = [
@@ -32,7 +32,7 @@ const port = process.env.PORT || 3000;
 // ];
 
 // const findsports = async (req: Request, res: Response) => {
-//   const sports = await prisma.tournament.findMany()
+//   const sports = await prisma.sports.findMany()
 //   console.log(sports)
 // }
 
@@ -47,7 +47,7 @@ const port = process.env.PORT || 3000;
 //   try {
 //     const tournaments = await prisma.tournament.findMany({
 //       where: {
-//         registrationStatus: EventStatus.ONGOING,
+//         registrationStatus: EventStatus.UPCOMING,
 //       },
 //       select: {
 //         id: true,

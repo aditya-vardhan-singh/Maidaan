@@ -6,6 +6,7 @@ import classes from './Tournaments.module.css';
 import { baseURL } from '@/Utility';
 
 interface Tournament {
+  id: string;
   title: string;
   sport: string;
   location: string;
@@ -16,41 +17,37 @@ interface Tournament {
 }
 
 function NextUpTcard() {
-  const [tournaments, setTournaments] = useState<Tournament[]>([
-    {
-      title: 'Champions Trophy 2024',
-      sport: 'Cricket',
-      location: 'Mumbai',
-      teamsParticipating: '+1500 Teams Participating',
-      status: 'Upcoming',
-      fee: 'Fees Free',
-      startDate: 'Sept 21, 2024',
-    },
-  ]);
+  const [tournaments, setTournaments] = useState<Tournament[]>();
   useEffect(() => {
     // Fetch tournaments data from backend
     const fetchTournaments = async () => {
       try {
-        const response = await axios.get<{ tournaments: Tournament[] }>(
+        const response = await axios.get<Tournament[]>(
           `${baseURL}/tournaments/upcoming`
         );
-        if (!response.data?.tournaments || response.data.tournaments.length === 0) {
+        if (!response.data || response.data.length === 0) {
           toast.error('No tournaments available');
         } else {
-          setTournaments(response.data.tournaments);
+          setTournaments(response.data);
         }
       } catch (err) {
-        toast.error((err as Error).message || 'Error getting ongoing records!');
+        toast.error((err as Error).message || 'Error getting upcoming records!');
       }
     };
 
     fetchTournaments();
   }, []);
 
-  const card = tournaments.map((tournament, index) => (
-    <Card shadow="sm" p="lg">
+  
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const card = tournaments?.map((tournament) => (
+    <Card shadow="sm" p="lg" key={tournament.id}>
       <Toaster richColors />
-      <Card className={classes.card} key={index}>
+      <Card className={classes.card}>
         <Text className={classes.title}>{tournament.title}</Text>
         <Text className={classes.sport}>{tournament.sport}</Text>
         <div className={classes.location}>
@@ -63,7 +60,7 @@ function NextUpTcard() {
         <Text className={classes.teams}>{tournament.teamsParticipating}</Text>
         <div className={classes.date}>
           {/* <IconCalendar size={18} className={classes.icon} /> */}
-          <Text>Kicks Off {tournament.startDate}</Text>
+          <Text>Kicks Off {formatDate(tournament.startDate)}</Text>
         </div>
         <Button className={classes.registerButton}>Register Now</Button>
       </Card>

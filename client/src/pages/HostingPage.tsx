@@ -2,15 +2,20 @@ import { useState } from "react";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 
-// NOTE: Why passing 'page' as prop to all components when it is not being used?
-import { HpBanner } from "@/components/HpBanner/HpBanner"; // 1 warn, reviewed
-import HpDetailsPageLinks from "@/components/HpForm/HpDetailPageLinks"; // 2 warns, reviewed
-import HpDetailsPage from "@/components/HpForm/HpDetailsPage"; // 1 warn, reviewed
-import { HpDetailsubmit } from "@/components/HpForm/HpDetailsubmit"; // 4 warns, reviewed
-import HpFormPrizePage from "@/components/HpForm/HpFormPrizePage"; // 1 warn, reviewed
-import HpSchdulePage from "@/components/HpForm/HpSchedulePage"; // 1 warn, reviewed
-import HpFormNavbar from "@/components/HpFormNavbar/HpFormNavbar"; // reviewed
+import { HpBanner } from "@/components/HpBanner/HpBanner";
+import HpDetailsPageLinks from "@/components/HpForm/HpDetailPageLinks";
+import HpDetailsPage from "@/components/HpForm/HpDetailsPage";
+import { HpDetailsubmit } from "@/components/HpForm/HpDetailsubmit";
+import HpFormPrizePage from "@/components/HpForm/HpFormPrizePage";
+import HpSchdulePage from "@/components/HpForm/HpSchedulePage";
+import HpFormNavbar from "@/components/HpFormNavbar/HpFormNavbar";
 import { baseURL } from "@/Utility";
+
+export enum RegistrationStatus {
+  ONGOING = "ONGOING",
+  UPCOMING = "UPCOMING",
+  FINISHED = "FINISHED",
+}
 
 export interface Tournament {
   details: {
@@ -46,13 +51,12 @@ export interface Tournament {
     endDate: string;
     endTime: string;
   }[];
-  registrationStatus: string;
+  registrationStatus: RegistrationStatus;
 }
 
 const HostingPage: React.FC = () => {
   const [page, setPage] = useState<string>("");
 
-  /* All forms data compiled in tournaments */
   const [tournament, setTournament] = useState<Tournament>({
     details: {
       tournamentName: "",
@@ -89,7 +93,7 @@ const HostingPage: React.FC = () => {
         endTime: "",
       },
     ],
-    registrationStatus: "",
+    registrationStatus: RegistrationStatus.ONGOING,
   });
 
   const handleFormSubmit = async () => {

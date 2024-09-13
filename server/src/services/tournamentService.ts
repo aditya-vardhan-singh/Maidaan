@@ -5,9 +5,8 @@ const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
 const router = express.Router();
-console.log('chk pt 1')
+
 router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
-  console.log('chk pt 2')
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
@@ -33,9 +32,10 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
         },
       },
     });
-    console.log('chk pt 3')
+    console.log(tournaments)
     const response = tournaments.map((tournament) => {
       return {
+        id: tournament.id, 
         title: tournament.tournamentName,
         sport: tournament.sport.sportName,
         location: tournament.city,
@@ -45,12 +45,14 @@ router.get("/tournaments/ongoing", async (req: Request, res: Response) => {
         startDate: tournament.startDate,
       };
     });
-  } catch (error) {}
-  res.status(500).json({ error: "Internal server error" });
+    res.json(response); 
+  } catch (error) {
+    console.error("Error fetching ongoing tournaments:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
-  console.log('chk pttt 1')
   try {
     const tournaments = await prisma.tournament.findMany({
       where: {
@@ -77,9 +79,9 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
       },
     });
     console.log(tournaments)
-    console.log('chk pttt 2')
     const response = tournaments.map((tournament) => {
       return {
+        id: tournament.id, 
         title: tournament.tournamentName,
         sport: tournament.sport.sportName,
         location: tournament.city,
@@ -89,9 +91,9 @@ router.get("/tournaments/upcoming", async (req: Request, res: Response) => {
         startDate: tournament.startDate,
       };
     });
-    console.log('chk pttt 3')
     res.json(response);
   } catch (error) {
+    console.error("Error fetching upcoming tournaments:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -157,63 +159,6 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
 
   const tournament: Tournament = req.body.tournament;
   console.log(tournament)
-  // const details = tournament.details;
-  // const links = tournament.links;
-  // const prize = tournament.prize;
-  // const schedules = tournament.schedules;
-  // const registrationStatus = tournament.registrationStatus;
-
-  // console.log(tournament);
-  // Output: 👇🏻
-  // {
-  //   details: {
-  //     tournamentName: 'Champions League',
-  //     startDate: '2024-09-07',
-  //     endDate: '2024-09-08',
-  //     selectedOption: 'basketball',
-  //     registrationFees: '1000',
-  //     venueName: 'Ekana Indoor Stadium',
-  //     city: 'Lucknow',
-  //     tournamentDetails: 'No details yet'
-  //   },
-  //   links: {
-  //     officialLink: 'No official link',
-  //     facebookLink: 'No fb either',
-  //     xLink: "I have x link but won't share, sorry :P",
-  //     instaLink: 'Insta huh? Can I know why??!',
-  //     posterImage: ''
-  //   },
-  //   prize: {
-  //     tournamentRules: 'You are free to kick the basketball',
-  //     prizeName: 'Losers of the League',
-  //     amount: '00000001',
-  //     trophy: true,
-  //     medal: true,
-  //     certificate: true,
-  //     participationCertificate: false
-  //   },
-  //   schedules: [
-  //     {
-  //       scheduleName: 'Day 1',
-  //       startDate: '2024-09-07',
-  //       startTime: '10:00',
-  //       endDate: '2024-09-07',
-  //       endTime: '14:00'
-  //     },
-  //     {
-  //       scheduleName: 'Day 2',
-  //       startDate: '2024-09-08',
-  //       startTime: '10:00',
-  //       endDate: '2024-09-07',
-  //       endTime: '14:00'
-  //     }
-  //   ],
-  //   registrationStatus: 'UPCOMING'
-  // }
-
-  // FROM: Aditya 🤟🏻
-  // MESSAGE 1 ENDS
-  // ############
 
   try {
     const sportExists = await prisma.sports.findUnique({
@@ -232,8 +177,8 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
         venueName: tournament.details.venueName,
         tournamentDetails: tournament.details.tournamentDetails,
         registrationFee: parseInt(tournament.details.registrationFees),
-        sport: { connect: { id: parseInt(tournament.details.selectedOption) } }, // Corrected: use 'connect' for existing relations
-        // organizer: { connect: { id: userId } }, // Corrected: use 'connect' for existing relations
+        sport: { connect: { id: parseInt(tournament.details.selectedOption) } }, 
+        // organizer: { connect: { id: userId } }, 
         links: {
           create: {
             officialLink: tournament.links.officialLink || "",
@@ -257,7 +202,7 @@ router.post("/tournaments/new", async (req: Request, res: Response) => {
             prizeName: tournament.prize.prizeName || "",
             trophy: tournament.prize.trophy,
             medal: tournament.prize.medal,
-            amount: parseFloat(tournament.prize.amount) || 0, // Ensure amount is a number
+            amount: parseFloat(tournament.prize.amount) || 0, 
           },
         },
       },
